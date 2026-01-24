@@ -159,10 +159,10 @@ class FreshdeskClient:
         logger.debug(f"Applying client-side filters to {len(tickets)} tickets")
         
         for ticket in tickets:
-            # Filter by status (Closed = 4 or 5 depending on Freshdesk config)
-            # Common values: 2=Open, 3=Pending, 4=Resolved, 5=Closed
+            # Filter by status (Only Closed = 5)
+            # Status values: 2=Open, 3=Pending, 4=Resolved, 5=Closed
             status = ticket.get('status')
-            if status not in [4, 5]:  # Resolved or Closed
+            if status != 5:  # Only Closed
                 continue
             
             # Filter by type (Feedback - usually a custom field or tag)
@@ -231,18 +231,34 @@ class FreshdeskClient:
             
             if os_filter != 'Both':
                 # Check subject, description, and custom fields for OS
+                # Handle variations: Android, iOS, IOS (case-insensitive)
                 os_match = False
                 
-                if os_filter.lower() in subject or os_filter.lower() in description:
-                    os_match = True
+                # For iOS, check both "ios" and "iOS" variations
+                if os_filter.lower() == 'ios':
+                    # Check for "ios" or "iOS" or "IOS"
+                    os_variations = ['ios', 'iOS', 'IOS']
+                    for os_var in os_variations:
+                        if os_var in subject or os_var in description:
+                            os_match = True
+                            break
+                else:
+                    # For Android, simple case-insensitive match
+                    if os_filter.lower() in subject or os_filter.lower() in description:
+                        os_match = True
                 
                 # Check custom fields
-                if custom_fields:
-                    os_field = custom_fields.get('os', '').lower()
-                    platform_field = custom_fields.get('platform', '').lower()
+                if custom_fields and not os_match:
+                    os_field = custom_fields.get('os', '')
+                    platform_field = custom_fields.get('platform', '')
                     
-                    if os_filter.lower() in os_field or os_filter.lower() in platform_field:
-                        os_match = True
+                    # Handle iOS variations in custom fields
+                    if os_filter.lower() == 'ios':
+                        if os_field in ['ios', 'iOS', 'IOS'] or platform_field in ['ios', 'iOS', 'IOS']:
+                            os_match = True
+                    else:
+                        if os_filter.lower() in os_field.lower() or os_filter.lower() in platform_field.lower():
+                            os_match = True
                 
                 if not os_match:
                     continue
