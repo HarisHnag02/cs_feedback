@@ -438,11 +438,17 @@ def clean_ticket(raw_ticket: Dict[str, Any]) -> CleanTicket:
     priority = raw_ticket.get('priority')
     tags = raw_ticket.get('tags', [])
     
+    # Get custom_fields to extract Type, Game, OS, etc.
+    custom_fields = raw_ticket.get('custom_fields', {})
+    
     # Store additional metadata
+    # Type is in custom_fields as "Type" in Freshdesk
     metadata = {
-        'type': raw_ticket.get('type'),
+        'type': custom_fields.get('Type') or raw_ticket.get('type'),  # Try custom_fields first
+        'status': status,  # Store status for filtering
         'source': raw_ticket.get('source'),
-        'custom_fields': raw_ticket.get('custom_fields', {}),
+        'custom_fields': custom_fields,
+        'tags': tags,  # Store tags for filtering
         'original_length': len(raw_feedback),
         'cleaned_length': len(clean_feedback),
         'reduction_ratio': round(

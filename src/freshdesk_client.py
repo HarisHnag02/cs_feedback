@@ -187,39 +187,47 @@ class FreshdeskClient:
                     logger.warning(f"Failed to parse date for ticket {ticket.get('id')}: {e}")
                     continue
             
-            # Filter by game name (ONLY check custom_fields, not subject/description)
+            # Filter by game name (check custom_fields with actual Freshdesk field name)
             game_name_lower = input_params.game_name.lower()
             game_match = False
             
-            # Check custom fields only
+            # Check custom fields with actual Freshdesk field name: "Game"
             custom_fields = ticket.get('custom_fields', {})
             if custom_fields:
-                game_field = custom_fields.get('game_name', '').lower()
+                # Freshdesk field is "Game" not "game_name"
+                game_field = str(custom_fields.get('Game', '')).lower()
                 if game_name_lower in game_field:
                     game_match = True
+                else:
+                    logger.debug(f"Ticket #{ticket.get('id')}: Game mismatch. Expected '{input_params.game_name}', got '{custom_fields.get('Game', 'N/A')}'")
+            else:
+                logger.debug(f"Ticket #{ticket.get('id')}: No custom_fields")
             
             if not game_match:
                 continue
             
-            # Filter by OS (ONLY check custom_fields, not subject/description)
+            # Filter by OS (check custom_fields with actual Freshdesk field name)
             os_filter = input_params.os
             
             if os_filter != 'Both':
-                # Check custom fields ONLY
+                # Check custom fields with actual Freshdesk field name: "OS"
                 os_match = False
                 
                 if custom_fields:
-                    os_field = custom_fields.get('os', '')
-                    platform_field = custom_fields.get('platform', '')
+                    # Freshdesk field is "OS" not "os" or "platform"
+                    os_field = str(custom_fields.get('OS', ''))
                     
-                    # Handle iOS variations in custom fields
+                    # Handle iOS variations
                     if os_filter.lower() == 'ios':
-                        if os_field in ['ios', 'iOS', 'IOS'] or platform_field in ['ios', 'iOS', 'IOS']:
+                        if os_field in ['ios', 'iOS', 'IOS']:
                             os_match = True
                     else:
                         # For Android, case-insensitive match
-                        if os_filter.lower() in os_field.lower() or os_filter.lower() in platform_field.lower():
+                        if os_filter.lower() in os_field.lower():
                             os_match = True
+                    
+                    if not os_match:
+                        logger.debug(f"Ticket #{ticket.get('id')}: OS mismatch. Expected '{os_filter}', got '{custom_fields.get('OS', 'N/A')}'")
                 
                 if not os_match:
                     continue
