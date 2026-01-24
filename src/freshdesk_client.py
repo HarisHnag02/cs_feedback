@@ -142,25 +142,25 @@ class FreshdeskClient:
         input_params: FeedbackAnalysisInput
     ) -> List[Dict[str, Any]]:
         """
-        Apply strict client-side filtering to tickets.
+        Apply client-side filtering to tickets.
         
-        This function applies additional filtering on tickets to ensure they match
-        all criteria, especially for custom fields like game name and OS.
+        Filters ONLY for: Date range, Game name, and OS.
+        Status and Type filtering happens later in AI classification step.
         
         Args:
             tickets: List of ticket dictionaries from API
             input_params: User input parameters with filter criteria
             
         Returns:
-            List of filtered tickets matching all criteria
+            List of filtered tickets matching date/game/OS criteria
         """
         filtered_tickets = []
         
-        logger.debug(f"Applying client-side filters to {len(tickets)} tickets")
+        logger.debug(f"Applying client-side filters to {len(tickets)} tickets (Date, Game, OS only)")
         
         for ticket in tickets:
-            # NOTE: Status and Type are already filtered by the Search API query
-            # We only need to filter by: Date, Game Name, and OS
+            # Filter by: Date, Game Name, and OS only
+            # NO Status or Type filtering - that happens in AI step
             
             # Filter by date range
             created_at = ticket.get('created_at')
@@ -226,8 +226,8 @@ class FreshdeskClient:
             filtered_tickets.append(ticket)
         
         logger.info(
-            f"Filtered {len(tickets)} tickets down to {len(filtered_tickets)} "
-            f"matching all criteria"
+            f"Filtered {len(tickets)} tickets → {len(filtered_tickets)} "
+            f"tickets matching game/date/OS (all types and statuses included)"
         )
         
         return filtered_tickets
@@ -238,40 +238,35 @@ class FreshdeskClient:
         max_pages: int = 10
     ) -> List[Dict[str, Any]]:
         """
-        Fetch feedback tickets from Freshdesk using Search API with query.
+        Fetch ALL tickets from Freshdesk for the given game, date range, and OS.
         
-        Uses Freshdesk Search API to fetch tickets matching:
-        - Type: Feedback
-        - Status: 5 (Closed)
+        NO type or status filtering at fetch time - saves ALL tickets.
+        Filtering for Feedback (type) and Closed (status=5) happens later in AI step.
+        
+        Client-side filtering applied here:
         - Created date: Between start_date and end_date
-        - Game name: From custom_fields
-        - OS: From custom_fields (if not 'Both')
+        - Game name: From custom_fields['game_name']
+        - OS: From custom_fields['os'] or ['platform']
         
         Args:
             input_params: FeedbackAnalysisInput with filter criteria
             max_pages: Maximum number of pages to fetch (safety limit)
             
         Returns:
-            List of ticket dictionaries matching all criteria
+            List of ALL ticket dictionaries matching game/date/OS criteria
             
         Example:
             >>> client = FreshdeskClient()
             >>> params = FeedbackAnalysisInput(...)
             >>> tickets = client.fetch_feedback_tickets(params)
-            >>> print(f"Found {len(tickets)} feedback tickets")
+            >>> print(f"Found {len(tickets)} total tickets (all types)")
         """
         logger.info("="*70)
-        logger.info("Starting Freshdesk ticket fetch using Search API")
+        logger.info("Starting Freshdesk ticket fetch - PULLING ALL TICKETS")
         logger.info(f"Filters: Game={input_params.game_name}, OS={input_params.os}")
         logger.info(f"Date Range: {input_params.start_date} to {input_params.end_date}")
+        logger.info("NOTE: Type and Status filtering happens in AI classification step")
         logger.info("="*70)
-        
-        # Build Freshdesk search query
-        query_parts = [
-            '"type:Feedback AND status:5"'
-        ]
-        
-        logger.info(f"Search query: {' AND '.join(query_parts)}")
         
         all_tickets = []
         page = 1
@@ -279,24 +274,16 @@ class FreshdeskClient:
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Build search query URL
-            # Using Freshdesk Search API: /api/v2/search/tickets
-            query = '"type:Feedback AND status:5"'
-            
-            # URL encode the query
-            from urllib.parse import quote
-            encoded_query = quote(query)
-            
-            # Search API endpoint with query
-            endpoint = f'search/tickets?query={encoded_query}&page={page}'
+            # Use regular tickets API to get ALL tickets
+            # No type/status filtering in query
+            endpoint = f"tickets?per_page=100&page={page}&order_by=created_at&order_type=desc"
             
             try:
                 # Make API request
                 response = self._make_request(endpoint, method='GET')
-                data = response.json()
                 
-                # Search API returns results in 'results' field
-                tickets = data.get('results', [])
+                # Regular tickets API returns list directly (not in 'results')
+                tickets = response.json() if isinstance(response.json(), list) else []
                 
                 if not tickets:
                     logger.info("No more tickets found. Search complete.")
@@ -329,7 +316,8 @@ class FreshdeskClient:
                 break
         
         logger.info("="*70)
-        logger.info(f"✓ Fetch complete: {len(all_tickets)} total tickets match all criteria")
+        logger.info(f"✓ Fetch complete: {len(all_tickets)} total tickets (ALL types and statuses)")
+        logger.info("NOTE: Filtering for Feedback (type) and Closed (status=5) happens in AI step")
         logger.info("="*70)
         
         return all_tickets

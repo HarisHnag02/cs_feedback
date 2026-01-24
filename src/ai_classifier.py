@@ -348,6 +348,53 @@ class OpenAIClassifier:
         return classifications
 
 
+def filter_feedback_tickets(tickets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Filter to only Feedback tickets with Status = 5 (Closed).
+    
+    This happens BEFORE sending to ChatGPT to reduce API costs.
+    Filters out tickets that are not:
+    - Type: Feedback
+    - Status: 5 (Closed)
+    
+    Args:
+        tickets: List of all cleaned ticket dictionaries
+        
+    Returns:
+        List of only Feedback tickets with status=5
+    """
+    feedback_tickets = []
+    
+    logger.info(f"Filtering {len(tickets)} tickets for Feedback type and Closed status...")
+    
+    for ticket in tickets:
+        # Get metadata (stored during cleaning)
+        metadata = ticket.get('metadata', {})
+        
+        # Check status = 5 (Closed)
+        status = metadata.get('status')
+        if status != 5:
+            continue
+        
+        # Check type = Feedback
+        ticket_type = metadata.get('type')
+        tags = metadata.get('tags', [])
+        
+        is_feedback = (
+            ticket_type == 'Feedback' or
+            'feedback' in [str(tag).lower() for tag in tags] or
+            'Feedback' in tags
+        )
+        
+        if is_feedback:
+            feedback_tickets.append(ticket)
+    
+    logger.info(f"✓ Filtered: {len(tickets)} total → {len(feedback_tickets)} Feedback tickets (status=5)")
+    logger.info(f"   Removed: {len(tickets) - len(feedback_tickets)} tickets (non-Feedback or not Closed)")
+    
+    return feedback_tickets
+
+
 def classify_feedback_data(
     cleaned_data: Dict[str, Any],
     game_context: Optional[GameFeatureContext] = None,
@@ -358,6 +405,7 @@ def classify_feedback_data(
     Classify entire feedback data structure.
     
     This is the main entry point for AI classification.
+    Filters to Feedback tickets (status=5) before sending to ChatGPT.
     
     Args:
         cleaned_data: Cleaned feedback data with 'metadata' and 'feedbacks' keys
@@ -376,22 +424,42 @@ def classify_feedback_data(
     logger.info("Starting AI classification of feedback data")
     logger.info("="*70)
     
-    # Extract tickets
-    tickets = cleaned_data.get('feedbacks', [])
+    # Extract all tickets
+    all_tickets = cleaned_data.get('feedbacks', [])
     
-    if not tickets:
+    if not all_tickets:
         logger.warning("No tickets to classify")
         return {
             'metadata': cleaned_data.get('metadata', {}),
-            'classifications': []
+            'classifications': [],
+            'filtering_stats': {
+                'total_tickets': 0,
+                'feedback_tickets': 0,
+                'filtered_out': 0
+            }
+        }
+    
+    # Filter to only Feedback tickets with status=5
+    feedback_tickets = filter_feedback_tickets(all_tickets)
+    
+    if not feedback_tickets:
+        logger.warning("No Feedback tickets (status=5) found after filtering")
+        return {
+            'metadata': cleaned_data.get('metadata', {}),
+            'classifications': [],
+            'filtering_stats': {
+                'total_tickets': len(all_tickets),
+                'feedback_tickets': 0,
+                'filtered_out': len(all_tickets)
+            }
         }
     
     # Initialize classifier
     classifier = OpenAIClassifier(model=model)
     
-    # Classify tickets
+    # Classify only the feedback tickets
     classifications = classifier.classify_tickets(
-        tickets,
+        feedback_tickets,
         game_context=game_context,
         max_tickets=max_tickets
     )
@@ -407,16 +475,24 @@ def classify_feedback_data(
             'classification_model': model,
             'classification_timestamp': datetime.now().isoformat(),
             'total_classified': len(classifications),
-            'total_tickets': len(tickets),
+            'total_tickets_fetched': len(all_tickets),
+            'feedback_tickets_filtered': len(feedback_tickets),
+            'filtered_out': len(all_tickets) - len(feedback_tickets),
             'classification_success_rate': round(
-                len(classifications) / len(tickets) * 100, 1
-            ) if tickets else 0
+                len(classifications) / len(feedback_tickets) * 100, 1
+            ) if feedback_tickets else 0
         },
-        'classifications': classification_dicts
+        'classifications': classification_dicts,
+        'filtering_stats': {
+            'total_tickets': len(all_tickets),
+            'feedback_tickets': len(feedback_tickets),
+            'filtered_out': len(all_tickets) - len(feedback_tickets)
+        }
     }
     
     logger.info("="*70)
-    logger.info(f"✓ AI classification complete: {len(classifications)} tickets")
+    logger.info(f"✓ AI classification complete: {len(classifications)}/{len(feedback_tickets)} Feedback tickets classified")
+    logger.info(f"   Total fetched: {len(all_tickets)} | Feedback (status=5): {len(feedback_tickets)} | Filtered out: {len(all_tickets) - len(feedback_tickets)}")
     logger.info("="*70)
     
     return result
