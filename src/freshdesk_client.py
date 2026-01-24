@@ -159,27 +159,8 @@ class FreshdeskClient:
         logger.debug(f"Applying client-side filters to {len(tickets)} tickets")
         
         for ticket in tickets:
-            # Filter by status (Only Closed = 5)
-            # Status values: 2=Open, 3=Pending, 4=Resolved, 5=Closed
-            status = ticket.get('status')
-            if status != 5:  # Only Closed
-                continue
-            
-            # Filter by type (Feedback - usually a custom field or tag)
-            # This may vary by Freshdesk configuration
-            ticket_type = ticket.get('type')
-            tags = ticket.get('tags', [])
-            
-            # Check if it's a feedback ticket
-            # (adjust based on your Freshdesk configuration)
-            is_feedback = (
-                ticket_type == 'Feedback' or
-                'feedback' in [tag.lower() for tag in tags] or
-                'Feedback' in tags
-            )
-            
-            if not is_feedback:
-                continue
+            # NOTE: Status and Type are already filtered by the Search API query
+            # We only need to filter by: Date, Game Name, and OS
             
             # Filter by date range
             created_at = ticket.get('created_at')
@@ -257,14 +238,14 @@ class FreshdeskClient:
         max_pages: int = 10
     ) -> List[Dict[str, Any]]:
         """
-        Fetch feedback tickets from Freshdesk with strict filtering.
+        Fetch feedback tickets from Freshdesk using Search API with query.
         
-        Fetches tickets matching the following criteria:
+        Uses Freshdesk Search API to fetch tickets matching:
         - Type: Feedback
-        - Status: Closed (Resolved or Closed)
+        - Status: 5 (Closed)
         - Created date: Between start_date and end_date
-        - Game name: Matches user input
-        - OS: Matches selected filter (if not 'Both')
+        - Game name: From custom_fields
+        - OS: From custom_fields (if not 'Both')
         
         Args:
             input_params: FeedbackAnalysisInput with filter criteria
@@ -280,41 +261,50 @@ class FreshdeskClient:
             >>> print(f"Found {len(tickets)} feedback tickets")
         """
         logger.info("="*70)
-        logger.info("Starting Freshdesk ticket fetch")
+        logger.info("Starting Freshdesk ticket fetch using Search API")
         logger.info(f"Filters: Game={input_params.game_name}, OS={input_params.os}")
         logger.info(f"Date Range: {input_params.start_date} to {input_params.end_date}")
         logger.info("="*70)
         
+        # Build Freshdesk search query
+        query_parts = [
+            '"type:Feedback AND status:5"'
+        ]
+        
+        logger.info(f"Search query: {' AND '.join(query_parts)}")
+        
         all_tickets = []
         page = 1
-        per_page = 100  # Freshdesk max is 100 per page
         
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Build query parameters
-            # Note: Freshdesk API has limited filtering, so we'll fetch broadly
-            # and filter client-side for strict matching
-            params = {
-                'per_page': per_page,
-                'page': page,
-                # Include updated tickets within a broader range
-                'order_by': 'created_at',
-                'order_type': 'desc'
-            }
+            # Build search query URL
+            # Using Freshdesk Search API: /api/v2/search/tickets
+            query = '"type:Feedback AND status:5"'
+            
+            # URL encode the query
+            from urllib.parse import quote
+            encoded_query = quote(query)
+            
+            # Search API endpoint with query
+            endpoint = f'search/tickets?query={encoded_query}&page={page}'
             
             try:
                 # Make API request
-                response = self._make_request('tickets', params=params)
-                tickets = response.json()
+                response = self._make_request(endpoint, method='GET')
+                data = response.json()
+                
+                # Search API returns results in 'results' field
+                tickets = data.get('results', [])
                 
                 if not tickets:
-                    logger.info("No more tickets found. Pagination complete.")
+                    logger.info("No more tickets found. Search complete.")
                     break
                 
                 logger.info(f"Retrieved {len(tickets)} tickets from page {page}")
                 
-                # Apply strict client-side filtering
+                # Apply client-side filtering for custom fields (game_name and OS)
                 filtered = self._filter_tickets_by_criteria(tickets, input_params)
                 all_tickets.extend(filtered)
                 
@@ -323,9 +313,10 @@ class FreshdeskClient:
                     f"(Total so far: {len(all_tickets)})"
                 )
                 
-                # Check if we got less than per_page (last page)
-                if len(tickets) < per_page:
-                    logger.info("Received fewer tickets than page size. Last page reached.")
+                # Check if there are more pages
+                total = data.get('total', 0)
+                if len(all_tickets) >= total or len(tickets) < 30:  # Search API default page size
+                    logger.info("All matching tickets fetched.")
                     break
                 
                 page += 1
