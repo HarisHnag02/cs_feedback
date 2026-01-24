@@ -195,12 +195,12 @@ def main():
         # Display cleaned data summary
         print_header("DATA SUMMARY")
         print(f"\n📊 Dataset Overview:")
-        print(f"   Total Tickets: {len(cleaned_data['feedbacks'])} (ALL types and statuses)")
+        print(f"   Total Tickets: {len(cleaned_data['feedbacks'])} (Status=5 Closed, all types)")
         print(f"   Game: {cleaned_data['metadata']['game_name']}")
         print(f"   Platform: {cleaned_data['metadata']['os']}")
         print(f"   Date Range: {cleaned_data['metadata']['start_date']} to {cleaned_data['metadata']['end_date']}")
         print(f"   Source: {'Cache' if used_cache else 'Freshdesk API'}")
-        print(f"\n💡 Note: Filtering to Feedback (status=5) happens in AI classification step")
+        print(f"\n💡 Note: Filtering to Feedback type happens in AI classification step")
         
         if cleaned_data['feedbacks']:
             print(f"\n📝 Sample Clean Tickets (first 3):")
@@ -291,9 +291,9 @@ def main():
             
             # Show filtering statistics
             print(f"\n🔍 Filtering Statistics:")
-            print(f"   Total Tickets Fetched: {filtering_stats.get('total_tickets', 'N/A')}")
-            print(f"   Feedback (status=5): {filtering_stats.get('feedback_tickets', 'N/A')}")
-            print(f"   Filtered Out: {filtering_stats.get('filtered_out', 'N/A')}")
+            print(f"   Closed Tickets (status=5): {filtering_stats.get('closed_tickets', 'N/A')}")
+            print(f"   Feedback Type: {filtering_stats.get('feedback_tickets', 'N/A')}")
+            print(f"   Non-Feedback Filtered Out: {filtering_stats.get('filtered_out', 'N/A')}")
             
             print(f"\n✅ Successfully classified {len(classifications)} Feedback tickets")
             print(f"   Success Rate: {metadata['classification_success_rate']}%")

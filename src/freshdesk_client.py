@@ -144,11 +144,12 @@ class FreshdeskClient:
         """
         Apply client-side filtering to tickets.
         
-        Filters ONLY for: Date range, Game name, and OS.
-        Status and Type filtering happens later in AI classification step.
+        Filters for: Date range, Game name, and OS.
+        Status=5 already filtered by Search API query.
+        Type filtering (Feedback) happens in AI classification step.
         
         Args:
-            tickets: List of ticket dictionaries from API
+            tickets: List of ticket dictionaries from API (already status=5)
             input_params: User input parameters with filter criteria
             
         Returns:
@@ -156,11 +157,12 @@ class FreshdeskClient:
         """
         filtered_tickets = []
         
-        logger.debug(f"Applying client-side filters to {len(tickets)} tickets (Date, Game, OS only)")
+        logger.debug(f"Applying client-side filters to {len(tickets)} tickets (Date, Game, OS)")
         
         for ticket in tickets:
-            # Filter by: Date, Game Name, and OS only
-            # NO Status or Type filtering - that happens in AI step
+            # Status=5 already filtered by Search API
+            # Filter by: Date, Game Name, and OS
+            # Type filtering happens in AI step
             
             # Filter by date range
             created_at = ticket.get('created_at')
@@ -227,7 +229,7 @@ class FreshdeskClient:
         
         logger.info(
             f"Filtered {len(tickets)} tickets → {len(filtered_tickets)} "
-            f"tickets matching game/date/OS (all types and statuses included)"
+            f"tickets matching game/date/OS (status=5 only, all types included)"
         )
         
         return filtered_tickets
@@ -238,22 +240,24 @@ class FreshdeskClient:
         max_pages: int = 10
     ) -> List[Dict[str, Any]]:
         """
-        Fetch ALL tickets from Freshdesk for the given game, date range, and OS.
+        Fetch CLOSED tickets (status=5) from Freshdesk for the given game, date range, and OS.
         
-        NO type or status filtering at fetch time - saves ALL tickets.
-        Filtering for Feedback (type) and Closed (status=5) happens later in AI step.
+        Server-side filtering (Search API):
+        - Status: 5 (Closed) - filtered by Freshdesk
         
         Client-side filtering applied here:
         - Created date: Between start_date and end_date
         - Game name: From custom_fields['game_name']
         - OS: From custom_fields['os'] or ['platform']
         
+        Type filtering (Feedback) happens later in AI classification step.
+        
         Args:
             input_params: FeedbackAnalysisInput with filter criteria
             max_pages: Maximum number of pages to fetch (safety limit)
             
         Returns:
-            List of ALL ticket dictionaries matching game/date/OS criteria
+            List of CLOSED ticket dictionaries matching game/date/OS criteria
             
         Example:
             >>> client = FreshdeskClient()
@@ -262,10 +266,10 @@ class FreshdeskClient:
             >>> print(f"Found {len(tickets)} total tickets (all types)")
         """
         logger.info("="*70)
-        logger.info("Starting Freshdesk ticket fetch - PULLING ALL TICKETS")
-        logger.info(f"Filters: Game={input_params.game_name}, OS={input_params.os}")
+        logger.info("Starting Freshdesk ticket fetch - CLOSED TICKETS ONLY")
+        logger.info(f"Filters: Status=5 (Closed), Game={input_params.game_name}, OS={input_params.os}")
         logger.info(f"Date Range: {input_params.start_date} to {input_params.end_date}")
-        logger.info("NOTE: Type and Status filtering happens in AI classification step")
+        logger.info("NOTE: Type filtering (Feedback) happens in AI classification step")
         logger.info("="*70)
         
         all_tickets = []
@@ -274,16 +278,24 @@ class FreshdeskClient:
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Use regular tickets API to get ALL tickets
-            # No type/status filtering in query
-            endpoint = f"tickets?per_page=100&page={page}&order_by=created_at&order_type=desc"
+            # Use Search API with status=5 filter (Closed tickets only)
+            # Type filtering happens in AI step
+            query = '"status:5"'
+            
+            # URL encode the query
+            from urllib.parse import quote
+            encoded_query = quote(query)
+            
+            # Search API endpoint
+            endpoint = f'search/tickets?query={encoded_query}&page={page}'
             
             try:
                 # Make API request
                 response = self._make_request(endpoint, method='GET')
+                data = response.json()
                 
-                # Regular tickets API returns list directly (not in 'results')
-                tickets = response.json() if isinstance(response.json(), list) else []
+                # Search API returns results in 'results' field
+                tickets = data.get('results', [])
                 
                 if not tickets:
                     logger.info("No more tickets found. Search complete.")
@@ -301,8 +313,8 @@ class FreshdeskClient:
                 )
                 
                 # Check if there are more pages
-                total = data.get('total', 0)
-                if len(all_tickets) >= total or len(tickets) < 30:  # Search API default page size
+                # Search API: if we get fewer tickets than expected, we're done
+                if not tickets or len(tickets) < 30:  # Search API default page size
                     logger.info("All matching tickets fetched.")
                     break
                 
@@ -316,8 +328,8 @@ class FreshdeskClient:
                 break
         
         logger.info("="*70)
-        logger.info(f"✓ Fetch complete: {len(all_tickets)} total tickets (ALL types and statuses)")
-        logger.info("NOTE: Filtering for Feedback (type) and Closed (status=5) happens in AI step")
+        logger.info(f"✓ Fetch complete: {len(all_tickets)} CLOSED tickets (status=5, all types)")
+        logger.info("NOTE: Filtering for Feedback (type) happens in AI classification step")
         logger.info("="*70)
         
         return all_tickets

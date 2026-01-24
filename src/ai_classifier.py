@@ -350,33 +350,29 @@ class OpenAIClassifier:
 
 def filter_feedback_tickets(tickets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
-    Filter to only Feedback tickets with Status = 5 (Closed).
+    Filter to only Feedback type tickets.
+    
+    Status=5 (Closed) is already filtered at Freshdesk fetch level.
+    This function filters by Type (Feedback) only.
     
     This happens BEFORE sending to ChatGPT to reduce API costs.
-    Filters out tickets that are not:
-    - Type: Feedback
-    - Status: 5 (Closed)
     
     Args:
-        tickets: List of all cleaned ticket dictionaries
+        tickets: List of cleaned ticket dictionaries (already status=5)
         
     Returns:
-        List of only Feedback tickets with status=5
+        List of only Feedback tickets
     """
     feedback_tickets = []
     
-    logger.info(f"Filtering {len(tickets)} tickets for Feedback type and Closed status...")
+    logger.info(f"Filtering {len(tickets)} tickets (status=5) for Feedback type...")
     
     for ticket in tickets:
         # Get metadata (stored during cleaning)
         metadata = ticket.get('metadata', {})
         
-        # Check status = 5 (Closed)
-        status = metadata.get('status')
-        if status != 5:
-            continue
-        
-        # Check type = Feedback
+        # Status=5 already filtered at Freshdesk level
+        # Only check type = Feedback
         ticket_type = metadata.get('type')
         tags = metadata.get('tags', [])
         
@@ -389,8 +385,8 @@ def filter_feedback_tickets(tickets: List[Dict[str, Any]]) -> List[Dict[str, Any
         if is_feedback:
             feedback_tickets.append(ticket)
     
-    logger.info(f"✓ Filtered: {len(tickets)} total → {len(feedback_tickets)} Feedback tickets (status=5)")
-    logger.info(f"   Removed: {len(tickets) - len(feedback_tickets)} tickets (non-Feedback or not Closed)")
+    logger.info(f"✓ Filtered: {len(tickets)} Closed tickets → {len(feedback_tickets)} Feedback tickets")
+    logger.info(f"   Removed: {len(tickets) - len(feedback_tickets)} non-Feedback tickets")
     
     return feedback_tickets
 
@@ -433,7 +429,7 @@ def classify_feedback_data(
             'metadata': cleaned_data.get('metadata', {}),
             'classifications': [],
             'filtering_stats': {
-                'total_tickets': 0,
+                'closed_tickets': 0,
                 'feedback_tickets': 0,
                 'filtered_out': 0
             }
@@ -443,12 +439,12 @@ def classify_feedback_data(
     feedback_tickets = filter_feedback_tickets(all_tickets)
     
     if not feedback_tickets:
-        logger.warning("No Feedback tickets (status=5) found after filtering")
+        logger.warning("No Feedback tickets found after type filtering")
         return {
             'metadata': cleaned_data.get('metadata', {}),
             'classifications': [],
             'filtering_stats': {
-                'total_tickets': len(all_tickets),
+                'closed_tickets': len(all_tickets),
                 'feedback_tickets': 0,
                 'filtered_out': len(all_tickets)
             }
@@ -475,16 +471,16 @@ def classify_feedback_data(
             'classification_model': model,
             'classification_timestamp': datetime.now().isoformat(),
             'total_classified': len(classifications),
-            'total_tickets_fetched': len(all_tickets),
+            'closed_tickets_fetched': len(all_tickets),
             'feedback_tickets_filtered': len(feedback_tickets),
-            'filtered_out': len(all_tickets) - len(feedback_tickets),
+            'non_feedback_filtered_out': len(all_tickets) - len(feedback_tickets),
             'classification_success_rate': round(
                 len(classifications) / len(feedback_tickets) * 100, 1
             ) if feedback_tickets else 0
         },
         'classifications': classification_dicts,
         'filtering_stats': {
-            'total_tickets': len(all_tickets),
+            'closed_tickets': len(all_tickets),
             'feedback_tickets': len(feedback_tickets),
             'filtered_out': len(all_tickets) - len(feedback_tickets)
         }
@@ -492,7 +488,7 @@ def classify_feedback_data(
     
     logger.info("="*70)
     logger.info(f"✓ AI classification complete: {len(classifications)}/{len(feedback_tickets)} Feedback tickets classified")
-    logger.info(f"   Total fetched: {len(all_tickets)} | Feedback (status=5): {len(feedback_tickets)} | Filtered out: {len(all_tickets) - len(feedback_tickets)}")
+    logger.info(f"   Closed tickets: {len(all_tickets)} | Feedback type: {len(feedback_tickets)} | Non-Feedback filtered: {len(all_tickets) - len(feedback_tickets)}")
     logger.info("="*70)
     
     return result
