@@ -144,7 +144,7 @@ class FreshdeskClient:
         """
         Apply client-side filtering to tickets.
         
-        Filters for: Date range, Game name, and OS.
+        Filters for: Closed date range, Game name, and OS.
         Status=5 already filtered by Search API query.
         Type filtering (Feedback) happens in AI classification step.
         
@@ -153,24 +153,26 @@ class FreshdeskClient:
             input_params: User input parameters with filter criteria
             
         Returns:
-            List of filtered tickets matching date/game/OS criteria
+            List of filtered tickets matching closed_at date/game/OS criteria
         """
         filtered_tickets = []
         
-        logger.debug(f"Applying client-side filters to {len(tickets)} tickets (Date, Game, OS)")
+        logger.debug(f"Applying client-side filters to {len(tickets)} tickets (Closed Date, Game, OS)")
         
         for ticket in tickets:
             # Status=5 already filtered by Search API
-            # Filter by: Date, Game Name, and OS
+            # Filter by: Closed Date (closed_at), Game Name, and OS
             # Type filtering happens in AI step
             
-            # Filter by date range
-            created_at = ticket.get('created_at')
-            if created_at:
+            # Filter by date range (using closed_at, not created_at)
+            # The search range is still start_date to end_date
+            closed_at = ticket.get('stats', {}).get('closed_at') or ticket.get('closed_at')
+            
+            if closed_at:
                 try:
                     # Parse Freshdesk datetime (ISO format)
                     ticket_date = datetime.fromisoformat(
-                        created_at.replace('Z', '+00:00')
+                        closed_at.replace('Z', '+00:00')
                     ).date()
                     
                     start_date = datetime.strptime(
@@ -181,11 +183,16 @@ class FreshdeskClient:
                     ).date()
                     
                     if not (start_date <= ticket_date <= end_date):
+                        logger.debug(f"Ticket #{ticket.get('id')}: Date out of range. Closed: {ticket_date}, Range: {start_date} to {end_date}")
                         continue
                         
                 except (ValueError, AttributeError) as e:
-                    logger.warning(f"Failed to parse date for ticket {ticket.get('id')}: {e}")
+                    logger.warning(f"Failed to parse closed_at date for ticket {ticket.get('id')}: {e}")
                     continue
+            else:
+                # Skip tickets without closed_at date
+                logger.debug(f"Ticket #{ticket.get('id')}: No closed_at date found")
+                continue
             
             # Filter by game name (check custom_fields with actual Freshdesk field name)
             game_name_lower = input_params.game_name.lower()
@@ -254,11 +261,13 @@ class FreshdeskClient:
         - Status: 5 (Closed) - filtered by Freshdesk
         
         Client-side filtering applied here:
-        - Created date: Between start_date and end_date
-        - Game name: From custom_fields['game_name']
-        - OS: From custom_fields['os'] or ['platform']
+        - Closed date (closed_at): Between start_date and end_date
+        - Game name: From custom_fields['Game']
+        - OS: From custom_fields['OS']
         
         Type filtering (Feedback) happens later in AI classification step.
+        
+        Returns tickets with: id, subject, description, status, custom_fields, stats, closed_at, etc.
         
         Args:
             input_params: FeedbackAnalysisInput with filter criteria
