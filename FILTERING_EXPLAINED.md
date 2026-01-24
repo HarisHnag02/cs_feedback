@@ -129,22 +129,15 @@ Ticket created on 2026-01-15 → ❌ REJECT (too late)
 
 ---
 
-### **Filter 4: Game Name Match** ✅ **"word trip" must appear**
+### **Filter 4: Game Name Match** ✅ **custom_fields['game_name'] ONLY**
 
-**Location:** `src/freshdesk_client.py` lines 207-227
+**Location:** `src/freshdesk_client.py` lines 207-219
 
 ```python
 game_name_lower = input_params.game_name.lower()  # "word trip"
+game_match = False
 
-subject = (ticket.get('subject') or '').lower()
-description = (ticket.get('description_text') or '').lower()
-
-game_match = (
-    game_name_lower in subject or
-    game_name_lower in description
-)
-
-# Also check custom fields
+# Check custom fields ONLY (NOT subject/description)
 custom_fields = ticket.get('custom_fields', {})
 if custom_fields:
     game_field = custom_fields.get('game_name', '').lower()
@@ -157,40 +150,38 @@ if not game_match:
 
 **What it does:**
 - Converts your game name to lowercase: `"Word Trip"` → `"word trip"`
-- Searches for this string in:
-  1. Subject (lowercase)
-  2. Description text (lowercase)
-  3. custom_fields['game_name'] (lowercase)
-- If found in ANY of these → PASS
-- If not found → REJECT
+- Searches **ONLY** in:
+  - custom_fields['game_name'] (lowercase)
+- **DOES NOT search** in subject or description
+- If found → PASS
+- If not found or no custom_fields → REJECT
 
 **Example Accepted:**
 ```json
 {
-  "subject": "Word Trip crashes on level 50",  ← Contains "word trip"! PASS
-  "description_text": "...",
-  "custom_fields": {}
-}
-```
-
-**Example Accepted (custom field):**
-```json
-{
-  "subject": "Crash issue",  ← Doesn't contain "word trip"
-  "description_text": "Game freezes",  ← Doesn't contain "word trip"
+  "subject": "Crash issue",
+  "description_text": "Game freezes",
   "custom_fields": {
     "game_name": "Word Trip"  ← Contains "word trip"! PASS
   }
 }
 ```
 
-**Example Rejected:**
+**Example Rejected (no custom_fields):**
 ```json
 {
-  "subject": "Payment issue",  ← No "word trip"
-  "description_text": "Cannot buy coins",  ← No "word trip"
+  "subject": "Word Trip crashes",  ← Has game name in subject but...
+  "description_text": "...",
+  "custom_fields": {}  ← No custom_fields! REJECTED
+}
+```
+→ ❌ REJECTED (because custom_fields is empty)
+
+**Example Rejected (wrong game):**
+```json
+{
   "custom_fields": {
-    "game_name": "Other Game"  ← No "word trip"
+    "game_name": "Other Game"  ← Doesn't contain "word trip"
   }
 }
 ```
@@ -198,9 +189,9 @@ if not game_match:
 
 ---
 
-### **Filter 5: OS Match** ✅ **Must contain "android"/"iOS"/"IOS"**
+### **Filter 5: OS Match** ✅ **custom_fields['os'] or ['platform'] ONLY**
 
-**Location:** `src/freshdesk_client.py` lines 229-267
+**Location:** `src/freshdesk_client.py` lines 221-239
 
 ```python
 os_filter = input_params.os  # "Android"
@@ -208,27 +199,17 @@ os_filter = input_params.os  # "Android"
 if os_filter != 'Both':
     os_match = False
     
-    # For iOS, check variations
-    if os_filter.lower() == 'ios':
-        os_variations = ['ios', 'iOS', 'IOS']
-        for os_var in os_variations:
-            if os_var in subject or os_var in description:
-                os_match = True
-                break
-    else:
-        # For Android
-        if os_filter.lower() in subject or os_filter.lower() in description:
-            os_match = True
-    
-    # Check custom fields
-    if custom_fields and not os_match:
+    # Check custom fields ONLY (NOT subject/description)
+    if custom_fields:
         os_field = custom_fields.get('os', '')
         platform_field = custom_fields.get('platform', '')
         
+        # Handle iOS variations
         if os_filter.lower() == 'ios':
             if os_field in ['ios', 'iOS', 'IOS'] or platform_field in ['ios', 'iOS', 'IOS']:
                 os_match = True
         else:
+            # For Android, case-insensitive match
             if os_filter.lower() in os_field.lower() or os_filter.lower() in platform_field.lower():
                 os_match = True
     
@@ -236,46 +217,40 @@ if os_filter != 'Both':
         continue  # REJECT
 ```
 
-**What it does (for Android):**
-- Searches for "android" (lowercase) in:
-  1. Subject
-  2. Description
-  3. custom_fields['os']
-  4. custom_fields['platform']
+**What it does:**
+- Checks **ONLY** in custom_fields:
+  - custom_fields['os']
+  - custom_fields['platform']
+- **DOES NOT search** in subject or description
+- For iOS: accepts "ios", "iOS", or "IOS"
+- For Android: case-insensitive match
 
-**What it does (for iOS):**
-- Searches for exact matches: "ios", "iOS", or "IOS" in:
-  1. Subject
-  2. Description
-  3. custom_fields['os']
-  4. custom_fields['platform']
-
-**Example Accepted (Android in subject):**
-```json
-{
-  "subject": "Word Trip Android v1.48.0 crash",  ← Contains "android"! PASS
-  "description_text": "..."
-}
-```
-
-**Example Accepted (iOS in custom field):**
+**Example Accepted:**
 ```json
 {
   "subject": "Crash issue",
   "custom_fields": {
-    "os": "iOS"  ← Exact match "iOS"! PASS
+    "os": "Android"  ← Match! PASS
   }
 }
 ```
 
-**Example Rejected:**
+**Example Rejected (OS in subject but not custom_fields):**
 ```json
 {
-  "subject": "Word Trip crash",  ← No OS mention
-  "description_text": "Game freezes",  ← No OS mention
+  "subject": "Word Trip Android crash",  ← Has "Android" in subject but...
   "custom_fields": {
-    "os": "Windows"  ← Wrong OS
+    "os": ""  ← Empty! REJECTED
   }
+}
+```
+→ ❌ REJECTED (because custom_fields['os'] is empty)
+
+**Example Rejected (no custom_fields):**
+```json
+{
+  "subject": "Word Trip iOS crash",
+  "custom_fields": {}  ← No os field! REJECTED
 }
 ```
 → ❌ REJECTED

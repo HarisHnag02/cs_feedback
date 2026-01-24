@@ -204,19 +204,11 @@ class FreshdeskClient:
                     logger.warning(f"Failed to parse date for ticket {ticket.get('id')}: {e}")
                     continue
             
-            # Filter by game name (check subject, description, and custom fields)
+            # Filter by game name (ONLY check custom_fields, not subject/description)
             game_name_lower = input_params.game_name.lower()
+            game_match = False
             
-            subject = (ticket.get('subject') or '').lower()
-            description = (ticket.get('description_text') or '').lower()
-            
-            # Check if game name appears in subject or description
-            game_match = (
-                game_name_lower in subject or
-                game_name_lower in description
-            )
-            
-            # Also check custom fields if they exist
+            # Check custom fields only
             custom_fields = ticket.get('custom_fields', {})
             if custom_fields:
                 game_field = custom_fields.get('game_name', '').lower()
@@ -226,29 +218,14 @@ class FreshdeskClient:
             if not game_match:
                 continue
             
-            # Filter by OS
+            # Filter by OS (ONLY check custom_fields, not subject/description)
             os_filter = input_params.os
             
             if os_filter != 'Both':
-                # Check subject, description, and custom fields for OS
-                # Handle variations: Android, iOS, IOS (case-insensitive)
+                # Check custom fields ONLY
                 os_match = False
                 
-                # For iOS, check both "ios" and "iOS" variations
-                if os_filter.lower() == 'ios':
-                    # Check for "ios" or "iOS" or "IOS"
-                    os_variations = ['ios', 'iOS', 'IOS']
-                    for os_var in os_variations:
-                        if os_var in subject or os_var in description:
-                            os_match = True
-                            break
-                else:
-                    # For Android, simple case-insensitive match
-                    if os_filter.lower() in subject or os_filter.lower() in description:
-                        os_match = True
-                
-                # Check custom fields
-                if custom_fields and not os_match:
+                if custom_fields:
                     os_field = custom_fields.get('os', '')
                     platform_field = custom_fields.get('platform', '')
                     
@@ -257,6 +234,7 @@ class FreshdeskClient:
                         if os_field in ['ios', 'iOS', 'IOS'] or platform_field in ['ios', 'iOS', 'IOS']:
                             os_match = True
                     else:
+                        # For Android, case-insensitive match
                         if os_filter.lower() in os_field.lower() or os_filter.lower() in platform_field.lower():
                             os_match = True
                 
