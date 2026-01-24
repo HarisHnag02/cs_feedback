@@ -183,8 +183,8 @@ def main():
             cleaned_data = clean_feedback_data(feedback_data)
             
             print(f"\n✅ Cleaning complete!")
-            print(f"   Original: {cleaned_data['metadata']['original_count']} tickets")
-            print(f"   Cleaned: {cleaned_data['metadata']['cleaned_count']} tickets")
+            print(f"   Original: {cleaned_data['metadata'].get('original_count', len(feedback_data.get('feedbacks', [])))} tickets")
+            print(f"   Cleaned: {cleaned_data['metadata'].get('cleaned_count', len(cleaned_data.get('feedbacks', [])))} tickets")
             logger.info("✓ Data cleaning completed successfully")
             
         except Exception as e:
