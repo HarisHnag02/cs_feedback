@@ -1,0 +1,28 @@
+# Core Dependencies
+python-dotenv==1.0.0        # Environment variable management
+PyYAML==6.0.1               # YAML file parsing
+
+# HTTP and API
+requests==2.31.0            # HTTP library for API calls
+
+# Data Processing
+pandas==2.1.4               # Data manipulation and analysis
+numpy==1.26.2               # Numerical computing
+
+# OpenAI
+openai>=1.12.0              # OpenAI API client (compatible version)
+tenacity==8.2.3             # Retry logic for API calls
+
+# Utilities
+python-dateutil==2.8.2      # Date parsing and manipulation
+pydantic==2.5.3             # Data validation using Python type hints
+pydantic-settings==2.1.0    # Pydantic settings management
+
+# Development Tools
+black==23.12.1              # Code formatter
+flake8==7.0.0               # Linting
+pytest==7.4.3               # Testing framework
+pytest-cov==4.1.0           # Test coverage
+
+# Logging
+colorlog==6.8.0             # Colored logging output

@@ -1,0 +1,53 @@
+# Game Feature Context File
+# This file provides essential context about the game for AI analysis
+# Edit this file with your game's specific information
+
+game_name: Candy Crush Saga
+
+current_features:
+  - "Match-3 puzzle gameplay with various candy types and combinations"
+  - "Hundreds of levels with increasing difficulty"
+  - "Daily challenges and special events"
+  - "Boosters and power-ups to help complete difficult levels"
+  - "Social features - connect with friends, send lives, compete on leaderboards"
+  - "In-app purchases for extra lives, moves, and boosters"
+  - "Cross-platform sync via Facebook or King account"
+  - "Offline play capability for most levels"
+  - "Regular content updates with new episodes and levels"
+  - "Seasonal events and limited-time challenges"
+
+known_constraints:
+  - "Performance issues on older Android devices (pre-2018)"
+  - "Limited server capacity during peak hours (evenings and weekends)"
+  - "Facebook integration occasionally causes login issues"
+  - "In-app purchase system has regional restrictions in some countries"
+  - "Offline mode doesn't support leaderboard updates"
+  - "Memory limitations on devices with less than 2GB RAM"
+  - "Cannot change difficulty after level design is published"
+  - "Localization limited to 15 major languages"
+
+recent_changes:
+  - "v2.5.0 (Jan 2024): Added new 'Ice Breaker' event with 50 exclusive levels"
+  - "v2.4.8 (Dec 2023): Fixed crash issue on iOS 17 devices"
+  - "v2.4.7 (Dec 2023): Improved loading times by 30% through asset optimization"
+  - "v2.4.5 (Nov 2023): Added new 'Sugar Stars' feature for completing levels with high scores"
+  - "v2.4.0 (Oct 2023): Redesigned daily rewards system with better progression"
+  - "v2.3.8 (Sep 2023): Fixed issue where boosters were not being applied correctly"
+  - "v2.3.5 (Aug 2023): Introduced 'Candy Necklace' - new gameplay mechanic"
+  - "v2.3.0 (Jul 2023): Major UI refresh with improved accessibility features"
+
+# Additional context (optional)
+target_audience: "Casual mobile gamers, ages 18-45, predominantly female"
+platform: "iOS and Android"
+monetization_model: "Free-to-play with optional in-app purchases"
+average_session_length: "8-12 minutes"
+retention_goals: "Day 1: 40%, Day 7: 20%, Day 30: 10%"
+known_pain_points:
+  - "Level difficulty spikes frustrate some players"
+  - "Waiting for lives can interrupt gameplay flow"
+  - "Some players feel pressured to make purchases to progress"
+competitive_games:
+  - "Homescapes"
+  - "Gardenscapes"
+  - "Cookie Jam"
+  - "Bejeweled"
