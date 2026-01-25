@@ -348,31 +348,52 @@ class OpenAIClassifier:
         return classifications
 
 
-def filter_feedback_tickets(tickets: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def filter_feedback_tickets(
+    tickets: List[Dict[str, Any]], 
+    os_filter: Optional[str] = None
+) -> List[Dict[str, Any]]:
     """
-    Filter to only Feedback type tickets.
+    Filter to only Feedback type tickets for the specified OS.
     
-    Status=5 (Closed) is already filtered at Freshdesk fetch level.
-    This function filters by Type (Feedback) only.
+    Status=5 (Closed) and Game already filtered at Freshdesk fetch level.
+    This function filters by OS and Type (Feedback).
     
     This happens BEFORE sending to ChatGPT to reduce API costs.
     
     Args:
-        tickets: List of cleaned ticket dictionaries (already status=5)
+        tickets: List of cleaned ticket dictionaries (already status=5, game filtered)
+        os_filter: OS to filter for ("Android", "iOS", or "Both")
         
     Returns:
-        List of only Feedback tickets
+        List of only Feedback tickets for the specified OS
     """
     feedback_tickets = []
     
-    logger.info(f"Filtering {len(tickets)} tickets (status=5) for Feedback type...")
+    logger.info(f"Filtering {len(tickets)} tickets for OS='{os_filter}' and Type='Feedback'...")
+    
+    os_rejected = 0
+    type_rejected = 0
     
     for ticket in tickets:
         # Get metadata (stored during cleaning)
         metadata = ticket.get('metadata', {})
+        custom_fields = metadata.get('custom_fields', {})
         
-        # Status=5 (Closed) already filtered at Freshdesk level
-        # Only check Type = "Feedback" (exact match)
+        # Filter by OS first (if not "Both")
+        if os_filter and os_filter != 'Both':
+            os_field = str(custom_fields.get('OS', ''))
+            
+            # Check OS match
+            if os_filter.lower() == 'ios':
+                if os_field not in ['ios', 'iOS', 'IOS']:
+                    os_rejected += 1
+                    continue
+            else:  # Android
+                if os_filter.lower() not in os_field.lower():
+                    os_rejected += 1
+                    continue
+        
+        # Then filter by Type = "Feedback" (exact match)
         ticket_type = metadata.get('type')
         tags = metadata.get('tags', [])
         
@@ -385,17 +406,23 @@ def filter_feedback_tickets(tickets: List[Dict[str, Any]]) -> List[Dict[str, Any
         if not is_feedback:
             is_feedback = 'Feedback' in tags or 'feedback' in [str(tag).lower() for tag in tags]
         
-        if is_feedback:
-            feedback_tickets.append(ticket)
+        if not is_feedback:
+            type_rejected += 1
+            continue
+        
+        # Passed both filters
+        feedback_tickets.append(ticket)
     
-    logger.info(f"✓ Filtered: {len(tickets)} Closed tickets → {len(feedback_tickets)} Feedback tickets")
-    logger.info(f"   Removed: {len(tickets) - len(feedback_tickets)} non-Feedback tickets")
+    logger.info(f"✓ Filtered: {len(tickets)} Closed/Game tickets → {len(feedback_tickets)} Feedback+OS tickets")
+    logger.info(f"   Rejected by OS filter: {os_rejected}")
+    logger.info(f"   Rejected by Type filter: {type_rejected}")
     
     return feedback_tickets
 
 
 def classify_feedback_data(
     cleaned_data: Dict[str, Any],
+    os_filter: str = "Both",
     game_context: Optional[GameFeatureContext] = None,
     max_tickets: Optional[int] = None,
     model: str = "gpt-4-turbo-preview"
@@ -404,7 +431,7 @@ def classify_feedback_data(
     Classify entire feedback data structure.
     
     This is the main entry point for AI classification.
-    Filters to Feedback tickets (status=5) before sending to ChatGPT.
+    Filters to Feedback tickets for specified OS before sending to ChatGPT.
     
     Args:
         cleaned_data: Cleaned feedback data with 'metadata' and 'feedbacks' keys
@@ -438,8 +465,8 @@ def classify_feedback_data(
             }
         }
     
-    # Filter to only Feedback tickets with status=5
-    feedback_tickets = filter_feedback_tickets(all_tickets)
+    # Filter to only Feedback tickets for the specified OS
+    feedback_tickets = filter_feedback_tickets(all_tickets, os_filter=os_filter)
     
     if not feedback_tickets:
         logger.warning("No Feedback tickets found after type filtering")

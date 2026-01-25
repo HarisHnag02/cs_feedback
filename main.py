@@ -195,12 +195,12 @@ def main():
         # Display cleaned data summary
         print_header("DATA SUMMARY")
         print(f"\n📊 Dataset Overview:")
-        print(f"   Total Tickets: {len(cleaned_data['feedbacks'])} (Status=5 Closed, all types)")
-        print(f"   Game: {cleaned_data['metadata']['game_name']}")
-        print(f"   Platform: {cleaned_data['metadata']['os']}")
+        print(f"   Total Tickets: {len(cleaned_data['feedbacks'])} (Status='Closed', Game='{user_inputs.game_name}')")
+        print(f"   Includes: All OS (Android + iOS), All Types")
         print(f"   Date Range: {cleaned_data['metadata']['start_date']} to {cleaned_data['metadata']['end_date']}")
         print(f"   Source: {'Cache' if used_cache else 'Freshdesk API'}")
-        print(f"\n💡 Note: Filtering to Feedback type happens in AI classification step")
+        print(f"\n💡 Note: OS and Type filtering happens in AI classification step")
+        print(f"   Will filter to: OS='{user_inputs.os}' and Type='Feedback'")
         
         if cleaned_data['feedbacks']:
             print(f"\n📝 Sample Clean Tickets (first 3):")
@@ -275,9 +275,10 @@ def main():
         print("   ⏳ This may take several minutes...\n")
         
         try:
-            # Classify tickets with AI
+            # Classify tickets with AI (includes OS and Type filtering)
             classified_data = classify_feedback_data(
                 cleaned_data,
+                os_filter=user_inputs.os,
                 game_context=game_context,
                 model="gpt-4-turbo-preview"
             )
@@ -291,9 +292,10 @@ def main():
             
             # Show filtering statistics
             print(f"\n🔍 Filtering Statistics:")
-            print(f"   Closed Tickets (status=5): {filtering_stats.get('closed_tickets', 'N/A')}")
-            print(f"   Feedback Type: {filtering_stats.get('feedback_tickets', 'N/A')}")
-            print(f"   Non-Feedback Filtered Out: {filtering_stats.get('filtered_out', 'N/A')}")
+            print(f"   Closed+Game Tickets: {filtering_stats.get('closed_tickets', 'N/A')}")
+            print(f"   After OS Filter: {filtering_stats.get('feedback_tickets', 'N/A') + filtering_stats.get('filtered_out', 0) if filtering_stats else 'N/A'}")
+            print(f"   After Type='Feedback' Filter: {filtering_stats.get('feedback_tickets', 'N/A')}")
+            print(f"   Total Filtered Out: {filtering_stats.get('filtered_out', 'N/A')}")
             
             print(f"\n✅ Successfully classified {len(classifications)} Feedback tickets")
             print(f"   Success Rate: {metadata['classification_success_rate']}%")
