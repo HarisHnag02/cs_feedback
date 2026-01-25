@@ -142,14 +142,15 @@ class FreshdeskClient:
         input_params: FeedbackAnalysisInput
     ) -> List[Dict[str, Any]]:
         """
-        Apply minimal client-side filtering to tickets.
+        Apply client-side filtering to tickets.
         
         Server-side filters already applied (Search API query):
         - Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)
-        - Game: Matches game name
         - updated_at: Within date range
         
-        Client-side: Just validate tickets have required fields.
+        Client-side filters (custom fields not supported in Search API):
+        - Game: From custom_fields['Game']
+        
         OS and Type filtering happens LATER (before AI).
         
         Args:
@@ -157,28 +158,35 @@ class FreshdeskClient:
             input_params: User input parameters
             
         Returns:
-            List of all valid tickets from search (all OS, all types)
+            List of tickets matching game filter (all OS, all types)
         """
         filtered_tickets = []
         
-        logger.debug(f"Validating {len(tickets)} tickets from Search API")
+        logger.debug(f"Filtering {len(tickets)} tickets for Game='{input_params.game_name}'")
         
         for ticket in tickets:
             # Search API already filtered by:
             # - Status (4, 5, or 6)
-            # - Game name (server-side)
             # - updated_at range (server-side)
             
-            # Just validate ticket has minimum required fields
-            if not ticket.get('id'):
-                logger.debug(f"Skipping ticket without ID")
+            # Client-side filter by Game (custom field not supported in Search API)
+            game_name_lower = input_params.game_name.lower()
+            custom_fields = ticket.get('custom_fields', {})
+            
+            if not custom_fields:
+                logger.debug(f"Ticket #{ticket.get('id')}: No custom_fields")
                 continue
             
-            # All tickets from search API are valid
+            game_field = str(custom_fields.get('Game', '')).lower()
+            if game_name_lower not in game_field:
+                logger.debug(f"Ticket #{ticket.get('id')}: Game mismatch. Expected '{input_params.game_name}', got '{custom_fields.get('Game', 'N/A')}'")
+                continue
+            
+            # Ticket passed game filter
             filtered_tickets.append(ticket)
         
         logger.info(
-            f"Validated {len(tickets)} tickets from Search API → {len(filtered_tickets)} valid tickets"
+            f"Filtered {len(tickets)} tickets → {len(filtered_tickets)} tickets matching Game='{input_params.game_name}'"
         )
         
         return filtered_tickets
@@ -193,10 +201,12 @@ class FreshdeskClient:
         
         Server-side filters (Search API query):
         - Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)
-        - Game: Matches input_params.game_name (server-side)
-        - updated_at: Between start_date and end_date (server-side)
+        - updated_at: Between start_date and end_date
         
-        NO OS or Type filtering at fetch - pulls all OS and all types.
+        Client-side filters (after fetch):
+        - Game: Matches custom_fields['Game'] (custom fields not supported in Search API)
+        
+        NO OS or Type filtering - pulls all OS and all types.
         OS and Type filtering happens LATER before AI.
         
         Returns ALL ticket fields: id, subject, description, status, custom_fields, updated_at, etc.
@@ -218,9 +228,10 @@ class FreshdeskClient:
         logger.info("Starting Freshdesk ticket fetch using Search API")
         logger.info(f"Search Query Filters (SERVER-SIDE):")
         logger.info(f"  • Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)")
-        logger.info(f"  • Game: '{input_params.game_name}' (game field)")
         logger.info(f"  • Updated At: {input_params.start_date} to {input_params.end_date}")
-        logger.info(f"Filters Applied Later (AI step):")
+        logger.info(f"Client-Side Filters (after fetch):")
+        logger.info(f"  • Game: '{input_params.game_name}' (custom_fields['Game'])")
+        logger.info(f"Filters Applied in AI Step:")
         logger.info(f"  • OS: '{input_params.os}'")
         logger.info(f"  • Type: 'Feedback'")
         logger.info("="*70)
@@ -238,13 +249,11 @@ class FreshdeskClient:
             formatted_start = input_params.start_date
             formatted_end = input_params.end_date
             
-            # Build query with proper Freshdesk syntax:
-            # - Space before and after AND
-            # - Date comparisons: updated_at:>'date' (with >)
-            # - No outer quotes
+            # Build query with ONLY standard Freshdesk fields
+            # Custom field 'game' doesn't work in Search API - filter client-side instead
+            # Use only status and date in query
             query_parts = [
                 "(status:4 OR status:5 OR status:6)",
-                f"game:'{input_params.game_name}'",
                 f"updated_at:>'{formatted_start}'",
                 f"updated_at:<'{formatted_end}'"
             ]
