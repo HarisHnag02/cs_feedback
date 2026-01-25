@@ -231,20 +231,28 @@ class FreshdeskClient:
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Use Search API with query matching Google Apps Script approach
-            # Build query: (status:4 OR status:5 OR status:6) AND game:'Word Trip' AND updated_at range
+            # Use Search API with proper Freshdesk query syntax
+            # Build query with mandatory spaces around operators
             
             # Format dates for query
             formatted_start = input_params.start_date
             formatted_end = input_params.end_date
             
-            # Build status query (Resolved=4, Closed=5, Waiting on Customer=6)
-            status_query = "(status:4 OR status:5 OR status:6)"
+            # Build query with proper Freshdesk syntax:
+            # - Space before and after AND
+            # - Date comparisons: updated_at:>'date' (with >)
+            # - No outer quotes
+            query_parts = [
+                "(status:4 OR status:5 OR status:6)",
+                f"game:'{input_params.game_name}'",
+                f"updated_at:>'{formatted_start}'",
+                f"updated_at:<'{formatted_end}'"
+            ]
             
-            # Build full query matching Google Apps Script
-            query = f'"{status_query} AND game:\'{input_params.game_name}\' AND updated_at:\'{formatted_start}\' AND updated_at<\'{formatted_end}\'"'
+            # Join with " AND " (spaces are mandatory)
+            query = " AND ".join(query_parts)
             
-            # URL encode the query
+            # URL encode the query (don't add extra quotes)
             from urllib.parse import quote
             encoded_query = quote(query)
             
