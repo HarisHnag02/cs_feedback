@@ -142,80 +142,43 @@ class FreshdeskClient:
         input_params: FeedbackAnalysisInput
     ) -> List[Dict[str, Any]]:
         """
-        Apply client-side filtering to tickets.
+        Apply minimal client-side filtering to tickets.
         
-        Filters for: Closed date range and Game name.
-        Status=5 already filtered by Search API query.
+        Server-side filters already applied (Search API query):
+        - Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)
+        - Game: Matches game name
+        - updated_at: Within date range
+        
+        Client-side: Just validate tickets have required fields.
         OS and Type filtering happens LATER (before AI).
         
         Args:
-            tickets: List of ticket dictionaries from API (already status=5)
-            input_params: User input parameters with game name and date range
+            tickets: List of ticket dictionaries from API
+            input_params: User input parameters
             
         Returns:
-            List of tickets matching closed_at date range and game (all OS, all types)
+            List of all valid tickets from search (all OS, all types)
         """
         filtered_tickets = []
         
-        logger.debug(f"Applying filters to {len(tickets)} tickets (Closed Date + Game Name)")
+        logger.debug(f"Validating {len(tickets)} tickets from Search API")
         
         for ticket in tickets:
-            # Status=5 already filtered by Search API
-            # Filter by: Closed Date + Game Name
-            # OS and Type filtering happens LATER
+            # Search API already filtered by:
+            # - Status (4, 5, or 6)
+            # - Game name (server-side)
+            # - updated_at range (server-side)
             
-            # Filter by date range (using closed_at, not created_at)
-            closed_at = ticket.get('stats', {}).get('closed_at') or ticket.get('closed_at')
-            
-            if closed_at:
-                try:
-                    # Parse Freshdesk datetime (ISO format)
-                    ticket_date = datetime.fromisoformat(
-                        closed_at.replace('Z', '+00:00')
-                    ).date()
-                    
-                    start_date = datetime.strptime(
-                        input_params.start_date, '%Y-%m-%d'
-                    ).date()
-                    end_date = datetime.strptime(
-                        input_params.end_date, '%Y-%m-%d'
-                    ).date()
-                    
-                    if not (start_date <= ticket_date <= end_date):
-                        logger.debug(f"Ticket #{ticket.get('id')}: Closed date out of range. Closed: {ticket_date}, Range: {start_date} to {end_date}")
-                        continue
-                        
-                except (ValueError, AttributeError) as e:
-                    logger.warning(f"Failed to parse closed_at date for ticket {ticket.get('id')}: {e}")
-                    continue
-            else:
-                # Skip tickets without closed_at date
-                logger.debug(f"Ticket #{ticket.get('id')}: No closed_at date found")
+            # Just validate ticket has minimum required fields
+            if not ticket.get('id'):
+                logger.debug(f"Skipping ticket without ID")
                 continue
             
-            # Filter by game name (check custom_fields['Game'])
-            game_name_lower = input_params.game_name.lower()
-            game_match = False
-            
-            custom_fields = ticket.get('custom_fields', {})
-            if custom_fields:
-                game_field = str(custom_fields.get('Game', '')).lower()
-                if game_name_lower in game_field:
-                    game_match = True
-                else:
-                    logger.debug(f"Ticket #{ticket.get('id')}: Game mismatch. Expected '{input_params.game_name}', got '{custom_fields.get('Game', 'N/A')}'")
-            else:
-                logger.debug(f"Ticket #{ticket.get('id')}: No custom_fields")
-            
-            if not game_match:
-                continue
-            
-            # Ticket passed date + game filters (ALL OS, ALL types)
+            # All tickets from search API are valid
             filtered_tickets.append(ticket)
         
         logger.info(
-            f"Filtered {len(tickets)} tickets → {len(filtered_tickets)} "
-            f"tickets within date range (ALL games, ALL OS, ALL types)"
+            f"Validated {len(tickets)} tickets from Search API → {len(filtered_tickets)} valid tickets"
         )
         
         return filtered_tickets
@@ -226,24 +189,24 @@ class FreshdeskClient:
         max_pages: int = 10
     ) -> List[Dict[str, Any]]:
         """
-        Fetch CLOSED tickets (status=5) for a specific game within the date range.
+        Fetch tickets for a specific game within the date range using Freshdesk Search API.
         
-        Filters at fetch time:
-        - Status: 5 (Closed) - filtered by Freshdesk
-        - Closed date: Between start_date and end_date
-        - Game: From custom_fields['Game']
+        Server-side filters (Search API query):
+        - Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)
+        - Game: Matches input_params.game_name (server-side)
+        - updated_at: Between start_date and end_date (server-side)
         
-        NO OS filtering at fetch - pulls both Android and iOS.
+        NO OS or Type filtering at fetch - pulls all OS and all types.
         OS and Type filtering happens LATER before AI.
         
-        Returns ALL ticket fields: id, subject, description, status, custom_fields, stats, closed_at, etc.
+        Returns ALL ticket fields: id, subject, description, status, custom_fields, updated_at, etc.
         
         Args:
             input_params: FeedbackAnalysisInput with game name and date range
             max_pages: Maximum number of pages to fetch (safety limit)
             
         Returns:
-            List of CLOSED ticket dictionaries for the game within date range (all OS, all types)
+            List of ticket dictionaries for the game within date range (all OS, all types)
             
         Example:
             >>> client = FreshdeskClient()
@@ -252,14 +215,14 @@ class FreshdeskClient:
             >>> print(f"Found {len(tickets)} total tickets (all types)")
         """
         logger.info("="*70)
-        logger.info("Starting Freshdesk ticket fetch - CLOSED TICKETS FOR GAME")
-        logger.info(f"Filters Applied at Fetch:")
-        logger.info(f"  • Status: 'Closed' (status=5 in Freshdesk API)")
-        logger.info(f"  • Game: '{input_params.game_name}' (custom_fields['Game'])")
-        logger.info(f"  • Closed Date: {input_params.start_date} to {input_params.end_date}")
-        logger.info(f"NOT Filtered (happens later):")
-        logger.info(f"  • OS: Will filter '{input_params.os}' in AI step")
-        logger.info(f"  • Type: Will filter 'Feedback' in AI step")
+        logger.info("Starting Freshdesk ticket fetch using Search API")
+        logger.info(f"Search Query Filters (SERVER-SIDE):")
+        logger.info(f"  • Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)")
+        logger.info(f"  • Game: '{input_params.game_name}' (game field)")
+        logger.info(f"  • Updated At: {input_params.start_date} to {input_params.end_date}")
+        logger.info(f"Filters Applied Later (AI step):")
+        logger.info(f"  • OS: '{input_params.os}'")
+        logger.info(f"  • Type: 'Feedback'")
         logger.info("="*70)
         
         all_tickets = []
@@ -268,9 +231,18 @@ class FreshdeskClient:
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Use Search API with status=5 filter (Closed tickets only)
-            # Type filtering happens in AI step
-            query = '"status:5"'
+            # Use Search API with query matching Google Apps Script approach
+            # Build query: (status:4 OR status:5 OR status:6) AND game:'Word Trip' AND updated_at range
+            
+            # Format dates for query
+            formatted_start = input_params.start_date
+            formatted_end = input_params.end_date
+            
+            # Build status query (Resolved=4, Closed=5, Waiting on Customer=6)
+            status_query = "(status:4 OR status:5 OR status:6)"
+            
+            # Build full query matching Google Apps Script
+            query = f'"{status_query} AND game:\'{input_params.game_name}\' AND updated_at:\'{formatted_start}\' AND updated_at<\'{formatted_end}\'"'
             
             # URL encode the query
             from urllib.parse import quote
@@ -278,6 +250,8 @@ class FreshdeskClient:
             
             # Search API endpoint
             endpoint = f'search/tickets?query={encoded_query}&page={page}'
+            
+            logger.debug(f"Search query: {query}")
             
             try:
                 # Make API request
@@ -318,9 +292,10 @@ class FreshdeskClient:
                 break
         
         logger.info("="*70)
-        logger.info(f"✓ Fetch complete: {len(all_tickets)} 'Closed' tickets for '{input_params.game_name}'")
+        logger.info(f"✓ Fetch complete: {len(all_tickets)} tickets for '{input_params.game_name}'")
+        logger.info(f"   Status: Resolved/Closed/Waiting (4/5/6)")
         logger.info(f"   Includes: All OS (Android + iOS), All Types")
-        logger.info(f"NOTE: OS and Type='Feedback' filtering happens in AI classification step")
+        logger.info(f"NOTE: OS='{input_params.os}' and Type='Feedback' filtering happens in AI step")
         logger.info("="*70)
         
         return all_tickets
