@@ -371,16 +371,19 @@ def filter_feedback_tickets(tickets: List[Dict[str, Any]]) -> List[Dict[str, Any
         # Get metadata (stored during cleaning)
         metadata = ticket.get('metadata', {})
         
-        # Status=5 already filtered at Freshdesk level
-        # Only check type = Feedback
+        # Status=5 (Closed) already filtered at Freshdesk level
+        # Only check Type = "Feedback" (exact match)
         ticket_type = metadata.get('type')
         tags = metadata.get('tags', [])
         
+        # Check for exact "Feedback" type
         is_feedback = (
-            ticket_type == 'Feedback' or
-            'feedback' in [str(tag).lower() for tag in tags] or
-            'Feedback' in tags
+            ticket_type == 'Feedback'  # Exact match: custom_fields['Type'] == "Feedback"
         )
+        
+        # Fallback: Also check tags if type not set
+        if not is_feedback:
+            is_feedback = 'Feedback' in tags or 'feedback' in [str(tag).lower() for tag in tags]
         
         if is_feedback:
             feedback_tickets.append(ticket)

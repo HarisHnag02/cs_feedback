@@ -284,9 +284,12 @@ class FreshdeskClient:
         """
         logger.info("="*70)
         logger.info("Starting Freshdesk ticket fetch - CLOSED TICKETS ONLY")
-        logger.info(f"Filters: Status=5 (Closed), Game={input_params.game_name}, OS={input_params.os}")
-        logger.info(f"Date Range: {input_params.start_date} to {input_params.end_date}")
-        logger.info("NOTE: Type filtering (Feedback) happens in AI classification step")
+        logger.info(f"Filters Applied:")
+        logger.info(f"  • Status: 'Closed' (status=5 in Freshdesk API)")
+        logger.info(f"  • Game: '{input_params.game_name}' (custom_fields['Game'])")
+        logger.info(f"  • OS: '{input_params.os}' (custom_fields['OS'])")
+        logger.info(f"  • Closed Date Range: {input_params.start_date} to {input_params.end_date}")
+        logger.info(f"NOTE: Type='Feedback' filtering happens in AI classification step")
         logger.info("="*70)
         
         all_tickets = []
@@ -345,8 +348,8 @@ class FreshdeskClient:
                 break
         
         logger.info("="*70)
-        logger.info(f"✓ Fetch complete: {len(all_tickets)} CLOSED tickets (status=5, all types)")
-        logger.info("NOTE: Filtering for Feedback (type) happens in AI classification step")
+        logger.info(f"✓ Fetch complete: {len(all_tickets)} 'Closed' tickets (status=5, all types)")
+        logger.info("NOTE: Filtering for Type='Feedback' happens in AI classification step")
         logger.info("="*70)
         
         return all_tickets
