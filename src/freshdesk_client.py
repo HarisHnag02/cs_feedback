@@ -243,7 +243,7 @@ class FreshdeskClient:
         NO OS or Type filtering - pulls all OS and all types.
         OS and Type filtering happens LATER before AI.
         
-        Returns ALL ticket fields: id, subject, description, status, custom_fields, updated_at, etc.
+        Returns only essential fields: id, subject, description (+ minimal metadata for OS filtering)
         
         Args:
             input_params: FeedbackAnalysisInput with game name and date range
