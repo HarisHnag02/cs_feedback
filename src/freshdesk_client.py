@@ -218,11 +218,12 @@ class FreshdeskClient:
             # Passed all filters (Date + Game + Type)
             filtered_tickets.append(ticket)
         
-        logger.info(f"✅ Filtered: {len(tickets)} tickets → {len(filtered_tickets)} Feedback tickets for '{input_params.game_name}'")
-        logger.info(f"   Step 1 - Game Filter: {len(tickets) - game_rejected - no_custom_fields} matched, {game_rejected + no_custom_fields} other games")
-        logger.info(f"   Step 2 - Date Filter: {len(tickets) - game_rejected - no_custom_fields - date_rejected} matched, {date_rejected} outside range")
-        logger.info(f"   Step 3 - Type Filter: {len(filtered_tickets)} Feedback tickets, {type_rejected} other types")
-        logger.info(f"   Result: {len(filtered_tickets)} Feedback tickets for '{input_params.game_name}' ready for analysis")
+        logger.info(f"✅ Filtered: {len(tickets)} tickets → {len(filtered_tickets)} tickets")
+        logger.info(f"   Step 1 - Date: {len(tickets) - date_rejected} in range, {date_rejected} outside")
+        logger.info(f"   Step 2 - Status: {len(tickets) - date_rejected - status_rejected} Closed, {status_rejected} other statuses")
+        logger.info(f"   Step 3 - Game: {len(tickets) - date_rejected - status_rejected - game_rejected - no_custom_fields} '{input_params.game_name}' tickets")
+        logger.info(f"   Step 4 - OS: {len(filtered_tickets)} '{input_params.os}' tickets, {os_rejected} other OS")
+        logger.info(f"   ✅ Final: {len(filtered_tickets)} Closed '{input_params.game_name}' tickets on '{input_params.os}'")
         
         return filtered_tickets
     
