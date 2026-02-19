@@ -280,9 +280,9 @@ class FreshdeskClient:
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Use REGULAR Tickets API (not Search API)
-            # No query needed - just pagination
-            endpoint = f"tickets?per_page=100&page={page}&order_by=updated_at&order_type=desc"
+            # Use REGULAR Tickets API with description included
+            # include=description ensures we get the full ticket description
+            endpoint = f"tickets?include=description&per_page=100&page={page}&order_by=updated_at&order_type=desc"
             
             logger.debug(f"Fetching from: {endpoint}")
             
