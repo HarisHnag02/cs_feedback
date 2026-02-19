@@ -84,6 +84,81 @@ class TicketClassification:
         )
 
 
+def build_batch_classification_prompt(
+    tickets: List[Dict[str, Any]],
+    game_context: Optional[GameFeatureContext] = None
+) -> str:
+    """
+    Build prompt for batch classification of multiple tickets.
+    
+    Args:
+        tickets: List of ticket dictionaries (up to 10)
+        game_context: Optional game feature context
+        
+    Returns:
+        Complete batch prompt string for OpenAI
+    """
+    prompt_parts = [
+        "You are an expert game feedback analyst. Analyze the following player feedback tickets and provide structured classifications.",
+        ""
+    ]
+    
+    # Add game context if available
+    if game_context:
+        prompt_parts.extend([
+            "GAME CONTEXT:",
+            game_context.format_for_ai(),
+            "",
+            "IMPORTANT: Use this context to:",
+            "- Determine if reported issues are actually expected behaviors",
+            "- Identify which specific game features the feedback relates to",
+            "- Understand if suggestions are for existing or new features",
+            ""
+        ])
+    
+    # Add all tickets
+    prompt_parts.append(f"ANALYZE THESE {len(tickets)} FEEDBACK TICKETS:")
+    prompt_parts.append("")
+    
+    for i, ticket in enumerate(tickets, 1):
+        prompt_parts.extend([
+            f"TICKET {i}:",
+            f"  ID: {ticket.get('ticket_id')}",
+            f"  Subject: {ticket.get('subject', 'N/A')}",
+            f"  Feedback: {ticket.get('clean_feedback', 'N/A')}",
+            ""
+        ])
+    
+    # Add response format instructions
+    prompt_parts.extend([
+        f"Return a JSON ARRAY with exactly {len(tickets)} classification objects (one per ticket):",
+        "[",
+        "  {",
+        '    "ticket_id": <ticket ID>,',
+        '    "category": "<Main category>",',
+        '    "subcategory": "<Specific subcategory>",',
+        '    "sentiment": "<Positive, Negative, Neutral, or Mixed>",',
+        '    "intent": "<Report Bug, Request Feature, Praise Game, Complain, Ask Question, or Other>",',
+        '    "confidence": <0.0 to 1.0>,',
+        '    "key_points": ["<point 1>", "<point 2>", ...],',
+        '    "short_summary": "<one sentence>",',
+        '    "is_expected_behavior": <true/false>,',
+        '    "related_feature": "<feature name or null>"',
+        "  },",
+        "  ... (repeat for all tickets)",
+        "]",
+        "",
+        "CRITICAL:",
+        "- Return ONLY the JSON array, no other text",
+        f"- Array must have exactly {len(tickets)} objects",
+        "- Each object must have a ticket_id matching the input",
+        "- Maintain the same order as input tickets",
+        "- All fields are required for each ticket"
+    ])
+    
+    return "\n".join(prompt_parts)
+
+
 def build_classification_prompt(
     clean_feedback: str,
     subject: str,
@@ -301,19 +376,90 @@ class OpenAIClassifier:
             logger.error(f"Failed to classify ticket #{ticket_id}: {e}")
             raise AIClassifierError(f"Classification failed: {e}") from e
     
+    def classify_batch(
+        self,
+        tickets: List[Dict[str, Any]],
+        game_context: Optional[GameFeatureContext] = None
+    ) -> List[TicketClassification]:
+        """
+        Classify a batch of tickets in a single API call.
+        
+        Args:
+            tickets: List of clean ticket dictionaries (up to 10)
+            game_context: Optional game feature context
+            
+        Returns:
+            List of TicketClassification objects
+        """
+        if not tickets:
+            return []
+        
+        logger.info(f"Classifying batch of {len(tickets)} tickets...")
+        
+        # Build batch prompt
+        prompt = build_batch_classification_prompt(tickets, game_context)
+        
+        try:
+            # Call OpenAI API (with retry logic)
+            response_text = self._call_openai_api(prompt)
+            
+            # Parse JSON array response
+            try:
+                results = json.loads(response_text)
+                
+                if not isinstance(results, list):
+                    raise AIClassifierError(f"Expected JSON array, got {type(results)}")
+                
+                if len(results) != len(tickets):
+                    logger.warning(f"Expected {len(tickets)} results, got {len(results)}")
+            
+            except json.JSONDecodeError as e:
+                logger.error(f"Failed to parse JSON response: {e}")
+                raise AIClassifierError(f"Invalid JSON response from API: {e}")
+            
+            # Create classification objects
+            classifications = []
+            for result in results:
+                try:
+                    classification = TicketClassification(
+                        ticket_id=result.get('ticket_id'),
+                        category=result['category'],
+                        subcategory=result['subcategory'],
+                        sentiment=result['sentiment'],
+                        intent=result['intent'],
+                        confidence=float(result['confidence']),
+                        key_points=result['key_points'],
+                        short_summary=result['short_summary'],
+                        is_expected_behavior=bool(result['is_expected_behavior']),
+                        related_feature=result.get('related_feature')
+                    )
+                    classifications.append(classification)
+                except (KeyError, ValueError) as e:
+                    logger.error(f"Failed to parse classification for ticket {result.get('ticket_id', '?')}: {e}")
+                    continue
+            
+            logger.info(f"✓ Batch classified: {len(classifications)}/{len(tickets)} tickets")
+            return classifications
+            
+        except Exception as e:
+            logger.error(f"Failed to classify batch: {e}")
+            raise AIClassifierError(f"Batch classification failed: {e}") from e
+    
     def classify_tickets(
         self,
         tickets: List[Dict[str, Any]],
         game_context: Optional[GameFeatureContext] = None,
-        max_tickets: Optional[int] = None
+        max_tickets: Optional[int] = None,
+        batch_size: int = 10
     ) -> List[TicketClassification]:
         """
-        Classify multiple tickets.
+        Classify multiple tickets using batch processing.
         
         Args:
             tickets: List of clean ticket dictionaries
             game_context: Optional game feature context
             max_tickets: Optional limit on number of tickets to classify
+            batch_size: Number of tickets per batch (default: 10)
             
         Returns:
             List of TicketClassification objects
@@ -321,28 +467,33 @@ class OpenAIClassifier:
         if max_tickets:
             tickets = tickets[:max_tickets]
         
-        logger.info(f"Starting classification of {len(tickets)} tickets...")
+        logger.info(f"Starting BATCH classification of {len(tickets)} tickets (batch size: {batch_size})...")
         
         classifications = []
-        failed_count = 0
+        failed_batches = 0
         
-        for i, ticket in enumerate(tickets, 1):
+        # Split tickets into batches
+        total_batches = (len(tickets) + batch_size - 1) // batch_size
+        
+        for batch_num in range(total_batches):
+            start_idx = batch_num * batch_size
+            end_idx = min(start_idx + batch_size, len(tickets))
+            batch = tickets[start_idx:end_idx]
+            
             try:
-                classification = self.classify_ticket(ticket, game_context)
-                classifications.append(classification)
+                batch_classifications = self.classify_batch(batch, game_context)
+                classifications.extend(batch_classifications)
                 
-                if i % 5 == 0:
-                    logger.info(f"Progress: {i}/{len(tickets)} tickets classified...")
+                logger.info(f"Progress: Batch {batch_num + 1}/{total_batches} complete ({len(classifications)}/{len(tickets)} tickets)")
                 
             except AIClassifierError as e:
-                ticket_id = ticket.get('ticket_id', 'unknown')
-                logger.error(f"Failed to classify ticket #{ticket_id}: {e}")
-                failed_count += 1
+                logger.error(f"Failed to classify batch {batch_num + 1}: {e}")
+                failed_batches += 1
                 continue
         
         logger.info(
             f"✓ Classification complete: {len(classifications)} successful, "
-            f"{failed_count} failed"
+            f"{failed_batches} batches failed"
         )
         
         return classifications
