@@ -276,6 +276,8 @@ class FreshdeskClient:
         
         all_tickets = []
         page = 1
+        consecutive_empty_pages = 0
+        max_empty_pages = 10  # Stop if 10 consecutive pages have 0 matches
         
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
@@ -303,7 +305,7 @@ class FreshdeskClient:
                 
                 logger.info(f"Retrieved {len(tickets)} tickets from page {page}")
                 
-                # Apply client-side filtering for custom fields (game_name and OS)
+                # Apply client-side filtering
                 filtered = self._filter_tickets_by_criteria(tickets, input_params)
                 all_tickets.extend(filtered)
                 
@@ -312,9 +314,21 @@ class FreshdeskClient:
                     f"(Total so far: {len(all_tickets)})"
                 )
                 
+                # Smart stopping: Track consecutive empty pages
+                if len(filtered) == 0:
+                    consecutive_empty_pages += 1
+                    logger.warning(f"⚠️  No matches on this page. Consecutive empty: {consecutive_empty_pages}/{max_empty_pages}")
+                    
+                    if consecutive_empty_pages >= max_empty_pages:
+                        logger.info(f"🛑 Stopping: {max_empty_pages} consecutive pages with 0 matches. Likely no more relevant tickets.")
+                        break
+                else:
+                    # Reset counter if we found matches
+                    consecutive_empty_pages = 0
+                
                 # Check if there are more pages
-                if not tickets or len(tickets) < 100:  # Regular API uses 100 per page
-                    logger.info("All tickets fetched.")
+                if len(tickets) < 100:  # Regular API uses 100 per page
+                    logger.info("All tickets fetched (last page).")
                     break
                 
                 page += 1
