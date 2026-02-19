@@ -160,10 +160,11 @@ class FreshdeskClient:
         """
         filtered_tickets = []
         
-        logger.info(f"Filtering {len(tickets)} tickets for Game → Date → Type...")
+        logger.info(f"Filtering {len(tickets)} tickets: Days → Status → Game → Type...")
         
-        game_rejected = 0
         date_rejected = 0
+        status_rejected = 0
+        game_rejected = 0
         type_rejected = 0
         no_custom_fields = 0
         
