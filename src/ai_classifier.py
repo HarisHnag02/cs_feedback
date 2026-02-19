@@ -130,30 +130,34 @@ def build_batch_classification_prompt(
         ])
     
     # Add response format instructions
+    # NOTE: OpenAI json_object mode always returns a dict, so we wrap in {"classifications": [...]}
     prompt_parts.extend([
-        f"Return a JSON ARRAY with exactly {len(tickets)} classification objects (one per ticket):",
-        "[",
-        "  {",
-        '    "ticket_id": <ticket ID>,',
-        '    "category": "<Main category>",',
-        '    "subcategory": "<Specific subcategory>",',
-        '    "sentiment": "<Positive, Negative, Neutral, or Mixed>",',
-        '    "intent": "<Report Bug, Request Feature, Praise Game, Complain, Ask Question, or Other>",',
-        '    "confidence": <0.0 to 1.0>,',
-        '    "key_points": ["<point 1>", "<point 2>", ...],',
-        '    "short_summary": "<one sentence>",',
-        '    "is_expected_behavior": <true/false>,',
-        '    "related_feature": "<feature name or null>"',
-        "  },",
-        "  ... (repeat for all tickets)",
-        "]",
+        f"Return a JSON OBJECT with a 'classifications' key containing an array of {len(tickets)} objects:",
+        "{",
+        '  "classifications": [',
+        "    {",
+        '      "ticket_id": <ticket ID>,',
+        '      "category": "<Main category: Bug, Feature Request, Positive Feedback, Negative Feedback, Question, Technical Issue, Balance Issue, or Other>",',
+        '      "subcategory": "<Specific subcategory>",',
+        '      "sentiment": "<Positive, Negative, Neutral, or Mixed>",',
+        '      "intent": "<Report Bug, Request Feature, Praise Game, Complain, Ask Question, or Other>",',
+        '      "confidence": <0.0 to 1.0>,',
+        '      "key_points": ["<point 1>", "<point 2>", ...],',
+        '      "short_summary": "<one sentence>",',
+        '      "is_expected_behavior": <true/false>,',
+        '      "related_feature": "<feature name or null>"',
+        "    },",
+        "    ... (repeat for all tickets)",
+        "  ]",
+        "}",
         "",
         "CRITICAL:",
-        "- Return ONLY the JSON array, no other text",
-        f"- Array must have exactly {len(tickets)} objects",
+        f"- classifications array must have exactly {len(tickets)} objects",
         "- Each object must have a ticket_id matching the input",
         "- Maintain the same order as input tickets",
-        "- All fields are required for each ticket"
+        "- All fields are required for each ticket",
+        "- confidence must be 0.0 to 1.0",
+        "- is_expected_behavior must be true or false"
     ])
     
     return "\n".join(prompt_parts)
@@ -403,12 +407,21 @@ class OpenAIClassifier:
             # Call OpenAI API (with retry logic)
             response_text = self._call_openai_api(prompt)
             
-            # Parse JSON array response
+            # Parse JSON response
+            # OpenAI json_object mode returns dict, so extract "classifications" array
             try:
-                results = json.loads(response_text)
+                response_data = json.loads(response_text)
                 
-                if not isinstance(results, list):
-                    raise AIClassifierError(f"Expected JSON array, got {type(results)}")
+                # Extract array from the wrapper dict
+                if isinstance(response_data, dict):
+                    results = response_data.get('classifications', [])
+                elif isinstance(response_data, list):
+                    results = response_data  # Fallback: already a list
+                else:
+                    raise AIClassifierError(f"Unexpected response format: {type(response_data)}")
+                
+                if not results:
+                    raise AIClassifierError("Empty classifications array in response")
                 
                 if len(results) != len(tickets):
                     logger.warning(f"Expected {len(tickets)} results, got {len(results)}")
