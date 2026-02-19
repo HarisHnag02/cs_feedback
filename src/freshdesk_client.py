@@ -327,9 +327,11 @@ class FreshdeskClient:
                 break
         
         logger.info("="*70)
-        logger.info(f"✓ Fetch complete: {len(all_tickets)} Feedback tickets for '{input_params.game_name}'")
-        logger.info(f"   Includes: All Statuses (Open, Closed, etc.), All OS")
-        logger.info(f"NOTE: OS='{input_params.os}' filtering happens in AI step")
+        logger.info(f"✅ Fetch complete: {len(all_tickets)} Feedback tickets for '{input_params.game_name}'")
+        logger.info(f"   Includes: All Dates, All Statuses, All OS")
+        logger.info(f"Next Steps:")
+        logger.info(f"   • Date filtering: Applied during data analysis")
+        logger.info(f"   • OS filtering: '{input_params.os}' in AI step")
         logger.info("="*70)
         
         return all_tickets
