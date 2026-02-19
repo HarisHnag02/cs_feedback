@@ -1,10 +1,12 @@
 """
-Report generation module for feedback analysis.
+Executive-level Feedback Intelligence Report Generator.
 
-This module generates comprehensive reports in Markdown and JSON formats
-from aggregated insights, designed for designers and stakeholders.
+Generates reports from the perspective of a Senior Product Analyst,
+Game Monetization Strategist, and QA Lead. Focuses on business impact,
+player pain, retention risks, and revenue risks — not just frequency tables.
 """
 
+from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -17,453 +19,475 @@ from .logger import get_logger
 from .utils import get_timestamp, sanitize_filename, save_json, save_markdown
 
 
-# Initialize logger for this module
 logger = get_logger(__name__)
 
 
-def generate_executive_summary(
+# ─────────────────────────────────────────────────────────────────────────────
+# SECTION BUILDERS
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _header(title: str, level: int = 2) -> str:
+    prefix = "#" * level
+    return f"\n{prefix} {title}\n"
+
+
+def _divider() -> str:
+    return "\n---\n"
+
+
+def _build_executive_brief(
     insights: AggregatedInsights,
-    input_params: FeedbackAnalysisInput,
-    game_context: Optional[GameFeatureContext] = None
+    classifications: List[Dict[str, Any]],
+    input_params: FeedbackAnalysisInput
 ) -> str:
-    """
-    Generate executive summary section for Markdown report.
-    
-    Args:
-        insights: Aggregated insights
-        input_params: Input parameters
-        game_context: Optional game context
-        
-    Returns:
-        Markdown formatted executive summary
-    """
+    """Top-level signal overview ranked by business impact."""
+    total = insights.total_tickets
+
+    # Sentiment breakdown
+    sent = insights.sentiment_breakdown
+    neg_pct = round(sent.get('Negative', 0) / total * 100, 1) if total else 0
+    pos_pct = round(sent.get('Positive', 0) / total * 100, 1) if total else 0
+
+    # Business risk breakdown
+    risks = Counter(c.get('business_risk') for c in classifications if c.get('business_risk'))
+
+    # Critical severity count
+    critical = sum(1 for c in classifications if c.get('sentiment_severity') == 'Critical')
+
+    # Churn threats
+    churn_threats = sum(1 for c in classifications if 'Churn' in (c.get('intent', '') or ''))
+
+    # Payer signals
+    payers = sum(1 for c in classifications if c.get('player_type_signal') == 'Payer')
+
     lines = [
-        "## 📊 Executive Summary",
+        _header("📋 Feedback Intelligence Report", 1),
+        f"> **Game:** {input_params.game_name} | **Platform:** {input_params.os} | "
+        f"**Period:** {input_params.start_date} → {input_params.end_date} | "
+        f"**Tickets Analyzed:** {total} | **Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}",
         "",
-        f"**Game:** {input_params.game_name}",
-        f"**Platform:** {input_params.os}",
-        f"**Analysis Period:** {input_params.start_date} to {input_params.end_date}",
-        f"**Total Feedback Analyzed:** {insights.total_tickets} tickets",
-        f"**AI Confidence:** {insights.average_confidence:.1%} average",
-        ""
+        _header("🚨 Executive Brief", 2),
+        "",
+        f"| Signal | Value | Risk Level |",
+        f"|--------|-------|------------|",
+        f"| Overall Negative Sentiment | {neg_pct}% | {'🔴 Critical' if neg_pct > 60 else '🟡 High' if neg_pct > 40 else '🟢 Moderate'} |",
+        f"| Overall Positive Sentiment | {pos_pct}% | {'🟢 Healthy' if pos_pct > 40 else '🟡 Watch' if pos_pct > 20 else '🔴 Alarming'} |",
+        f"| Critical Severity Tickets | {critical} ({round(critical/total*100,1) if total else 0}%) | {'🔴 Act Now' if critical > 5 else '🟡 Monitor'} |",
+        f"| Churn Threat Signals | {churn_threats} | {'🔴 High' if churn_threats > 3 else '🟡 Medium'} |",
+        f"| Payer-Identified Complaints | {payers} | {'🔴 Revenue Risk' if payers > 0 else '🟢 Low'} |",
     ]
-    
-    # Sentiment overview
-    if insights.sentiment_breakdown:
-        total = insights.total_tickets
-        negative_pct = insights.sentiment_breakdown.get('Negative', 0) / total * 100
-        positive_pct = insights.sentiment_breakdown.get('Positive', 0) / total * 100
-        
-        lines.extend([
-            "### Key Findings",
-            "",
-            f"- **Overall Sentiment:** {negative_pct:.1f}% Negative, {positive_pct:.1f}% Positive",
-            f"- **Top Issue Category:** {list(insights.category_breakdown.keys())[0] if insights.category_breakdown else 'N/A'}",
-            f"- **Expected Behaviors:** {insights.expected_behavior_count} tickets ({insights.expected_behavior_count/total*100:.1f}%) are due to known constraints",
-            ""
-        ])
-    
-    # Top issues summary
-    if insights.top_issues:
-        top_issue = insights.top_issues[0]
-        lines.extend([
-            f"**Most Reported Issue:** {top_issue['subcategory']} ({top_issue['count']} tickets, {top_issue['percentage']}%)",
-            ""
-        ])
-    
-    # Recent change impacts
-    if insights.recent_change_impacts:
-        lines.extend([
-            f"**Recent Updates Impact:** {len(insights.recent_change_impacts)} recent changes received player feedback",
-            ""
-        ])
-    
-    # Critical patterns
-    high_severity_patterns = [p for p in insights.key_patterns if p.get('severity') == 'High']
-    if high_severity_patterns:
-        lines.extend([
-            "### 🔴 Critical Attention Required",
-            ""
-        ])
-        for pattern in high_severity_patterns[:3]:
-            lines.append(f"- {pattern['description']}")
-        lines.append("")
-    
+
+    for risk, count in risks.most_common(4):
+        if risk:
+            pct = round(count / total * 100, 1)
+            lines.append(f"| {risk} Risk Tickets | {count} ({pct}%) | {'🔴' if pct > 20 else '🟡'} |")
+
+    lines.append("")
+    lines.append("> **Bottom Line:** " + _generate_bottom_line(neg_pct, critical, churn_threats, payers, total))
+    lines.append("")
+
     return "\n".join(lines)
 
 
-def generate_top_issues_section(insights: AggregatedInsights) -> str:
-    """
-    Generate top issues section for Markdown report.
-    
-    Args:
-        insights: Aggregated insights
-        
-    Returns:
-        Markdown formatted top issues section
-    """
-    lines = [
-        "## 🔝 Top Recurring Issues",
-        "",
-        "The following issues were reported most frequently by players:",
-        ""
-    ]
-    
-    for i, issue in enumerate(insights.top_issues[:10], 1):
-        lines.extend([
-            f"### {i}. {issue['category']} > {issue['subcategory']}",
-            "",
-            f"**Frequency:** {issue['count']} tickets ({issue['percentage']}% of all feedback)",
-            f"**Confidence:** {issue['avg_confidence']:.1%}",
-            ""
-        ])
-        
-        # Sentiment breakdown
-        sentiment_str = ", ".join(
-            f"{sentiment}: {count}" 
-            for sentiment, count in issue['sentiment_breakdown'].items()
-        )
-        lines.extend([
-            f"**Player Sentiment:** {sentiment_str}",
-            ""
-        ])
-        
-        # Sample summaries
-        if issue.get('sample_summaries'):
-            lines.extend([
-                "**Example Player Reports:**",
-                ""
-            ])
-            for summary in issue['sample_summaries']:
-                lines.append(f"- \"{summary}\"")
-            lines.append("")
-        
-        lines.append("---")
-        lines.append("")
-    
-    return "\n".join(lines)
+def _generate_bottom_line(neg_pct, critical, churn_threats, payers, total) -> str:
+    """Generate a sharp, analytical executive bottom line."""
+    if neg_pct > 65 and critical > 5:
+        return (f"Feedback is in a **danger zone** — {neg_pct}% negative with {critical} critical severity tickets. "
+                f"Immediate product intervention required before this impacts store ratings.")
+    elif neg_pct > 40 and payers > 0:
+        return (f"Monetization trust is at risk. {payers} payer-identified complaints detected. "
+                f"Revenue churn risk is elevated — prioritize payer pain resolution above all else.")
+    elif churn_threats > 3:
+        return (f"{churn_threats} players explicitly signaled intent to leave or warn others. "
+                f"Retention is actively eroding — focus on friction reduction immediately.")
+    elif neg_pct < 30:
+        return (f"Feedback is relatively healthy at {neg_pct}% negative, but do not become complacent — "
+                f"monitor the identified friction points before they compound.")
+    else:
+        return (f"{neg_pct}% negative sentiment across {total} tickets. "
+                f"Several actionable pain points identified — prioritize by business impact, not frequency.")
 
 
-def generate_feature_feedback_section(
-    insights: AggregatedInsights,
-    classifications: List[Dict[str, Any]]
-) -> str:
-    """
-    Generate feature-wise feedback section for Markdown report.
-    
-    Args:
-        insights: Aggregated insights
-        classifications: List of all classifications
-        
-    Returns:
-        Markdown formatted feature feedback section
-    """
-    lines = [
-        "## 🎮 Feature-Wise Feedback Analysis",
-        "",
-        "Breakdown of feedback by game feature:",
-        ""
-    ]
-    
-    # Sort features by count
-    sorted_features = sorted(
-        insights.feature_breakdown.items(),
-        key=lambda x: x[1],
-        reverse=True
-    )
-    
-    for feature, count in sorted_features[:15]:  # Top 15 features
-        if feature == "Unspecified":
-            continue
-        
-        percentage = count / insights.total_tickets * 100
-        
-        lines.extend([
-            f"### {feature}",
-            "",
-            f"**Mentions:** {count} tickets ({percentage:.1f}%)",
-            ""
-        ])
-        
-        # Get sentiment breakdown for this feature
-        feature_tickets = [
-            c for c in classifications 
-            if c.get('related_feature') == feature
-        ]
-        
-        if feature_tickets:
-            sentiments = {}
-            for ticket in feature_tickets:
-                sentiment = ticket['sentiment']
-                sentiments[sentiment] = sentiments.get(sentiment, 0) + 1
-            
-            sentiment_str = ", ".join(
-                f"{s}: {c}" for s, c in sorted(sentiments.items(), key=lambda x: x[1], reverse=True)
-            )
-            lines.extend([
-                f"**Sentiment Distribution:** {sentiment_str}",
-                ""
-            ])
-            
-            # Get categories for this feature
-            categories = {}
-            for ticket in feature_tickets:
-                cat = ticket['category']
-                categories[cat] = categories.get(cat, 0) + 1
-            
-            category_str = ", ".join(
-                f"{c}: {count}" for c, count in sorted(categories.items(), key=lambda x: x[1], reverse=True)
-            )
-            lines.extend([
-                f"**Feedback Types:** {category_str}",
-                ""
-            ])
-            
-            # Sample quotes for this feature
-            sample_summaries = [t['short_summary'] for t in feature_tickets[:3]]
-            if sample_summaries:
-                lines.extend([
-                    "**Player Comments:**",
-                    ""
-                ])
-                for summary in sample_summaries:
-                    lines.append(f"- \"{summary}\"")
-                lines.append("")
-        
-        lines.append("---")
-        lines.append("")
-    
-    return "\n".join(lines)
-
-
-def generate_player_quotes_section(
+def _build_pain_points(
     classifications: List[Dict[str, Any]],
     insights: AggregatedInsights
 ) -> str:
-    """
-    Generate example player quotes section for Markdown report.
-    
-    Args:
-        classifications: List of all classifications
-        insights: Aggregated insights
-        
-    Returns:
-        Markdown formatted player quotes section
-    """
-    lines = [
-        "## 💬 Example Player Quotes",
-        "",
-        "Representative feedback from players across different categories:",
-        ""
-    ]
-    
-    # Group by category
-    for category in insights.category_breakdown.keys():
-        category_tickets = [
-            c for c in classifications
-            if c['category'] == category
-        ]
-        
-        if not category_tickets:
-            continue
-        
-        lines.extend([
-            f"### {category}",
-            ""
-        ])
-        
-        # Get diverse quotes (different sentiments)
-        quotes_by_sentiment = {}
-        for ticket in category_tickets:
-            sentiment = ticket['sentiment']
-            if sentiment not in quotes_by_sentiment:
-                quotes_by_sentiment[sentiment] = []
-            if len(quotes_by_sentiment[sentiment]) < 2:  # Max 2 per sentiment
-                quotes_by_sentiment[sentiment].append(ticket['short_summary'])
-        
-        for sentiment, quotes in sorted(quotes_by_sentiment.items()):
-            for quote in quotes:
-                lines.append(f"- **[{sentiment}]** \"{quote}\"")
-        
-        lines.extend(["", ""])
-    
-    return "\n".join(lines)
+    """Deep-dive into real player pain points ranked by business impact."""
 
+    lines = [_header("🔥 Major Player Pain Points", 2)]
+    lines.append("> Ranked by **business impact**, not frequency. Signal separated from noise.\n")
 
-def generate_actionable_insights_section(
-    insights: AggregatedInsights,
-    game_context: Optional[GameFeatureContext] = None
-) -> str:
-    """
-    Generate actionable insights and recommendations section.
-    
-    Args:
-        insights: Aggregated insights
-        game_context: Optional game context
-        
-    Returns:
-        Markdown formatted actionable insights section
-    """
-    lines = [
-        "## 💡 Actionable Insights & Recommendations",
-        "",
-        "Based on the analysis, here are the key recommendations:",
-        ""
-    ]
-    
-    recommendations = []
-    
-    # Recommendation 1: Address top issues
-    if insights.top_issues:
-        top_3 = insights.top_issues[:3]
-        lines.extend([
-            "### 🎯 Priority 1: Address Top Recurring Issues",
-            ""
-        ])
-        for i, issue in enumerate(top_3, 1):
-            lines.append(
-                f"{i}. **{issue['subcategory']}** - Affecting {issue['count']} players ({issue['percentage']}%)"
-            )
-        lines.append("")
-    
-    # Recommendation 2: High severity patterns
-    high_severity = [p for p in insights.key_patterns if p.get('severity') == 'High']
-    if high_severity:
-        lines.extend([
-            "### 🔴 Priority 2: Critical Pattern Alerts",
-            ""
-        ])
-        for pattern in high_severity:
-            lines.append(f"- **{pattern['description']}**")
-            if pattern.get('pattern_type') == 'Negative Sentiment Cluster':
-                lines.append(f"  - Recommendation: Review and improve the {pattern.get('feature')} experience")
-            elif pattern.get('pattern_type') == 'Bug Concentration':
-                lines.append(f"  - Recommendation: Focus QA efforts on {pattern.get('subcategory')} issues")
-        lines.append("")
-    
-    # Recommendation 3: Recent change impacts
-    if insights.recent_change_impacts:
-        negative_impacts = [
-            impact for impact in insights.recent_change_impacts
-            if impact['sentiment_breakdown'].get('Negative', 0) > 
-               impact['sentiment_breakdown'].get('Positive', 0)
-        ]
-        
-        if negative_impacts:
-            lines.extend([
-                "### 🔄 Priority 3: Review Recent Updates",
-                "",
-                "The following recent changes received predominantly negative feedback:",
-                ""
-            ])
-            for impact in negative_impacts[:3]:
-                neg = impact['sentiment_breakdown'].get('Negative', 0)
-                pos = impact['sentiment_breakdown'].get('Positive', 0)
-                lines.append(
-                    f"- **{impact['change_keyword']}**: {neg} negative vs {pos} positive reports"
-                )
-            lines.append("")
-    
-    # Recommendation 4: Feature improvements
-    if insights.feature_breakdown:
-        lines.extend([
-            "### ⭐ Priority 4: Feature Enhancement Opportunities",
-            ""
-        ])
-        
-        # Look for features with high mention count
-        top_features = sorted(
-            insights.feature_breakdown.items(),
-            key=lambda x: x[1],
-            reverse=True
-        )[:5]
-        
-        for feature, count in top_features:
-            if feature != "Unspecified":
-                lines.append(
-                    f"- **{feature}**: {count} mentions - High player engagement, "
-                    f"consider as focus area for improvements"
-                )
-        lines.append("")
-    
-    # Recommendation 5: Expected behaviors
-    if insights.expected_behavior_count > 0:
-        expected_pct = insights.expected_behavior_count / insights.total_tickets * 100
-        if expected_pct > 20:  # More than 20% are expected behaviors
-            lines.extend([
-                "### 📢 Priority 5: Player Communication",
-                "",
-                f"- **{insights.expected_behavior_count} tickets ({expected_pct:.1f}%)** "
-                f"are reporting known constraints as issues",
-                f"- Recommendation: Improve in-game communication about these limitations",
-                f"- Consider adding tooltips, tutorials, or FAQ entries",
-                ""
-            ])
-    
-    return "\n".join(lines)
+    # Group by (category, subcategory) and sort by business risk severity
+    risk_order = {'Revenue': 0, 'Trust': 1, 'Retention': 2, 'Rating': 3, None: 4}
 
+    groups = defaultdict(list)
+    for c in classifications:
+        if c.get('sentiment') in ['Negative', 'Mixed']:
+            key = (c.get('category', 'Other'), c.get('subcategory', 'General'))
+            groups[key].append(c)
 
-def generate_recent_changes_section(insights: AggregatedInsights) -> str:
-    """
-    Generate recent changes impact section.
-    
-    Args:
-        insights: Aggregated insights
-        
-    Returns:
-        Markdown formatted recent changes section
-    """
-    if not insights.recent_change_impacts:
-        return ""
-    
-    lines = [
-        "## 🔄 Recent Changes Impact Analysis",
-        "",
-        "Player feedback related to recent game updates:",
-        ""
-    ]
-    
-    for impact in insights.recent_change_impacts:
+    # Sort by business risk then by count
+    sorted_groups = sorted(
+        groups.items(),
+        key=lambda x: (
+            min(risk_order.get(c.get('business_risk'), 4) for c in x[1]),
+            -len(x[1])
+        )
+    )
+
+    for rank, ((category, subcategory), tickets) in enumerate(sorted_groups[:8], 1):
+        count = len(tickets)
+        total = len(classifications)
+        pct = round(count / total * 100, 1)
+
+        # Severity breakdown
+        severities = Counter(t.get('sentiment_severity') for t in tickets)
+        critical_count = severities.get('Critical', 0)
+        is_100_neg = all(t.get('sentiment') == 'Negative' for t in tickets)
+
+        # Pain signals
+        pain_signals = list({t.get('short_summary') for t in tickets if t.get('short_summary')})[:3]
+
+        # Root causes
+        root_causes = list({t.get('root_cause') for t in tickets if t.get('root_cause')})[:2]
+
+        # Suggested solutions
+        solutions = list({t.get('player_suggested_solution') for t in tickets if t.get('player_suggested_solution')})[:2]
+
+        # Business risks
+        business_risks = list({t.get('business_risk') for t in tickets if t.get('business_risk')})
+
+        # Pain types
+        pain_types = list({t.get('pain_type') for t in tickets if t.get('pain_type')})
+
+        # Payer count
+        payer_count = sum(1 for t in tickets if t.get('player_type_signal') == 'Payer')
+
+        severity_emoji = "🔴" if critical_count > 0 or is_100_neg else "🟡" if pct > 10 else "🟢"
+
         lines.extend([
-            f"### {impact['change_keyword']}",
+            _header(f"{rank}. {severity_emoji} {category} — {subcategory}", 3),
             "",
-            f"**Affected Players:** {impact['affected_tickets_count']} tickets",
-            ""
+            f"**Affected Tickets:** {count} ({pct}%) {'| ⚠️ 100% Negative Cluster' if is_100_neg else ''}  ",
+            f"**Critical Severity:** {critical_count} tickets  ",
+            f"**Pain Type:** {', '.join(pain_types) if pain_types else 'N/A'}  ",
+            f"**Business Risk:** {', '.join(business_risks) if business_risks else 'N/A'}  ",
+            f"**Payer Complaints:** {payer_count}  ",
+            "",
+            "**Player Pain Signals:**",
         ])
-        
-        # Sentiment breakdown
-        sentiment_str = ", ".join(
-            f"{s}: {c}" for s, c in impact['sentiment_breakdown'].items()
-        )
-        lines.extend([
-            f"**Sentiment:** {sentiment_str}",
-            ""
-        ])
-        
-        # Category breakdown
-        category_str = ", ".join(
-            f"{c}: {count}" for c, count in impact['category_breakdown'].items()
-        )
-        lines.extend([
-            f"**Feedback Types:** {category_str}",
-            ""
-        ])
-        
-        # Sample tickets
-        if impact.get('sample_tickets'):
-            lines.extend([
-                "**Sample Player Feedback:**",
-                ""
-            ])
-            for ticket in impact['sample_tickets'][:3]:
-                lines.append(f"- [{ticket['sentiment']}] \"{ticket['summary']}\"")
-            lines.append("")
-        
-        lines.append("---")
+
+        for signal in pain_signals:
+            lines.append(f"- *\"{signal}\"*")
+
+        if root_causes:
+            lines.append("\n**Probable Root Cause:**")
+            for cause in root_causes:
+                lines.append(f"- {cause}")
+
+        if solutions:
+            lines.append("\n**Player-Suggested Solutions (explicit/implicit):**")
+            for sol in solutions:
+                lines.append(f"- {sol}")
+
+        # Recommend fixes based on category
+        lines.append("\n**Recommended Actions:**")
+        lines.extend(_get_recommendations(category, subcategory, business_risks))
+
         lines.append("")
-    
+
     return "\n".join(lines)
 
+
+def _get_recommendations(category: str, subcategory: str, business_risks: List[str]) -> List[str]:
+    """Generate product, UX, and engineering recommendations."""
+    recs = []
+    cat_lower = category.lower()
+    sub_lower = subcategory.lower()
+
+    if 'monetization' in cat_lower or 'revenue' in str(business_risks):
+        recs.extend([
+            "- 🏷️ **Product:** Review pricing, value perception, and IAP messaging — trust erosion is harder to recover than churn",
+            "- 🎨 **UX:** Add clear value indicators before purchase prompts; reduce surprise costs",
+            "- ⚙️ **Engineering:** Ensure purchase confirmation flows are error-free; audit failed transaction rates"
+        ])
+    elif 'trust' in str(business_risks) or 'trust' in cat_lower:
+        recs.extend([
+            "- 🏷️ **Product:** Issue transparent communication to players about this issue",
+            "- 🎨 **UX:** Add in-app notification or progress confirmation to rebuild trust",
+            "- ⚙️ **Engineering:** Implement redundant save/sync with visible confirmation states"
+        ])
+    elif 'balance' in cat_lower or 'difficulty' in sub_lower:
+        recs.extend([
+            "- 🏷️ **Product:** Review difficulty curve analytics — identify specific levels with abnormal drop-off rates",
+            "- 🎨 **UX:** Consider optional difficulty scaling or better hint system visibility",
+            "- ⚙️ **Engineering:** Instrument level completion rates, hint usage, and quit points per level"
+        ])
+    elif 'bug' in cat_lower or 'technical' in cat_lower:
+        recs.extend([
+            "- 🏷️ **Product:** Triage by device/OS segment to understand blast radius",
+            "- 🎨 **UX:** Add graceful error states and recovery flows",
+            "- ⚙️ **Engineering:** Prioritize crash reports; check if reproducible on latest builds"
+        ])
+    else:
+        recs.extend([
+            "- 🏷️ **Product:** Investigate player journey at this friction point with analytics",
+            "- 🎨 **UX:** Reduce cognitive load and improve feedback clarity",
+            "- ⚙️ **Engineering:** Instrument the affected flow to capture failure signals"
+        ])
+
+    return recs
+
+
+def _build_positive_drivers(
+    classifications: List[Dict[str, Any]],
+    insights: AggregatedInsights
+) -> str:
+    """Analyze what players love and how to scale it safely."""
+
+    pos_tickets = [c for c in classifications if c.get('sentiment') == 'Positive']
+
+    if not pos_tickets:
+        return _header("💚 Positive Drivers", 2) + "\n> No strong positive signals detected in this dataset.\n"
+
+    lines = [
+        _header("💚 Positive Drivers & Monetization Opportunities", 2),
+        "> What players love, why it works emotionally, and how to scale safely.\n"
+    ]
+
+    # Group positive signals by feature
+    feature_groups = defaultdict(list)
+    for c in pos_tickets:
+        feature = c.get('related_feature') or 'General'
+        feature_groups[feature].append(c)
+
+    for feature, tickets in sorted(feature_groups.items(), key=lambda x: -len(x[1]))[:5]:
+        count = len(tickets)
+        pct = round(count / len(classifications) * 100, 1)
+        summaries = list({t.get('short_summary') for t in tickets if t.get('short_summary')})[:2]
+
+        payer_love = sum(1 for t in tickets if t.get('player_type_signal') == 'Payer')
+
+        lines.extend([
+            f"### ✅ {feature} ({count} positive mentions, {pct}%)",
+            "",
+        ])
+        for s in summaries:
+            lines.append(f"- *\"{s}\"*")
+
+        lines.extend([
+            "",
+            f"**Why it works:** Players express genuine satisfaction — this is a stickiness signal.",
+            f"**Payer love count:** {payer_love} (monetizable engagement)",
+            f"**Scale opportunity:** Consider extending this feature, building seasonal variants, or offering premium expansions.",
+            ""
+        ])
+
+    return "\n".join(lines)
+
+
+def _build_hidden_patterns(
+    classifications: List[Dict[str, Any]],
+    insights: AggregatedInsights
+) -> str:
+    """Detect hidden patterns, UX gaps, and systemic issues."""
+
+    lines = [
+        _header("🔍 Hidden Patterns & Systemic Issues", 2),
+        "> Insights not visible from category counts alone.\n"
+    ]
+
+    # 1. 100% negative clusters
+    groups = defaultdict(list)
+    for c in classifications:
+        key = c.get('subcategory', 'Unknown')
+        groups[key].append(c)
+
+    hundred_pct_neg = [
+        (k, v) for k, v in groups.items()
+        if len(v) >= 3 and all(t.get('sentiment') == 'Negative' for t in v)
+    ]
+
+    if hundred_pct_neg:
+        lines.append("### 🚨 100% Negative Clusters (Zero Satisfaction)")
+        lines.append("")
+        for sub, tickets in sorted(hundred_pct_neg, key=lambda x: -len(x[1])):
+            lines.append(f"- **{sub}**: {len(tickets)} tickets — ALL negative. No positive signal at all. This is a systemic issue, not edge case feedback.")
+        lines.append("")
+
+    # 2. Communication gap signals
+    comms_gap = [c for c in classifications if c.get('pain_type') in ['Trust', 'Emotional']
+                 and c.get('business_risk') in ['Trust', 'Rating']]
+    if comms_gap:
+        lines.extend([
+            "### 📢 Communication Gaps",
+            "",
+            f"{len(comms_gap)} tickets indicate players feel **uninformed or misled** — a sign of poor in-game communication or unclear UX.",
+            "Root fix: proactive in-app messaging, clearer feature explanations, and expectation-setting.",
+            ""
+        ])
+
+    # 3. Overuse of generic categories
+    generic = sum(1 for c in classifications if c.get('category') == 'Other')
+    if generic > len(classifications) * 0.1:
+        lines.extend([
+            "### ⚠️ Feedback Intelligence System Issue",
+            "",
+            f"{generic} tickets ({round(generic/len(classifications)*100,1)}%) classified as 'Other' — "
+            "this suggests the AI categorization needs richer taxonomy or more context.",
+            "**Recommendation:** Expand category definitions or add game-specific categories to the prompt.",
+            ""
+        ])
+
+    # 4. Payer vs non-payer signal
+    payers = [c for c in classifications if c.get('player_type_signal') == 'Payer']
+    non_payers = [c for c in classifications if c.get('player_type_signal') == 'Non-Payer']
+    if payers:
+        payer_neg = sum(1 for p in payers if p.get('sentiment') == 'Negative')
+        lines.extend([
+            "### 💳 Payer vs Non-Payer Signal",
+            "",
+            f"- **Payer-identified tickets:** {len(payers)} | Negative: {payer_neg} ({round(payer_neg/len(payers)*100,1) if payers else 0}%)",
+            f"- **Non-payer tickets:** {len(non_payers)}",
+            "",
+            f"> {'🔴 **Payer complaints are revenue-critical.** Address these first.' if payer_neg > 0 else '🟢 Payer signals look stable.'}",
+            ""
+        ])
+
+    return "\n".join(lines)
+
+
+def _build_strategic_recommendations(
+    insights: AggregatedInsights,
+    classifications: List[Dict[str, Any]]
+) -> str:
+    """Strategic recommendations in sprint / short / long-term tiers."""
+
+    lines = [
+        _header("🎯 Strategic Recommendations", 2),
+        "> Prioritized by business impact, not complaint volume.\n"
+    ]
+
+    # Immediate
+    critical_issues = [c for c in classifications if c.get('sentiment_severity') == 'Critical']
+    churn_signals = [c for c in classifications if 'Churn' in (c.get('intent') or '')]
+    revenue_risks = [c for c in classifications if c.get('business_risk') == 'Revenue']
+
+    lines.extend([
+        "### 🚨 Immediate (This Sprint)",
+        "",
+        f"- **Fix critical-severity issues first** — {len(critical_issues)} tickets flagged as Critical. "
+        "These players are on the edge of churning or leaving 1-star reviews.",
+    ])
+    if churn_signals:
+        lines.append(f"- **Address churn-threat signals** — {len(churn_signals)} players explicitly signaled leaving. "
+                     "Reach out via CS or in-app if possible.")
+    if revenue_risks:
+        lines.append(f"- **Audit revenue risk flows** — {len(revenue_risks)} tickets flag monetization friction. "
+                     "Run conversion funnel audit this week.")
+    lines.append("")
+
+    # Short-term
+    retention_risks = [c for c in classifications if c.get('business_risk') == 'Retention']
+    trust_risks = [c for c in classifications if c.get('business_risk') == 'Trust']
+    lines.extend([
+        "### 📅 Short-Term (1–2 Months)",
+        "",
+        f"- **Reduce retention friction** — {len(retention_risks)} tickets indicate retention risk. "
+        "Map player journey to identify drop-off points and simplify.",
+    ])
+    if trust_risks:
+        lines.append(f"- **Rebuild trust** — {len(trust_risks)} trust-risk tickets. "
+                     "Consider a transparent update note or player communication campaign.")
+    lines.extend([
+        "- **Improve difficulty curve** — if balance issues dominate, instrument level telemetry and A/B test adjustments.",
+        "- **Enhance positive drivers** — double down on features players love (see Positive Drivers section).",
+        ""
+    ])
+
+    # Long-term
+    lines.extend([
+        "### 🔭 Long-Term (Quarterly)",
+        "",
+        "- **Build a real-time feedback loop** — move from reactive analysis to proactive monitoring.",
+        "- **Segment feedback by payer cohort** — payer vs non-payer pain differs and needs separate product responses.",
+        "- **Refine AI feedback taxonomy** — add game-specific subcategories to improve signal fidelity.",
+        "- **Monetization trust investment** — ensure IAP flows feel fair, transparent, and rewarding.",
+        ""
+    ])
+
+    return "\n".join(lines)
+
+
+def _build_system_critique(classifications: List[Dict[str, Any]]) -> str:
+    """Critique the feedback intelligence system itself."""
+
+    total = len(classifications)
+    generic = sum(1 for c in classifications if c.get('category') == 'Other')
+    low_conf = sum(1 for c in classifications if c.get('confidence', 1) < 0.7)
+    no_feature = sum(1 for c in classifications if not c.get('related_feature'))
+
+    lines = [
+        _header("🔬 Feedback Intelligence System Critique", 2),
+        "> How well did the AI analysis actually work? What to improve.\n",
+        "| Metric | Value | Assessment |",
+        "|--------|-------|------------|",
+        f"| Generic 'Other' category usage | {generic} ({round(generic/total*100,1) if total else 0}%) | "
+        f"{'🔴 Too high — richer taxonomy needed' if generic > total*0.1 else '🟢 Acceptable'} |",
+        f"| Low-confidence classifications (<0.7) | {low_conf} | "
+        f"{'🟡 Review manually' if low_conf > 5 else '🟢 Good'} |",
+        f"| Tickets without feature mapping | {no_feature} | "
+        f"{'🟡 Improve feature taxonomy in context' if no_feature > total*0.2 else '🟢 Good'} |",
+        "",
+        "**Improvement Recommendations:**",
+        "",
+        "- Add game-specific categories (e.g., 'Level Difficulty', 'IAP Value', 'Progression Loss') to the AI prompt",
+        "- Include player ARPU/payer tier data if available to enable payer-specific analysis",
+        "- Track sentiment trends over time (weekly deltas) to detect degradation early",
+        "- Add duplicate/near-duplicate detection to avoid skewing frequency counts",
+        "- Build a confidence threshold filter — tickets below 0.65 confidence should be human-reviewed",
+        ""
+    ]
+
+    return "\n".join(lines)
+
+
+def _build_stats_appendix(
+    insights: AggregatedInsights,
+    classifications: List[Dict[str, Any]]
+) -> str:
+    """Compact statistical appendix — not the main story."""
+
+    total = insights.total_tickets
+    lines = [
+        _header("📊 Statistical Appendix", 2),
+        "> Reference data only — the analysis above is what matters.\n",
+        "**Category Breakdown:**",
+        "",
+    ]
+
+    for cat, count in sorted(insights.category_breakdown.items(), key=lambda x: -x[1]):
+        pct = round(count / total * 100, 1) if total else 0
+        lines.append(f"- {cat}: {count} ({pct}%)")
+
+    lines.extend(["", "**Sentiment Breakdown:**", ""])
+    for sent, count in sorted(insights.sentiment_breakdown.items(), key=lambda x: -x[1]):
+        pct = round(count / total * 100, 1) if total else 0
+        lines.append(f"- {sent}: {count} ({pct}%)")
+
+    lines.extend(["", "**Top Features Mentioned:**", ""])
+    for feat, count in sorted(insights.feature_breakdown.items(), key=lambda x: -x[1])[:10]:
+        if feat != 'Unspecified':
+            pct = round(count / total * 100, 1) if total else 0
+            lines.append(f"- {feat}: {count} ({pct}%)")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MAIN REPORT BUILDERS
+# ─────────────────────────────────────────────────────────────────────────────
 
 def generate_markdown_report(
     insights: AggregatedInsights,
@@ -472,68 +496,25 @@ def generate_markdown_report(
     game_context: Optional[GameFeatureContext] = None
 ) -> str:
     """
-    Generate complete Markdown report for designers.
-    
-    Args:
-        insights: Aggregated insights
-        classifications: List of all classifications
-        input_params: Input parameters
-        game_context: Optional game context
-        
-    Returns:
-        Complete Markdown formatted report
+    Generate executive-level Markdown Feedback Intelligence Report.
     """
-    logger.info("Generating Markdown report...")
-    
-    report_parts = [
-        f"# 📋 Feedback Analysis Report: {input_params.game_name}",
-        "",
-        f"*Generated on {datetime.now().strftime('%Y-%m-%d at %H:%M:%S')}*",
-        "",
-        "---",
-        "",
-        generate_executive_summary(insights, input_params, game_context),
-        "",
-        generate_top_issues_section(insights),
-        "",
-        generate_feature_feedback_section(insights, classifications),
-        "",
-        generate_recent_changes_section(insights),
-        "",
-        generate_player_quotes_section(classifications, insights),
-        "",
-        generate_actionable_insights_section(insights, game_context),
-        "",
-        "---",
-        "",
-        "## 📈 Statistical Breakdown",
-        "",
-        "### Category Distribution",
-        ""
+    logger.info("Generating executive Feedback Intelligence Report...")
+
+    sections = [
+        _build_executive_brief(insights, classifications, input_params),
+        _build_pain_points(classifications, insights),
+        _build_positive_drivers(classifications, insights),
+        _build_hidden_patterns(classifications, insights),
+        _build_strategic_recommendations(insights, classifications),
+        _build_system_critique(classifications),
+        _build_stats_appendix(insights, classifications),
+        _divider(),
+        f"*Report generated by Freshdesk Feedback AI Analysis System — "
+        f"{datetime.now().strftime('%Y-%m-%d %H:%M')}*\n"
     ]
-    
-    # Add category stats
-    for category, count in sorted(insights.category_breakdown.items(), key=lambda x: x[1], reverse=True):
-        percentage = count / insights.total_tickets * 100
-        report_parts.append(f"- **{category}**: {count} ({percentage:.1f}%)")
-    
-    report_parts.extend(["", "### Sentiment Distribution", ""])
-    
-    # Add sentiment stats
-    for sentiment, count in sorted(insights.sentiment_breakdown.items(), key=lambda x: x[1], reverse=True):
-        percentage = count / insights.total_tickets * 100
-        report_parts.append(f"- **{sentiment}**: {count} ({percentage:.1f}%)")
-    
-    report_parts.extend([
-        "",
-        "---",
-        "",
-        "*This report was automatically generated by the Freshdesk Feedback AI Analysis System*"
-    ])
-    
-    logger.info("✓ Markdown report generated successfully")
-    
-    return "\n".join(report_parts)
+
+    logger.info("✓ Executive Markdown report generated")
+    return "\n".join(sections)
 
 
 def generate_json_insights(
@@ -542,20 +523,15 @@ def generate_json_insights(
     input_params: FeedbackAnalysisInput,
     metadata: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """
-    Generate structured JSON insights report.
-    
-    Args:
-        insights: Aggregated insights
-        classifications: List of all classifications
-        input_params: Input parameters
-        metadata: Additional metadata
-        
-    Returns:
-        Dictionary ready for JSON export
-    """
+    """Generate structured JSON insights report."""
     logger.info("Generating JSON insights report...")
-    
+
+    # Business risk summary
+    risks = Counter(c.get('business_risk') for c in classifications if c.get('business_risk'))
+    severities = Counter(c.get('sentiment_severity') for c in classifications if c.get('sentiment_severity'))
+    pain_types = Counter(c.get('pain_type') for c in classifications if c.get('pain_type'))
+    payer_signals = Counter(c.get('player_type_signal') for c in classifications if c.get('player_type_signal'))
+
     json_report = {
         'report_metadata': {
             'game_name': input_params.game_name,
@@ -568,24 +544,29 @@ def generate_json_insights(
             'total_tickets_analyzed': insights.total_tickets,
             'ai_average_confidence': insights.average_confidence
         },
+        'business_intelligence': {
+            'business_risk_breakdown': dict(risks),
+            'sentiment_severity_breakdown': dict(severities),
+            'pain_type_breakdown': dict(pain_types),
+            'player_type_signals': dict(payer_signals),
+            'critical_ticket_count': severities.get('Critical', 0),
+            'churn_threat_count': sum(1 for c in classifications if 'Churn' in (c.get('intent') or '')),
+            'payer_complaint_count': payer_signals.get('Payer', 0)
+        },
         'summary': {
             'total_tickets': insights.total_tickets,
-            'expected_behaviors': insights.expected_behavior_count,
-            'average_confidence': insights.average_confidence,
             'category_breakdown': insights.category_breakdown,
             'sentiment_breakdown': insights.sentiment_breakdown,
-            'intent_breakdown': insights.intent_breakdown,
-            'feature_breakdown': insights.feature_breakdown
+            'feature_breakdown': insights.feature_breakdown,
+            'top_issues': insights.top_issues,
         },
-        'top_issues': insights.top_issues,
-        'recent_change_impacts': insights.recent_change_impacts,
         'patterns': insights.key_patterns,
+        'recent_change_impacts': insights.recent_change_impacts,
         'detailed_classifications': classifications,
         'metadata': metadata
     }
-    
-    logger.info("✓ JSON insights report generated successfully")
-    
+
+    logger.info("✓ JSON insights generated")
     return json_report
 
 
@@ -596,160 +577,40 @@ def save_reports(
     game_context: Optional[GameFeatureContext] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Path]:
-    """
-    Generate and save both Markdown and JSON reports.
-    
-    Args:
-        insights: Aggregated insights
-        classifications: List of all classifications
-        input_params: Input parameters
-        game_context: Optional game context
-        metadata: Optional additional metadata
-        
-    Returns:
-        Dictionary with paths to saved reports
-    """
+    """Generate and save both Markdown and JSON reports."""
     logger.info("="*70)
-    logger.info("Generating and saving reports")
+    logger.info("Generating Feedback Intelligence Reports")
     logger.info("="*70)
-    
-    # Ensure directories exist
+
     REPORTS_MARKDOWN_DIR.mkdir(parents=True, exist_ok=True)
     REPORTS_JSON_DIR.mkdir(parents=True, exist_ok=True)
-    
-    # Build deterministic filenames
+
     safe_game_name = sanitize_filename(input_params.game_name)
     timestamp = get_timestamp()
-    
+
     base_filename = (
         f"{safe_game_name}_{input_params.os}_"
         f"{input_params.start_date}_to_{input_params.end_date}_{timestamp}"
     )
-    
-    # Generate and save Markdown report
+
+    # Markdown report
     markdown_content = generate_markdown_report(
-        insights,
-        classifications,
-        input_params,
-        game_context
+        insights, classifications, input_params, game_context
     )
-    
-    markdown_filename = f"report_{base_filename}.md"
-    markdown_path = REPORTS_MARKDOWN_DIR / markdown_filename
+    markdown_path = REPORTS_MARKDOWN_DIR / f"report_{base_filename}.md"
     save_markdown(markdown_content, markdown_path)
-    
-    logger.info(f"✓ Markdown report saved: {markdown_filename}")
-    
-    # Generate and save JSON insights
+    logger.info(f"✓ Markdown report: {markdown_path.name}")
+
+    # JSON report
     json_insights = generate_json_insights(
-        insights,
-        classifications,
-        input_params,
-        metadata or {}
+        insights, classifications, input_params, metadata or {}
     )
-    
-    json_filename = f"insights_{base_filename}.json"
-    json_path = REPORTS_JSON_DIR / json_filename
+    json_path = REPORTS_JSON_DIR / f"insights_{base_filename}.json"
     save_json(json_insights, json_path)
-    
-    logger.info(f"✓ JSON insights saved: {json_filename}")
-    
+    logger.info(f"✓ JSON insights: {json_path.name}")
+
     logger.info("="*70)
     logger.info("✓ Report generation complete")
     logger.info("="*70)
-    
-    return {
-        'markdown': markdown_path,
-        'json': json_path
-    }
 
-
-if __name__ == "__main__":
-    # Test report generation
-    print("\n" + "="*70)
-    print("  TESTING REPORT GENERATOR")
-    print("="*70 + "\n")
-    
-    # Create sample data for testing
-    from src.aggregator import AggregatedInsights
-    from src.input_handler import FeedbackAnalysisInput
-    
-    sample_insights = AggregatedInsights(
-        total_tickets=100,
-        category_breakdown={'Bug': 45, 'Feature Request': 30, 'Positive Feedback': 25},
-        sentiment_breakdown={'Negative': 50, 'Positive': 35, 'Neutral': 15},
-        intent_breakdown={'Report Bug': 45, 'Request Feature': 30, 'Praise Game': 25},
-        feature_breakdown={'Level progression': 40, 'IAP': 30, 'UI': 20, 'Social': 10},
-        top_issues=[
-            {
-                'category': 'Bug',
-                'subcategory': 'Crash/Freeze',
-                'count': 25,
-                'percentage': 25.0,
-                'avg_confidence': 0.95,
-                'sentiment_breakdown': {'Negative': 24, 'Neutral': 1},
-                'sample_summaries': [
-                    'Game crashes on level 50',
-                    'Freeze when opening shop',
-                    'App crashes during event'
-                ],
-                'ticket_ids': [1, 2, 3]
-            }
-        ],
-        recent_change_impacts=[],
-        expected_behavior_count=10,
-        average_confidence=0.92,
-        key_patterns=[
-            {
-                'pattern_type': 'Negative Sentiment Cluster',
-                'description': 'Lives system has 80% negative feedback',
-                'severity': 'High',
-                'feature': 'Lives system'
-            }
-        ]
-    )
-    
-    sample_classifications = [
-        {
-            'ticket_id': 1,
-            'category': 'Bug',
-            'subcategory': 'Crash/Freeze',
-            'sentiment': 'Negative',
-            'intent': 'Report Bug',
-            'confidence': 0.95,
-            'short_summary': 'Game crashes on level 50',
-            'related_feature': 'Level progression'
-        }
-    ]
-    
-    sample_params = FeedbackAnalysisInput(
-        game_name="Test Game",
-        os="Android",
-        start_date="2024-01-01",
-        end_date="2024-01-31"
-    )
-    
-    print("1. Generating Markdown report...")
-    markdown = generate_markdown_report(
-        sample_insights,
-        sample_classifications,
-        sample_params
-    )
-    print(f"   ✓ Generated {len(markdown)} characters\n")
-    
-    print("2. Preview (first 500 chars):")
-    print(markdown[:500])
-    print("   ...\n")
-    
-    print("3. Generating JSON insights...")
-    json_insights = generate_json_insights(
-        sample_insights,
-        sample_classifications,
-        sample_params,
-        {}
-    )
-    print(f"   ✓ Generated with {len(json_insights)} top-level keys\n")
-    
-    print("="*70)
-    print("✅ Report generator test completed successfully!")
-    print("="*70 + "\n")
+    return {'markdown': markdown_path, 'json': json_path}

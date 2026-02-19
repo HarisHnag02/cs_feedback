@@ -33,18 +33,7 @@ class AIClassifierError(Exception):
 class TicketClassification:
     """
     AI classification result for a single ticket.
-    
-    Attributes:
-        ticket_id: Original ticket ID
-        category: Main category (Bug, Feature Request, Feedback, etc.)
-        subcategory: Specific subcategory within main category
-        sentiment: Sentiment analysis (Positive, Negative, Neutral, Mixed)
-        intent: User intent (Report Issue, Request Feature, Praise, Complaint, etc.)
-        confidence: AI confidence score (0.0 to 1.0)
-        key_points: List of key points extracted from feedback
-        short_summary: Brief summary of the feedback
-        is_expected_behavior: Whether issue is due to known constraint/expected behavior
-        related_feature: Which game feature this relates to (if any)
+    Enhanced with business intelligence fields.
     """
     ticket_id: int
     category: str
@@ -56,6 +45,13 @@ class TicketClassification:
     short_summary: str
     is_expected_behavior: bool
     related_feature: Optional[str] = None
+    # New business intelligence fields
+    sentiment_severity: Optional[str] = None   # Critical, High, Medium, Low
+    pain_type: Optional[str] = None            # Emotional, Functional, Financial, Trust, Progress
+    business_risk: Optional[str] = None        # Retention, Revenue, Rating, Trust
+    player_type_signal: Optional[str] = None   # Payer, Non-Payer, Unknown
+    root_cause: Optional[str] = None           # Probable root cause
+    player_suggested_solution: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
@@ -64,10 +60,16 @@ class TicketClassification:
             'category': self.category,
             'subcategory': self.subcategory,
             'sentiment': self.sentiment,
+            'sentiment_severity': self.sentiment_severity,
             'intent': self.intent,
+            'pain_type': self.pain_type,
+            'business_risk': self.business_risk,
+            'player_type_signal': self.player_type_signal,
             'confidence': self.confidence,
             'key_points': self.key_points,
             'short_summary': self.short_summary,
+            'root_cause': self.root_cause,
+            'player_suggested_solution': self.player_suggested_solution,
             'is_expected_behavior': self.is_expected_behavior,
             'related_feature': self.related_feature
         }
@@ -99,7 +101,11 @@ def build_batch_classification_prompt(
         Complete batch prompt string for OpenAI
     """
     prompt_parts = [
-        "You are an expert game feedback analyst. Analyze the following player feedback tickets and provide structured classifications.",
+        "You are a Senior Product Analyst, Game Monetization Strategist, and QA Lead.",
+        "Analyze the following mobile game player feedback tickets with deep business intelligence.",
+        "Think in terms of LTV, churn, payer vs non-payer behavior, retention, and monetization trust.",
+        "Do NOT produce generic summaries. Identify REAL player pain points, emotional friction,",
+        "trust risks, retention risks, and revenue risks.",
         ""
     ]
     
@@ -109,15 +115,15 @@ def build_batch_classification_prompt(
             "GAME CONTEXT:",
             game_context.format_for_ai(),
             "",
-            "IMPORTANT: Use this context to:",
-            "- Determine if reported issues are actually expected behaviors",
-            "- Identify which specific game features the feedback relates to",
-            "- Understand if suggestions are for existing or new features",
+            "Use this context to:",
+            "- Identify if issues relate to known constraints vs real bugs",
+            "- Detect if player pain is from recent changes",
+            "- Understand which features drive satisfaction or churn",
             ""
         ])
     
     # Add all tickets
-    prompt_parts.append(f"ANALYZE THESE {len(tickets)} FEEDBACK TICKETS:")
+    prompt_parts.append(f"CLASSIFY THESE {len(tickets)} FEEDBACK TICKETS:")
     prompt_parts.append("")
     
     for i, ticket in enumerate(tickets, 1):
@@ -136,28 +142,36 @@ def build_batch_classification_prompt(
         "{",
         '  "classifications": [',
         "    {",
-        '      "ticket_id": <ticket ID>,',
-        '      "category": "<Main category: Bug, Feature Request, Positive Feedback, Negative Feedback, Question, Technical Issue, Balance Issue, or Other>",',
-        '      "subcategory": "<Specific subcategory>",',
-        '      "sentiment": "<Positive, Negative, Neutral, or Mixed>",',
-        '      "intent": "<Report Bug, Request Feature, Praise Game, Complain, Ask Question, or Other>",',
+        '      "ticket_id": <ticket ID as number>,',
+        '      "category": "<Bug | Feature Request | Positive Feedback | Negative Feedback | Balance Issue | Monetization Friction | Trust Issue | UX Problem | Technical Issue | Other>",',
+        '      "subcategory": "<specific type e.g. Level Difficulty, IAP Trust, Crash, Progress Loss>",',
+        '      "sentiment": "<Positive | Negative | Neutral | Mixed>",',
+        '      "sentiment_severity": "<Critical | High | Medium | Low> (how strongly felt)",',
+        '      "intent": "<Report Bug | Complain | Request Feature | Praise | Warn Others | Threaten Churn | Other>",',
+        '      "pain_type": "<Emotional | Functional | Financial | Trust | Progress | null>",',
+        '      "business_risk": "<Retention | Revenue | Rating | Trust | null>",',
+        '      "player_type_signal": "<Payer | Non-Payer | Unknown> based on context clues",',
         '      "confidence": <0.0 to 1.0>,',
-        '      "key_points": ["<point 1>", "<point 2>", ...],',
-        '      "short_summary": "<one sentence>",',
+        '      "key_points": ["<specific player pain signal 1>", "<pain signal 2>", ...],',
+        '      "short_summary": "<one sharp analytical sentence, not a restatement>",',
+        '      "root_cause": "<probable technical or design root cause>",',
+        '      "player_suggested_solution": "<explicit or implicit solution player mentioned, or null>",',
         '      "is_expected_behavior": <true/false>,',
-        '      "related_feature": "<feature name or null>"',
+        '      "related_feature": "<exact feature name or null>"',
         "    },",
         "    ... (repeat for all tickets)",
         "  ]",
         "}",
         "",
-        "CRITICAL:",
+        "CRITICAL RULES:",
         f"- classifications array must have exactly {len(tickets)} objects",
-        "- Each object must have a ticket_id matching the input",
-        "- Maintain the same order as input tickets",
-        "- All fields are required for each ticket",
-        "- confidence must be 0.0 to 1.0",
-        "- is_expected_behavior must be true or false"
+        "- Each object must have ticket_id matching the input",
+        "- Maintain same order as input",
+        "- All fields required, use null only where specified",
+        "- sentiment_severity: Critical = rage/threat to leave/1-star warning",
+        "- pain_type: what KIND of pain the player is experiencing",
+        "- business_risk: what business metric is at risk from this ticket",
+        "- be analytical, not generic — each summary must be distinct"
     ])
     
     return "\n".join(prompt_parts)
@@ -444,7 +458,14 @@ class OpenAIClassifier:
                         key_points=result['key_points'],
                         short_summary=result['short_summary'],
                         is_expected_behavior=bool(result['is_expected_behavior']),
-                        related_feature=result.get('related_feature')
+                        related_feature=result.get('related_feature'),
+                        # New business intelligence fields
+                        sentiment_severity=result.get('sentiment_severity'),
+                        pain_type=result.get('pain_type'),
+                        business_risk=result.get('business_risk'),
+                        player_type_signal=result.get('player_type_signal'),
+                        root_cause=result.get('root_cause'),
+                        player_suggested_solution=result.get('player_suggested_solution')
                     )
                     classifications.append(classification)
                 except (KeyError, ValueError) as e:
@@ -463,7 +484,7 @@ class OpenAIClassifier:
         tickets: List[Dict[str, Any]],
         game_context: Optional[GameFeatureContext] = None,
         max_tickets: Optional[int] = None,
-        batch_size: int = 10
+        batch_size: int = 20
     ) -> List[TicketClassification]:
         """
         Classify multiple tickets using batch processing.

@@ -1,0 +1,4576 @@
+{
+  "metadata": {
+    "game_name": "Word Trip",
+    "os": "Android",
+    "start_date": "2026-02-12",
+    "end_date": "2026-02-19",
+    "fetched_at": "2026-02-19T15:26:04.632085",
+    "total_records": 407,
+    "source": "freshdesk_api",
+    "domain": "playsimple.freshdesk.com",
+    "cleaned": true,
+    "original_count": 407,
+    "cleaned_count": 407,
+    "cleaning_timestamp": "2026-02-19T15:26:04.632085",
+    "classified": true,
+    "classification_model": "gpt-4-turbo-preview",
+    "classification_timestamp": "2026-02-19T16:09:42.728291",
+    "total_classified": 351,
+    "closed_tickets_fetched": 407,
+    "feedback_tickets_filtered": 351,
+    "non_feedback_filtered_out": 56,
+    "classification_success_rate": 100.0
+  },
+  "classifications": [
+    {
+      "ticket_id": 1462211,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1462192,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player enjoys the puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1462140,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfaction with game progress"
+      ],
+      "short_summary": "Player is satisfied with game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1462113,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Connectivity issue reported"
+      ],
+      "short_summary": "Player reports a connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Offline play capability"
+    },
+    {
+      "ticket_id": 1462112,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Issue with internet connection"
+      ],
+      "short_summary": "Player faces internet connection issues.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1462116,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Gameplay enjoyment"
+      ],
+      "short_summary": "Australian player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1462115,
+      "category": "Positive Feedback",
+      "subcategory": "Game Progress",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "High level of progress"
+      ],
+      "short_summary": "Player has made significant progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1462102,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoyment of puzzles"
+      ],
+      "short_summary": "Player enjoys solving puzzles.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1462101,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Gameplay satisfaction"
+      ],
+      "short_summary": "Player is satisfied with the gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1462089,
+      "category": "Technical Issue",
+      "subcategory": "Device Compatibility",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.75,
+      "key_points": [
+        "Possible device compatibility issue"
+      ],
+      "short_summary": "Player might be experiencing device compatibility issues.",
+      "is_expected_behavior": false,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1462076,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoyment of game"
+      ],
+      "short_summary": "Player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1462053,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Gameplay enjoyment",
+        "Satisfaction with progress"
+      ],
+      "short_summary": "UK player enjoys the game and is satisfied with progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1462044,
+      "category": "Positive Feedback",
+      "subcategory": "Game Progress",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "Extensive progress and satisfaction"
+      ],
+      "short_summary": "Player has made extensive progress and is highly satisfied.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1462040,
+      "category": "Positive Feedback",
+      "subcategory": "Monetization",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfaction with purchases"
+      ],
+      "short_summary": "Paying player is satisfied with their purchases.",
+      "is_expected_behavior": true,
+      "related_feature": "Coin system"
+    },
+    {
+      "ticket_id": 1462036,
+      "category": "Positive Feedback",
+      "subcategory": "Monetization",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfaction with in-game purchases"
+      ],
+      "short_summary": "Player is satisfied with in-game purchases.",
+      "is_expected_behavior": true,
+      "related_feature": "Coin system"
+    },
+    {
+      "ticket_id": 1462009,
+      "category": "Positive Feedback",
+      "subcategory": "Monetization",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Positive experience with purchases"
+      ],
+      "short_summary": "Player has a positive experience with purchases.",
+      "is_expected_behavior": true,
+      "related_feature": "Coin system"
+    },
+    {
+      "ticket_id": 1462008,
+      "category": "Positive Feedback",
+      "subcategory": "Monetization",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with purchase experience"
+      ],
+      "short_summary": "Player is happy with their purchase experience.",
+      "is_expected_behavior": true,
+      "related_feature": "Coin system"
+    },
+    {
+      "ticket_id": 1461999,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoyment of game"
+      ],
+      "short_summary": "Player from Barbados enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1461992,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfaction with gameplay"
+      ],
+      "short_summary": "Player is satisfied with the gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles"
+    },
+    {
+      "ticket_id": 1461970,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Connectivity issue"
+      ],
+      "short_summary": "Player reports a connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Offline play capability"
+    },
+    {
+      "ticket_id": 1461956,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461934,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461933,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461930,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461924,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461890,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461878,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461869,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461862,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461828,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity Issue",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports a connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1461833,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461832,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Positive feedback from a paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461793,
+      "category": "Technical Issue",
+      "subcategory": "Inappropriate Ads",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "Inappropriate ads"
+      ],
+      "short_summary": "Player reports inappropriate ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad loading performance"
+    },
+    {
+      "ticket_id": 1461795,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461805,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461763,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461762,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461761,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461744,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461713,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Positive feedback from a paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461705,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461694,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1461688,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461671,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461669,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461667,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461651,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461652,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461586,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461584,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461581,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461578,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461577,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461559,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461549,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461539,
+      "category": "Negative Feedback",
+      "subcategory": "Insult",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 1.0,
+      "key_points": [
+        "Insulting language"
+      ],
+      "short_summary": "Player expresses dissatisfaction with insulting language.",
+      "is_expected_behavior": false,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461538,
+      "category": "Negative Feedback",
+      "subcategory": "Insult",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 1.0,
+      "key_points": [
+        "Insulting language"
+      ],
+      "short_summary": "Player expresses dissatisfaction with insulting language.",
+      "is_expected_behavior": false,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461547,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461546,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461520,
+      "category": "Other",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "General feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461504,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461494,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.65,
+      "key_points": [],
+      "short_summary": "Player provided feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461465,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Positive feedback from a player in India.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461447,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Neutral feedback from a player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461437,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback from a player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461377,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Feedback from a player with some game progress.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461375,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Neutral feedback from a player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461345,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback from a player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461340,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.65,
+      "key_points": [],
+      "short_summary": "Feedback from a player using an older version.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461338,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Neutral feedback from a player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461324,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Highly engaged payer providing positive feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461322,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from a highly engaged payer.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461321,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from a dedicated player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461318,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from an engaged payer.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461307,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from a dedicated payer.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461304,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from a highly engaged player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461299,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from an engaged payer.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461297,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from a dedicated player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461293,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from an engaged payer.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461291,
+      "category": "Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High game progress"
+      ],
+      "short_summary": "Positive feedback from a highly engaged player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461277,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461268,
+      "category": "Positive Feedback",
+      "subcategory": "Game Progress",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High level of progress"
+      ],
+      "short_summary": "Player is pleased with their game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1461264,
+      "category": "Positive Feedback",
+      "subcategory": "Monetization Satisfaction",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.85,
+      "key_points": [
+        "Satisfaction with purchases"
+      ],
+      "short_summary": "Paying player is satisfied with their purchases.",
+      "is_expected_behavior": true,
+      "related_feature": "Coin system"
+    },
+    {
+      "ticket_id": 1461259,
+      "category": "Negative Feedback",
+      "subcategory": "Ad Frequency",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 0.75,
+      "key_points": [
+        "Complaint about ad frequency"
+      ],
+      "short_summary": "Player complains about the frequency of ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad frequency"
+    },
+    {
+      "ticket_id": 1461228,
+      "category": "Technical Issue",
+      "subcategory": "Performance Issues",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.7,
+      "key_points": [
+        "Game performance issues"
+      ],
+      "short_summary": "Player reports performance issues on their device.",
+      "is_expected_behavior": false,
+      "related_feature": "Performance issues on older devices"
+    },
+    {
+      "ticket_id": 1461205,
+      "category": "Technical Issue",
+      "subcategory": "Sync Issues",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.65,
+      "key_points": [
+        "Issues with game data sync"
+      ],
+      "short_summary": "Player experiences issues with game data synchronization.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1461193,
+      "category": "Question",
+      "subcategory": "Gameplay Query",
+      "sentiment": "Neutral",
+      "intent": "Ask Question",
+      "confidence": 0.5,
+      "key_points": [],
+      "short_summary": "Player has a gameplay-related query.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461181,
+      "category": "Question",
+      "subcategory": "Feature Inquiry",
+      "sentiment": "Neutral",
+      "intent": "Ask Question",
+      "confidence": 0.55,
+      "key_points": [],
+      "short_summary": "Player inquires about a specific game feature.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461180,
+      "category": "Question",
+      "subcategory": "Feature Inquiry",
+      "sentiment": "Neutral",
+      "intent": "Ask Question",
+      "confidence": 0.55,
+      "key_points": [],
+      "short_summary": "Player inquires about a specific game feature.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461176,
+      "category": "Question",
+      "subcategory": "Connectivity Issues",
+      "sentiment": "Neutral",
+      "intent": "Ask Question",
+      "confidence": 0.6,
+      "key_points": [],
+      "short_summary": "Player asks about connectivity issues.",
+      "is_expected_behavior": true,
+      "related_feature": "Internet connection required"
+    },
+    {
+      "ticket_id": 1461146,
+      "category": "Technical Issue",
+      "subcategory": "Ad Loading",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.65,
+      "key_points": [
+        "Ad loading issues"
+      ],
+      "short_summary": "Player reports issues with ad loading.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad loading performance"
+    },
+    {
+      "ticket_id": 1461159,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay Enjoyment",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [
+        "Enjoyment of gameplay"
+      ],
+      "short_summary": "Player expresses enjoyment of the gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461090,
+      "category": "Negative Feedback",
+      "subcategory": "Dictionary Limitations",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 0.75,
+      "key_points": [
+        "Complaint about dictionary limitations"
+      ],
+      "short_summary": "Player complains about the limitations of the game's dictionary.",
+      "is_expected_behavior": true,
+      "related_feature": "Dictionary limited to common English words"
+    },
+    {
+      "ticket_id": 1461032,
+      "category": "Question",
+      "subcategory": "Feature Inquiry",
+      "sentiment": "Neutral",
+      "intent": "Ask Question",
+      "confidence": 0.55,
+      "key_points": [],
+      "short_summary": "Player inquires about a specific game feature.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1461048,
+      "category": "Negative Feedback",
+      "subcategory": "Ad Frequency",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 0.75,
+      "key_points": [
+        "Complaint about ad frequency"
+      ],
+      "short_summary": "Player complains about the frequency of ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad frequency"
+    },
+    {
+      "ticket_id": 1461041,
+      "category": "Negative Feedback",
+      "subcategory": "Ad Frequency",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 0.75,
+      "key_points": [
+        "Complaint about ad frequency"
+      ],
+      "short_summary": "Player complains about the frequency of ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad frequency"
+    },
+    {
+      "ticket_id": 1460983,
+      "category": "Technical Issue",
+      "subcategory": "Ad Issues",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.7,
+      "key_points": [
+        "Issues with ads/videos/offers"
+      ],
+      "short_summary": "Player reports issues with ads, videos, or offers.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad frequency"
+    },
+    {
+      "ticket_id": 1460910,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay Enjoyment",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [
+        "Enjoyment of gameplay"
+      ],
+      "short_summary": "Player expresses enjoyment of the gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460904,
+      "category": "Negative Feedback",
+      "subcategory": "Dictionary Limitations",
+      "sentiment": "Negative",
+      "intent": "Complain",
+      "confidence": 0.75,
+      "key_points": [
+        "Complaint about dictionary limitations"
+      ],
+      "short_summary": "Player complains about the limitations of the game's dictionary.",
+      "is_expected_behavior": true,
+      "related_feature": "Dictionary limited to common English words"
+    },
+    {
+      "ticket_id": 1460898,
+      "category": "Question",
+      "subcategory": "Feature Inquiry",
+      "sentiment": "Neutral",
+      "intent": "Ask Question",
+      "confidence": 0.55,
+      "key_points": [],
+      "short_summary": "Player inquires about a specific game feature.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460901,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460862,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460857,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460843,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460828,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460783,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460782,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460784,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460789,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460773,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460771,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460740,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460739,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460731,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460720,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460702,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460701,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460657,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460653,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460613,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460612,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460610,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460569,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460565,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460550,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460531,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460484,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460506,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460482,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460468,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460441,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460419,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460410,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460402,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460385,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460397,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460396,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460362,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460350,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460349,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460348,
+      "category": "Technical Issue",
+      "subcategory": "Performance",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Performance issues on older devices"
+      ],
+      "short_summary": "Player reports performance issues.",
+      "is_expected_behavior": false,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460317,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the game"
+      ],
+      "short_summary": "Player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460316,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Likes the game"
+      ],
+      "short_summary": "Player likes the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460289,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with the game"
+      ],
+      "short_summary": "Player is happy with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460272,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfied with the game"
+      ],
+      "short_summary": "Player is satisfied with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460249,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.85,
+      "key_points": [
+        "Internet connectivity issue"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1460255,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoys the game"
+      ],
+      "short_summary": "Player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460250,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Likes the game"
+      ],
+      "short_summary": "Player likes the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460228,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with the game"
+      ],
+      "short_summary": "Player is happy with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460197,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfied with the game"
+      ],
+      "short_summary": "Player is satisfied with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460175,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoys the game"
+      ],
+      "short_summary": "Player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460159,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Likes the game"
+      ],
+      "short_summary": "Player likes the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460144,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with the game"
+      ],
+      "short_summary": "Player is happy with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460143,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfied with the game"
+      ],
+      "short_summary": "Player is satisfied with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460132,
+      "category": "Technical Issue",
+      "subcategory": "Performance",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Performance issues on older devices"
+      ],
+      "short_summary": "Player reports performance issues.",
+      "is_expected_behavior": false,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460131,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoys the game"
+      ],
+      "short_summary": "Player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460130,
+      "category": "Technical Issue",
+      "subcategory": "Game Progress",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.85,
+      "key_points": [
+        "Issue with game progress"
+      ],
+      "short_summary": "Player reports issue with game progress.",
+      "is_expected_behavior": false,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1460119,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Likes the game"
+      ],
+      "short_summary": "Player likes the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460114,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.85,
+      "key_points": [
+        "Internet connectivity issue"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1460107,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with the game"
+      ],
+      "short_summary": "Player is happy with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460095,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460069,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460049,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460041,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460034,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460022,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1460003,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459929,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity Issue",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459916,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459902,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459866,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459888,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459889,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459867,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459868,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459837,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459845,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459816,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459797,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459785,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Other",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback provided without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459772,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459767,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player enjoys the puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": "Daily puzzles and bonus challenges"
+    },
+    {
+      "ticket_id": 1459763,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with game progress"
+      ],
+      "short_summary": "Player is happy with their game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking and level completion rewards"
+    },
+    {
+      "ticket_id": 1459728,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "High level of engagement",
+        "Significant progress"
+      ],
+      "short_summary": "Player has made significant progress and is highly engaged.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking and level completion rewards"
+    },
+    {
+      "ticket_id": 1459714,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfied with game experience"
+      ],
+      "short_summary": "Player is satisfied with their game experience.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459712,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the game"
+      ],
+      "short_summary": "Player enjoys playing the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459690,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459698,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.85,
+      "key_points": [
+        "New player enjoying the game"
+      ],
+      "short_summary": "New player enjoys the early game experience.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459670,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459669,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459647,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the game"
+      ],
+      "short_summary": "Player enjoys playing the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459624,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459596,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Happy with game progress"
+      ],
+      "short_summary": "Player is happy with their game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking and level completion rewards"
+    },
+    {
+      "ticket_id": 1459585,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459587,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the game"
+      ],
+      "short_summary": "Player enjoys playing the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459586,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the game"
+      ],
+      "short_summary": "Player enjoys playing the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459580,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "Significant progress",
+        "Satisfied with game experience"
+      ],
+      "short_summary": "Player has made significant progress and is satisfied with the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking and level completion rewards"
+    },
+    {
+      "ticket_id": 1459575,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet connection issue"
+      ],
+      "short_summary": "Player reports an issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459573,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "Significant progress",
+        "Satisfied with game experience"
+      ],
+      "short_summary": "Player has made significant progress and is satisfied with the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking and level completion rewards"
+    },
+    {
+      "ticket_id": 1459552,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Satisfied with game progress"
+      ],
+      "short_summary": "Player is satisfied with their game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking and level completion rewards"
+    },
+    {
+      "ticket_id": 1459545,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459528,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459494,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459492,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459472,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459470,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459457,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459447,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459413,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459384,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459377,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459370,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459361,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a highly engaged player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459358,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [],
+      "short_summary": "Positive feedback from a paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459344,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459332,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459305,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459271,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback from a non-paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459218,
+      "category": "Technical Issue",
+      "subcategory": "Compatibility",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "OS:7.1.1"
+      ],
+      "short_summary": "Player reports issue likely related to older OS compatibility.",
+      "is_expected_behavior": false,
+      "related_feature": "Performance issues on older devices"
+    },
+    {
+      "ticket_id": 1459229,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1459222,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459196,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459195,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459212,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459204,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459184,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459183,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459168,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459157,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459141,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459128,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459116,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [],
+      "short_summary": "Positive feedback from a paying player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459114,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459078,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459034,
+      "category": "Technical Issue",
+      "subcategory": "Ads & Rewards",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "No coins for watching videos"
+      ],
+      "short_summary": "Player did not receive coins for watching ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad Rewards"
+    },
+    {
+      "ticket_id": 1459032,
+      "category": "Technical Issue",
+      "subcategory": "Ads & Rewards",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "No coins for watching videos"
+      ],
+      "short_summary": "Player did not receive coins for watching ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad Rewards"
+    },
+    {
+      "ticket_id": 1459033,
+      "category": "Technical Issue",
+      "subcategory": "Ads & Rewards",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "No coins for watching videos"
+      ],
+      "short_summary": "Player did not receive coins for watching ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad Rewards"
+    },
+    {
+      "ticket_id": 1459030,
+      "category": "Technical Issue",
+      "subcategory": "Ads & Rewards",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "No coins for watching videos"
+      ],
+      "short_summary": "Player did not receive coins for watching ads.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad Rewards"
+    },
+    {
+      "ticket_id": 1459029,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459023,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "General positive feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1459010,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Offline play not working as expected"
+      ],
+      "short_summary": "Player reports an issue with offline play functionality.",
+      "is_expected_behavior": false,
+      "related_feature": "Offline play capability"
+    },
+    {
+      "ticket_id": 1459009,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Offline play not working as expected"
+      ],
+      "short_summary": "Player reports an issue with offline play functionality.",
+      "is_expected_behavior": false,
+      "related_feature": "Offline play capability"
+    },
+    {
+      "ticket_id": 1458998,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458987,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458950,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Issue with internet connectivity"
+      ],
+      "short_summary": "Player reports an issue related to internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1458949,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Issue with internet connectivity"
+      ],
+      "short_summary": "Player reports an issue related to internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1458962,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458947,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458944,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "High level of engagement with the game",
+        "Satisfied with gameplay"
+      ],
+      "short_summary": "Long-time player expresses high satisfaction with gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458924,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Offline play not working as expected"
+      ],
+      "short_summary": "Player reports an issue with offline play functionality.",
+      "is_expected_behavior": false,
+      "related_feature": "Offline play capability"
+    },
+    {
+      "ticket_id": 1458934,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "High level of engagement with the game",
+        "Satisfied with gameplay"
+      ],
+      "short_summary": "Long-time player expresses high satisfaction with gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458930,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458922,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458897,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "High level of engagement with the game",
+        "Satisfied with gameplay"
+      ],
+      "short_summary": "Long-time player expresses high satisfaction with gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458889,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458886,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458875,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458866,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458852,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458847,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Enjoying the puzzles",
+        "Satisfied with coin and spin rewards"
+      ],
+      "short_summary": "Player expresses satisfaction with the game's puzzles and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458845,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458824,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458817,
+      "category": "Positive Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High level of progress"
+      ],
+      "short_summary": "Highly engaged player praises the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1458816,
+      "category": "Positive Feedback",
+      "subcategory": "High Engagement",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "High level of progress"
+      ],
+      "short_summary": "Highly engaged player praises the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1458793,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458784,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458780,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458754,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458742,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458737,
+      "category": "Technical Issue",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Feedback",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458711,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458699,
+      "category": "Technical Issue",
+      "subcategory": "Purchase Issues",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "Unable to make purchases"
+      ],
+      "short_summary": "Player reports an issue with making purchases.",
+      "is_expected_behavior": false,
+      "related_feature": "In-app purchases"
+    },
+    {
+      "ticket_id": 1458695,
+      "category": "Technical Issue",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Feedback",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458641,
+      "category": "Technical Issue",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Feedback",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458646,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458639,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458614,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458612,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458604,
+      "category": "Positive Feedback",
+      "subcategory": "General Satisfaction",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player expresses general satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458577,
+      "category": "Technical Issue",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Feedback",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player provides general feedback without specific details.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458568,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458550,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458545,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458525,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458509,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458470,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458467,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458449,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458433,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458440,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458427,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458425,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458393,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458362,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458353,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458345,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458309,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458308,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458336,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458319,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback on the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458302,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General positive feedback from a new player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458297,
+      "category": "Feedback",
+      "subcategory": "Gameplay Experience",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Experienced player providing general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458281,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "New player expressing satisfaction with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458263,
+      "category": "Feedback",
+      "subcategory": "Gameplay Experience",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Long-term player happy with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458262,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "New player providing positive feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458238,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "New player's general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458175,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Feedback from a new player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458143,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [],
+      "short_summary": "Player reports connectivity issues.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1458131,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [],
+      "short_summary": "Connectivity issues reported by player.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1458154,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "General feedback from a new player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458139,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Positive feedback from a new player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458129,
+      "category": "Technical Issue",
+      "subcategory": "In-App Purchases",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [],
+      "short_summary": "Player unable to make purchases.",
+      "is_expected_behavior": false,
+      "related_feature": "In-app purchases"
+    },
+    {
+      "ticket_id": 1458088,
+      "category": "Feedback",
+      "subcategory": "Gameplay Experience",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Player with some experience provides feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458076,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "New player's general feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458075,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Feedback from a new player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458059,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "New player expressing satisfaction.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458041,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "Positive feedback from a new player.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458019,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [],
+      "short_summary": "Player reports issues with connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1458020,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [],
+      "short_summary": "Connectivity issues reported.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1458013,
+      "category": "Feedback",
+      "subcategory": "General Feedback",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.7,
+      "key_points": [],
+      "short_summary": "New player from Cyprus providing feedback.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1458000,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player reports connectivity issue.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1457952,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player enjoys the game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457927,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player is satisfied with game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457902,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player expresses satisfaction with gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457892,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player happy with game achievements.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457863,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Connectivity issue reported by player.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1457852,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player enjoys the gameplay and progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457851,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player satisfied with game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457849,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player reports issue with internet connectivity.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1457844,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player expresses happiness with gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457834,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player is happy with game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457806,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Connectivity issue reported.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1457808,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player praises game progress and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457807,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player happy with gameplay and rewards.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457798,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player enjoys the game and its challenges.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457787,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player is very satisfied with game progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457782,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.95,
+      "key_points": [
+        "High puzzles solved",
+        "High coins",
+        "Spins"
+      ],
+      "short_summary": "Highly engaged player praises the game.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457763,
+      "category": "Technical Issue",
+      "subcategory": "Connectivity",
+      "sentiment": "Neutral",
+      "intent": "Report Bug",
+      "confidence": 0.8,
+      "key_points": [
+        "Internet: false"
+      ],
+      "short_summary": "Player faces connectivity issues.",
+      "is_expected_behavior": false,
+      "related_feature": "Cross-platform sync"
+    },
+    {
+      "ticket_id": 1457749,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player expresses satisfaction with gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457736,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Positive",
+      "intent": "Praise Game",
+      "confidence": 0.9,
+      "key_points": [
+        "Puzzles solved",
+        "Coins",
+        "Spins"
+      ],
+      "short_summary": "Player is happy with the game's progress.",
+      "is_expected_behavior": true,
+      "related_feature": "Progress tracking"
+    },
+    {
+      "ticket_id": 1457724,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457692,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "New player is enjoying the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457691,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player from Malaysia enjoys the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457677,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Experienced player is satisfied with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457672,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player enjoys the game's challenges.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457651,
+      "category": "Technical Issue",
+      "subcategory": "Performance",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.9,
+      "key_points": [
+        "Performance issues on older device"
+      ],
+      "short_summary": "Player reports performance issues on an older device.",
+      "is_expected_behavior": true,
+      "related_feature": "Performance issues on older devices with large word banks"
+    },
+    {
+      "ticket_id": 1457638,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player is enjoying the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457637,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player enjoys the game's features.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457599,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player is happy with the game.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457596,
+      "category": "Positive Feedback",
+      "subcategory": "Gameplay",
+      "sentiment": "Neutral",
+      "intent": "Praise Game",
+      "confidence": 0.8,
+      "key_points": [],
+      "short_summary": "Player enjoys the gameplay.",
+      "is_expected_behavior": true,
+      "related_feature": null
+    },
+    {
+      "ticket_id": 1457573,
+      "category": "Technical Issue",
+      "subcategory": "Ad-related",
+      "sentiment": "Negative",
+      "intent": "Report Bug",
+      "confidence": 0.95,
+      "key_points": [
+        "Game freezes on playing videos"
+      ],
+      "short_summary": "Game freezes when trying to play ad videos.",
+      "is_expected_behavior": false,
+      "related_feature": "Ad frequency can be high for free players"
+    }
+  ],
+  "filtering_stats": {
+    "closed_tickets": 407,
+    "feedback_tickets": 351,
+    "filtered_out": 56
+  }
+}
