@@ -219,11 +219,11 @@ class FreshdeskClient:
             filtered_tickets.append(ticket)
         
         logger.info(f"✅ Filtered: {len(tickets)} tickets → {len(filtered_tickets)} tickets")
-        logger.info(f"   Step 1 - Date: {len(tickets) - date_rejected} in range, {date_rejected} outside")
-        logger.info(f"   Step 2 - Status: {len(tickets) - date_rejected - status_rejected} Closed, {status_rejected} other statuses")
-        logger.info(f"   Step 3 - Game: {len(tickets) - date_rejected - status_rejected - game_rejected - no_custom_fields} '{input_params.game_name}' tickets")
-        logger.info(f"   Step 4 - OS: {len(filtered_tickets)} '{input_params.os}' tickets, {os_rejected} other OS")
-        logger.info(f"   ✅ Final: {len(filtered_tickets)} Closed '{input_params.game_name}' tickets on '{input_params.os}'")
+        logger.info(f"   Step 1 - Date Range: {len(tickets) - date_rejected} in range, {date_rejected} outside")
+        logger.info(f"   Step 2 - Status=Closed: {len(tickets) - date_rejected - status_rejected} Closed, {status_rejected} other statuses")
+        logger.info(f"   Step 3 - Game='{input_params.game_name}': {len(filtered_tickets)} matched, {game_rejected + no_custom_fields} other games")
+        logger.info(f"   ✅ Final: {len(filtered_tickets)} Closed '{input_params.game_name}' tickets (all OS)")
+        logger.info(f"   Next: OS='{input_params.os}' filter will be applied in AI step")
         
         return filtered_tickets
     
