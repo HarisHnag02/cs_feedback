@@ -144,46 +144,80 @@ class FreshdeskClient:
         """
         Apply client-side filtering to tickets.
         
-        Server-side filters already applied (Search API query):
-        - Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)
-        - updated_at: Within date range
-        
-        Client-side filters (custom fields not supported in Search API):
+        Filters ALL tickets from regular API by:
+        - Status: 5 (Closed)
+        - updated_at: Within date range  
         - Game: From custom_fields['Game']
         
-        OS and Type filtering happens LATER (before AI).
+        OS and Type filtering happens in AI step.
         
         Args:
-            tickets: List of ticket dictionaries from API
+            tickets: List of all ticket dictionaries from API
             input_params: User input parameters
             
         Returns:
-            List of tickets matching game filter (all OS, all types)
+            List of Closed tickets matching date range and game (all OS, all types)
         """
         filtered_tickets = []
         
-        logger.debug(f"Filtering {len(tickets)} tickets for Game='{input_params.game_name}'")
+        logger.info(f"Filtering {len(tickets)} tickets for Status + Date + Game...")
+        
+        status_rejected = 0
+        date_rejected = 0
+        game_rejected = 0
         
         for ticket in tickets:
-            # Search API already filtered by:
-            # - Status (4, 5, or 6)
-            # - updated_at range (server-side)
+            # Filter 1: Status = 5 (Closed)
+            status = ticket.get('status')
+            if status != 5:
+                status_rejected += 1
+                continue
             
-            # Client-side filter by Game (custom field not supported in Search API)
+            # Filter 2: Date range (updated_at)
+            updated_at = ticket.get('updated_at')
+            if updated_at:
+                try:
+                    ticket_date = datetime.fromisoformat(
+                        updated_at.replace('Z', '+00:00')
+                    ).date()
+                    
+                    start_date = datetime.strptime(
+                        input_params.start_date, '%Y-%m-%d'
+                    ).date()
+                    end_date = datetime.strptime(
+                        input_params.end_date, '%Y-%m-%d'
+                    ).date()
+                    
+                    if not (start_date <= ticket_date <= end_date):
+                        date_rejected += 1
+                        continue
+                        
+                except (ValueError, AttributeError) as e:
+                    date_rejected += 1
+                    continue
+            else:
+                date_rejected += 1
+                continue
+            
+            # Filter 2: Game name
             game_name_lower = input_params.game_name.lower()
             custom_fields = ticket.get('custom_fields', {})
             
             if not custom_fields:
-                logger.debug(f"Ticket #{ticket.get('id')}: No custom_fields")
+                game_rejected += 1
                 continue
             
             game_field = str(custom_fields.get('Game', '')).lower()
             if game_name_lower not in game_field:
-                logger.debug(f"Ticket #{ticket.get('id')}: Game mismatch. Expected '{input_params.game_name}', got '{custom_fields.get('Game', 'N/A')}'")
+                game_rejected += 1
                 continue
             
-            # Ticket passed game filter
+            # Passed both filters
             filtered_tickets.append(ticket)
+        
+        logger.info(f"✓ Filtered: {len(tickets)} → {len(filtered_tickets)} tickets")
+        logger.info(f"   Rejected by date: {date_rejected}")
+        logger.info(f"   Rejected by game: {game_rejected}")
         
         logger.info(
             f"Filtered {len(tickets)} tickets → {len(filtered_tickets)} tickets matching Game='{input_params.game_name}'"
@@ -225,13 +259,12 @@ class FreshdeskClient:
             >>> print(f"Found {len(tickets)} total tickets (all types)")
         """
         logger.info("="*70)
-        logger.info("Starting Freshdesk ticket fetch using Search API")
-        logger.info(f"Search Query Filters (SERVER-SIDE):")
-        logger.info(f"  • Status: 4, 5, or 6 (Resolved, Closed, Waiting on Customer)")
-        logger.info(f"  • Updated At: {input_params.start_date} to {input_params.end_date}")
-        logger.info(f"Client-Side Filters (after fetch):")
-        logger.info(f"  • Game: '{input_params.game_name}' (custom_fields['Game'])")
-        logger.info(f"Filters Applied in AI Step:")
+        logger.info("Fetching ALL CLOSED tickets - Simple Approach")
+        logger.info(f"Search Query: status:5 (Closed only)")
+        logger.info(f"Client-Side Filters:")
+        logger.info(f"  • Date Range: {input_params.start_date} to {input_params.end_date}")
+        logger.info(f"  • Game: '{input_params.game_name}'")
+        logger.info(f"AI Step Filters:")
         logger.info(f"  • OS: '{input_params.os}'")
         logger.info(f"  • Type: 'Feedback'")
         logger.info("="*70)
@@ -249,17 +282,9 @@ class FreshdeskClient:
             formatted_start = input_params.start_date
             formatted_end = input_params.end_date
             
-            # Build query with ONLY standard Freshdesk fields
-            # Custom field 'game' doesn't work in Search API - filter client-side instead
-            # Use only status and date in query
-            query_parts = [
-                "(status:4 OR status:5 OR status:6)",
-                f"updated_at:>'{formatted_start}'",
-                f"updated_at:<'{formatted_end}'"
-            ]
-            
-            # Join with " AND " (spaces are mandatory)
-            query = " AND ".join(query_parts)
+            # Simplest query: Just pull ALL closed tickets in date range
+            # Filter everything (game, OS, type) client-side
+            query = f'"status:5"'
             
             # URL encode the query (don't add extra quotes)
             from urllib.parse import quote
@@ -273,10 +298,9 @@ class FreshdeskClient:
             try:
                 # Make API request
                 response = self._make_request(endpoint, method='GET')
-                data = response.json()
                 
-                # Search API returns results in 'results' field
-                tickets = data.get('results', [])
+                # Regular Tickets API returns array directly
+                tickets = response.json() if isinstance(response.json(), list) else []
                 
                 if not tickets:
                     logger.info("No more tickets found. Search complete.")
@@ -294,9 +318,8 @@ class FreshdeskClient:
                 )
                 
                 # Check if there are more pages
-                # Search API: if we get fewer tickets than expected, we're done
-                if not tickets or len(tickets) < 30:  # Search API default page size
-                    logger.info("All matching tickets fetched.")
+                if not tickets or len(tickets) < 100:  # Regular API uses 100 per page
+                    logger.info("All tickets fetched.")
                     break
                 
                 page += 1

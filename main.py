@@ -478,6 +478,15 @@ def main():
         print("\n\n⚠️  Application interrupted by user (Ctrl+C).")
         logger.warning("Application interrupted by user")
         return 130
+
+    except EOFError:
+        logger.error("Interactive input is not available (EOF on stdin)")
+        print("\n\n❌ Interactive input is not available in this terminal session.")
+        print("\nRun the app from an interactive terminal and enter prompts manually:")
+        print("   ./main.py")
+        print("   or")
+        print("   python3 main.py")
+        return 1
         
     except Exception as e:
         logger.error(f"Unexpected error: {e}", exc_info=True)

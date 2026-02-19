@@ -10,7 +10,10 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-import colorlog
+try:
+    import colorlog
+except ImportError:  # pragma: no cover - environment-specific dependency
+    colorlog = None
 
 
 def setup_logger(
@@ -42,22 +45,31 @@ def setup_logger(
     if logger.handlers:
         return logger
     
-    # Console handler with colored output
-    console_handler = colorlog.StreamHandler(sys.stdout)
+    # Console handler with optional colored output
+    if colorlog:
+        console_handler = colorlog.StreamHandler(sys.stdout)
+    else:
+        console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(getattr(logging, log_level.upper()))
-    
-    # Colored formatter for console
-    console_formatter = colorlog.ColoredFormatter(
-        fmt='%(log_color)s%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S',
-        log_colors={
-            'DEBUG': 'cyan',
-            'INFO': 'green',
-            'WARNING': 'yellow',
-            'ERROR': 'red',
-            'CRITICAL': 'red,bg_white',
-        }
-    )
+
+    if colorlog:
+        # Colored formatter for console when colorlog is available.
+        console_formatter = colorlog.ColoredFormatter(
+            fmt='%(log_color)s%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S',
+            log_colors={
+                'DEBUG': 'cyan',
+                'INFO': 'green',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'red,bg_white',
+            }
+        )
+    else:
+        console_formatter = logging.Formatter(
+            fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            datefmt='%Y-%m-%d %H:%M:%S'
+        )
     console_handler.setFormatter(console_formatter)
     logger.addHandler(console_handler)
     
