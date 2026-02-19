@@ -160,20 +160,16 @@ class FreshdeskClient:
         """
         filtered_tickets = []
         
-        logger.info(f"Filtering {len(tickets)} tickets for Status + Date + Game...")
+        logger.info(f"Filtering {len(tickets)} tickets for Date + Game + Type (NO status filter)...")
         
-        status_rejected = 0
         date_rejected = 0
         game_rejected = 0
+        type_rejected = 0
         
         for ticket in tickets:
-            # Filter 1: Status = 5 (Closed)
-            status = ticket.get('status')
-            if status != 5:
-                status_rejected += 1
-                continue
+            # NO Status filter - all statuses included
             
-            # Filter 2: Date range (updated_at)
+            # Filter 1: Date range (updated_at)
             updated_at = ticket.get('updated_at')
             if updated_at:
                 try:
@@ -199,7 +195,7 @@ class FreshdeskClient:
                 date_rejected += 1
                 continue
             
-            # Filter 2: Game name (field is 'game' lowercase in Freshdesk)
+            # Filter 2: Game name (custom_fields['game'])
             game_name_lower = input_params.game_name.lower()
             custom_fields = ticket.get('custom_fields', {})
             
@@ -207,18 +203,25 @@ class FreshdeskClient:
                 game_rejected += 1
                 continue
             
-            # Freshdesk uses 'game' (lowercase), not 'Game'
             game_field = str(custom_fields.get('game', '')).lower()
             if game_name_lower not in game_field:
                 game_rejected += 1
                 continue
             
-            # Passed all filters
+            # Filter 3: Type = "Feedback" (ticket['type'])
+            ticket_type = ticket.get('type')
+            if ticket_type != 'Feedback':
+                type_rejected += 1
+                continue
+            
+            # Passed all filters (Date + Game + Type)
             filtered_tickets.append(ticket)
         
         logger.info(f"✓ Filtered: {len(tickets)} → {len(filtered_tickets)} tickets")
         logger.info(f"   Rejected by date: {date_rejected}")
         logger.info(f"   Rejected by game: {game_rejected}")
+        logger.info(f"   Rejected by type: {type_rejected}")
+        logger.info(f"   NO status filter (all statuses included)")
         
         logger.info(
             f"Filtered {len(tickets)} tickets → {len(filtered_tickets)} tickets matching Game='{input_params.game_name}'"
@@ -324,10 +327,9 @@ class FreshdeskClient:
                 break
         
         logger.info("="*70)
-        logger.info(f"✓ Fetch complete: {len(all_tickets)} tickets for '{input_params.game_name}'")
-        logger.info(f"   Status: Resolved/Closed/Waiting (4/5/6)")
-        logger.info(f"   Includes: All OS (Android + iOS), All Types")
-        logger.info(f"NOTE: OS='{input_params.os}' and Type='Feedback' filtering happens in AI step")
+        logger.info(f"✓ Fetch complete: {len(all_tickets)} Feedback tickets for '{input_params.game_name}'")
+        logger.info(f"   Includes: All Statuses (Open, Closed, etc.), All OS")
+        logger.info(f"NOTE: OS='{input_params.os}' filtering happens in AI step")
         logger.info("="*70)
         
         return all_tickets
