@@ -199,7 +199,7 @@ class FreshdeskClient:
                 date_rejected += 1
                 continue
             
-            # Filter 2: Game name
+            # Filter 2: Game name (field is 'game' lowercase in Freshdesk)
             game_name_lower = input_params.game_name.lower()
             custom_fields = ticket.get('custom_fields', {})
             
@@ -207,12 +207,13 @@ class FreshdeskClient:
                 game_rejected += 1
                 continue
             
-            game_field = str(custom_fields.get('Game', '')).lower()
+            # Freshdesk uses 'game' (lowercase), not 'Game'
+            game_field = str(custom_fields.get('game', '')).lower()
             if game_name_lower not in game_field:
                 game_rejected += 1
                 continue
             
-            # Passed both filters
+            # Passed all filters
             filtered_tickets.append(ticket)
         
         logger.info(f"✓ Filtered: {len(tickets)} → {len(filtered_tickets)} tickets")

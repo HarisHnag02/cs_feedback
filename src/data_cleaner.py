@@ -442,9 +442,9 @@ def clean_ticket(raw_ticket: Dict[str, Any]) -> CleanTicket:
     custom_fields = raw_ticket.get('custom_fields', {})
     
     # Store additional metadata
-    # Type is in custom_fields as "Type" in Freshdesk
+    # Type is in main ticket object (not custom_fields)
     metadata = {
-        'type': custom_fields.get('Type') or raw_ticket.get('type'),  # Try custom_fields first
+        'type': raw_ticket.get('type'),  # Type is in main ticket object
         'status': status,  # Store status for filtering
         'source': raw_ticket.get('source'),
         'custom_fields': custom_fields,

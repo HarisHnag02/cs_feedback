@@ -381,11 +381,12 @@ def filter_feedback_tickets(
         
         # Filter by OS first (if not "Both")
         if os_filter and os_filter != 'Both':
-            os_field = str(custom_fields.get('OS', ''))
+            # Freshdesk field is 'os' (lowercase)
+            os_field = str(custom_fields.get('os', ''))
             
             # Check OS match
             if os_filter.lower() == 'ios':
-                if os_field not in ['ios', 'iOS', 'IOS']:
+                if os_field.lower() not in ['ios']:
                     os_rejected += 1
                     continue
             else:  # Android
