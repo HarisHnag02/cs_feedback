@@ -259,14 +259,15 @@ class FreshdeskClient:
             >>> print(f"Found {len(tickets)} total tickets (all types)")
         """
         logger.info("="*70)
-        logger.info("Fetching ALL CLOSED tickets - Simple Approach")
-        logger.info(f"Search Query: status:5 (Closed only)")
-        logger.info(f"Client-Side Filters:")
-        logger.info(f"  • Date Range: {input_params.start_date} to {input_params.end_date}")
-        logger.info(f"  • Game: '{input_params.game_name}'")
+        logger.info("Fetching tickets using Regular Tickets API")
+        logger.info(f"Endpoint: /api/v2/tickets (paginated)")
+        logger.info(f"Client-Side Filters Will Be Applied:")
+        logger.info(f"  • Status: 5 (Closed)")
+        logger.info(f"  • Date Range (updated_at): {input_params.start_date} to {input_params.end_date}")
+        logger.info(f"  • Game: '{input_params.game_name}' (custom_fields['Game'])")
         logger.info(f"AI Step Filters:")
-        logger.info(f"  • OS: '{input_params.os}'")
-        logger.info(f"  • Type: 'Feedback'")
+        logger.info(f"  • OS: '{input_params.os}' (custom_fields['OS'])")
+        logger.info(f"  • Type: 'Feedback' (custom_fields['Type'])")
         logger.info("="*70)
         
         all_tickets = []
@@ -275,35 +276,25 @@ class FreshdeskClient:
         while page <= max_pages:
             logger.info(f"Fetching page {page}...")
             
-            # Use Search API with proper Freshdesk query syntax
-            # Build query with mandatory spaces around operators
+            # Use REGULAR Tickets API (not Search API)
+            # No query needed - just pagination
+            endpoint = f"tickets?per_page=100&page={page}&order_by=updated_at&order_type=desc"
             
-            # Format dates for query
-            formatted_start = input_params.start_date
-            formatted_end = input_params.end_date
-            
-            # Simplest query: Just pull ALL closed tickets in date range
-            # Filter everything (game, OS, type) client-side
-            query = f'"status:5"'
-            
-            # URL encode the query (don't add extra quotes)
-            from urllib.parse import quote
-            encoded_query = quote(query)
-            
-            # Search API endpoint
-            endpoint = f'search/tickets?query={encoded_query}&page={page}'
-            
-            logger.debug(f"Search query: {query}")
+            logger.debug(f"Fetching from: {endpoint}")
             
             try:
                 # Make API request
                 response = self._make_request(endpoint, method='GET')
                 
                 # Regular Tickets API returns array directly
-                tickets = response.json() if isinstance(response.json(), list) else []
+                tickets = response.json()
+                
+                if not isinstance(tickets, list):
+                    logger.error(f"Unexpected response format: {type(tickets)}")
+                    break
                 
                 if not tickets:
-                    logger.info("No more tickets found. Search complete.")
+                    logger.info("No more tickets found.")
                     break
                 
                 logger.info(f"Retrieved {len(tickets)} tickets from page {page}")
