@@ -232,7 +232,7 @@ class FreshdeskClient:
     def fetch_feedback_tickets(
         self,
         input_params: FeedbackAnalysisInput,
-        max_pages: int = 10
+        max_pages: int = 999
     ) -> List[Dict[str, Any]]:
         """
         Fetch tickets for a specific game within the date range using Freshdesk Search API.
@@ -251,7 +251,7 @@ class FreshdeskClient:
         
         Args:
             input_params: FeedbackAnalysisInput with game name and date range
-            max_pages: Maximum number of pages to fetch (safety limit)
+            max_pages: Maximum number of pages to fetch (default: 999 = virtually unlimited)
             
         Returns:
             List of ticket dictionaries for the game within date range (all OS, all types)

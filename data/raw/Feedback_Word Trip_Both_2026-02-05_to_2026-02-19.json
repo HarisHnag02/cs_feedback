@@ -1,10 +1,10 @@
 {
   "metadata": {
     "game_name": "Word Trip",
-    "os": "Android",
-    "start_date": "2026-02-12",
+    "os": "Both",
+    "start_date": "2026-02-05",
     "end_date": "2026-02-19",
-    "fetched_at": "2026-02-19T15:10:38.875630",
+    "fetched_at": "2026-02-19T15:11:34.133526",
     "total_records": 60,
     "source": "freshdesk_api",
     "domain": "playsimple.freshdesk.com"
