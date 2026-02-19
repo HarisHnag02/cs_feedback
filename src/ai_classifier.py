@@ -353,72 +353,51 @@ def filter_feedback_tickets(
     os_filter: Optional[str] = None
 ) -> List[Dict[str, Any]]:
     """
-    Filter to only Feedback type tickets for the specified OS.
+    Filter to only tickets for the specified OS.
     
-    Status=5 (Closed) and Game already filtered at Freshdesk fetch level.
-    This function filters by OS and Type (Feedback).
+    Type='Feedback' and Game already filtered at Freshdesk fetch level.
+    This function only filters by OS.
     
     This happens BEFORE sending to ChatGPT to reduce API costs.
     
     Args:
-        tickets: List of cleaned ticket dictionaries (already status=5, game filtered)
+        tickets: List of cleaned ticket dictionaries (already Feedback type, game filtered)
         os_filter: OS to filter for ("Android", "iOS", or "Both")
         
     Returns:
         List of only Feedback tickets for the specified OS
     """
-    feedback_tickets = []
+    filtered_tickets = []
     
-    logger.info(f"Filtering {len(tickets)} tickets for OS='{os_filter}' and Type='Feedback'...")
+    logger.info(f"Filtering {len(tickets)} Feedback tickets for OS='{os_filter}'...")
     
     os_rejected = 0
-    type_rejected = 0
     
     for ticket in tickets:
+        # Type='Feedback' already filtered at fetch level
+        # Only filter by OS here
+        
         # Get metadata (stored during cleaning)
         metadata = ticket.get('metadata', {})
         custom_fields = metadata.get('custom_fields', {})
         
-        # Filter by OS first (if not "Both")
+        # Filter by OS (if not "Both")
         if os_filter and os_filter != 'Both':
-            # Freshdesk field is 'os' (lowercase)
+            # Actual Freshdesk field is 'os' (lowercase)
             os_field = str(custom_fields.get('os', ''))
             
-            # Check OS match
-            if os_filter.lower() == 'ios':
-                if os_field.lower() not in ['ios']:
-                    os_rejected += 1
-                    continue
-            else:  # Android
-                if os_filter.lower() not in os_field.lower():
-                    os_rejected += 1
-                    continue
+            # Check OS match (case-insensitive)
+            if not os_field or os_filter.lower() not in os_field.lower():
+                os_rejected += 1
+                continue
         
-        # Then filter by Type = "Feedback" (exact match)
-        ticket_type = metadata.get('type')
-        tags = metadata.get('tags', [])
-        
-        # Check for exact "Feedback" type
-        is_feedback = (
-            ticket_type == 'Feedback'  # Exact match: custom_fields['Type'] == "Feedback"
-        )
-        
-        # Fallback: Also check tags if type not set
-        if not is_feedback:
-            is_feedback = 'Feedback' in tags or 'feedback' in [str(tag).lower() for tag in tags]
-        
-        if not is_feedback:
-            type_rejected += 1
-            continue
-        
-        # Passed both filters
-        feedback_tickets.append(ticket)
+        # Passed OS filter
+        filtered_tickets.append(ticket)
     
-    logger.info(f"✓ Filtered: {len(tickets)} Closed/Game tickets → {len(feedback_tickets)} Feedback+OS tickets")
+    logger.info(f"✓ Filtered: {len(tickets)} Feedback tickets → {len(filtered_tickets)} Feedback+OS tickets")
     logger.info(f"   Rejected by OS filter: {os_rejected}")
-    logger.info(f"   Rejected by Type filter: {type_rejected}")
     
-    return feedback_tickets
+    return filtered_tickets
 
 
 def classify_feedback_data(
