@@ -24,13 +24,15 @@ class FeedbackAnalysisInput:
     Attributes:
         game_name: Name of the game to analyze
         os: Operating system platform (Android, iOS, or Both)
-        start_date: Analysis start date (YYYY-MM-DD format)
-        end_date: Analysis end date (YYYY-MM-DD format)
+        days_back: Number of days to look back from today
+        start_date: Analysis start date (calculated from days_back)
+        end_date: Analysis end date (today)
     """
     game_name: str
     os: str
-    start_date: str  # Stored as string in YYYY-MM-DD format
-    end_date: str    # Stored as string in YYYY-MM-DD format
+    days_back: int
+    start_date: str  # Calculated from days_back
+    end_date: str    # Today's date
     
     def to_dict(self) -> dict:
         """Convert dataclass to dictionary."""
@@ -47,6 +49,7 @@ class FeedbackAnalysisInput:
             f"\n{'='*50}\n"
             f"  Game Name:   {self.game_name}\n"
             f"  Platform:    {self.os}\n"
+            f"  Days Back:   {self.days_back} days\n"
             f"  Start Date:  {self.start_date}\n"
             f"  End Date:    {self.end_date}\n"
             f"{'='*50}"
@@ -131,40 +134,47 @@ def validate_date_format(date_string: str) -> Optional[datetime]:
         return None
 
 
-def prompt_date(prompt_text: str, date_type: str) -> str:
+def prompt_days_back() -> int:
     """
-    Prompt user for a date with validation.
+    Prompt user for number of days to look back.
     
-    Args:
-        prompt_text: Text to display in prompt
-        date_type: Type of date (for logging)
-        
     Returns:
-        str: Validated date in YYYY-MM-DD format
+        int: Number of days to look back (7, 14, 30, etc.)
     """
-    print(f"\n{prompt_text}")
-    print(f"   Format: YYYY-MM-DD (e.g., 2024-01-15)")
+    print(f"\n📅 How many days back to analyze?")
+    print(f"   Examples: 7 (last week), 14 (last 2 weeks), 30 (last month)")
     
     while True:
-        date_input = input("   Enter date: ").strip()
+        days_input = input("   Enter number of days: ").strip()
         
-        if not date_input:
-            print("   ❌ Error: Date cannot be empty. Please try again.\n")
-            logger.warning(f"User entered empty {date_type}")
+        if not days_input:
+            print("   ❌ Error: Please enter a number. Please try again.\n")
+            logger.warning("User entered empty days")
             continue
         
-        # Validate format
-        date_obj = validate_date_format(date_input)
-        
-        if date_obj is None:
-            print("   ❌ Error: Invalid date format. Must be YYYY-MM-DD.")
-            print("   Example: 2024-01-15")
+        # Validate it's a number
+        try:
+            days = int(days_input)
+            
+            if days <= 0:
+                print("   ❌ Error: Days must be a positive number.")
+                print("   Please try again.\n")
+                continue
+            
+            if days > 365:
+                print("   ⚠️  Warning: {days} days is more than a year. Are you sure?")
+                confirm = input("   Continue? (y/n): ").strip().lower()
+                if confirm not in ['y', 'yes']:
+                    continue
+            
+            logger.info(f"days_back entered: {days}")
+            return days
+            
+        except ValueError:
+            print("   ❌ Error: Please enter a valid number.")
             print("   Please try again.\n")
-            logger.warning(f"Invalid {date_type} format: {date_input}")
+            logger.warning(f"Invalid days format: {days_input}")
             continue
-        
-        logger.info(f"{date_type} entered: {date_input}")
-        return date_input
 
 
 def validate_date_range(start_date: str, end_date: str) -> bool:
@@ -189,8 +199,7 @@ def collect_user_inputs() -> FeedbackAnalysisInput:
     Collect all user inputs interactively with validation.
     
     This is the main function that orchestrates the entire input collection process.
-    It prompts for game name, OS, start date, and end date, validating each input
-    and ensuring the date range is valid.
+    It prompts for game name, OS, and number of days back.
     
     Returns:
         FeedbackAnalysisInput: Validated user inputs as a dataclass
@@ -198,8 +207,10 @@ def collect_user_inputs() -> FeedbackAnalysisInput:
     Example:
         >>> inputs = collect_user_inputs()
         >>> print(inputs.game_name)
-        'Candy Crush'
+        'Word Trip'
     """
+    from datetime import datetime, timedelta
+    
     logger.info("Starting user input collection")
     
     # Step 1: Collect game name
@@ -208,26 +219,26 @@ def collect_user_inputs() -> FeedbackAnalysisInput:
     # Step 2: Collect OS
     os = prompt_os()
     
-    # Step 3: Collect dates with range validation
-    while True:
-        start_date = prompt_date("📅 Start Date", "start_date")
-        end_date = prompt_date("📅 End Date", "end_date")
-        
-        # Validate date range
-        if validate_date_range(start_date, end_date):
-            logger.info(f"Valid date range: {start_date} to {end_date}")
-            break
-        else:
-            print("\n   ❌ Error: Start Date must be before or equal to End Date.")
-            print("   Please enter the dates again.\n")
-            logger.warning(f"Invalid date range: {start_date} > {end_date}")
+    # Step 3: Collect days back (simpler than start/end dates)
+    days_back = prompt_days_back()
+    
+    # Calculate date range automatically
+    end_date = datetime.now().date()
+    start_date = end_date - timedelta(days=days_back)
+    
+    # Convert to string format
+    start_date_str = start_date.strftime('%Y-%m-%d')
+    end_date_str = end_date.strftime('%Y-%m-%d')
+    
+    logger.info(f"Calculated date range: {start_date_str} to {end_date_str} ({days_back} days)")
     
     # Create and return the validated input object
     user_input = FeedbackAnalysisInput(
         game_name=game_name,
         os=os,
-        start_date=start_date,
-        end_date=end_date
+        days_back=days_back,
+        start_date=start_date_str,
+        end_date=end_date_str
     )
     
     logger.info("User input collection completed successfully")
