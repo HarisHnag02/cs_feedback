@@ -1,46 +1,1062 @@
-# Game Feature Context File for Word Trip
-# This file provides essential context about the game for AI analysis
+```yaml
+---
+name: WordTrip Game FAQ and Support Documentation
+version: 2.0
+description: Comprehensive FAQ and support knowledge base for the WordTrip mobile word puzzle game, including event intelligence classification rules.
+tags: [word-game, mobile-game, faq, support, knowledge-base, event-classification]
+---
+about:
+  summary: This document serves as the official FAQ and support reference for WordTrip, a word puzzle game developed by Playsimple Games. It covers gameplay basics, features, technical issues, purchases, and includes an event intelligence classification system for support ticket routing.
+  target_audience: WordTrip players, customer support agents, game testers, community managers, and support ticket classifiers.
+  last_updated: 2026-02-20
 
-game_name: Word Trip
+alerts:
+  - title: Lost all your coins?
+    content: |
+      If you have noticed that your coin balance has suddenly reduced to 0, it might be due to being on an older version of the app. Please update the app to the latest version and we will reimburse your coin balance post the update.
 
-current_features:
-  - "Word puzzle game with crossword-style gameplay"
-  - "Travel-themed levels across different countries and cities"
-  - "Daily puzzles and bonus challenges"
-  - "Hint system to help with difficult words"
-  - "Shuffle feature to rearrange letters"
-  - "Coin system for purchasing hints and power-ups"
-  - "Progress tracking and level completion rewards"
-  - "Offline play capability"
-  - "Cross-platform sync via Facebook or email login"
-  - "Regular content updates with new destinations and levels"
-  - "Special events and limited-time challenges"
-  - "Leaderboards and competitive features"
+      Follow the steps below to update your app to the latest version and enjoy a better experience.
 
-known_constraints:
-  - "Dictionary limited to common English words"
-  - "Some valid words not recognized in word list"
-  - "Performance issues on older devices with large word banks"
-  - "Sync issues when switching between devices"
-  - "Ad frequency can be high for free players"
-  - "Limited hint availability for free-to-play users"
-  - "Some levels have very difficult word combinations"
-  - "Internet connection required for sync and purchases"
+      **Android:**
+      1. Open the Play Store app on your device.
+      2. Tap on the Menu icon in the top left corner and then My applications and games.
+      3. Find the game Word Trip in the list and tap it.
+      4. Tap Update when the game page opens.
 
-recent_changes:
-  - "Added new travel destination: Paris themed levels (Jan 2026)"
-  - "Updated hint system to show letter positions"
-  - "Improved ad loading performance"
-  - "Fixed sync issues between iOS and Android"
-  - "Added daily bonus rewards"
-  - "Updated word dictionary with 500+ new words"
-  - "Optimized app size and loading times"
-  - "Fixed crashes on level completion screen"
+      **iOS:**
+      1. Open the App Store.
+      2. Tap your profile icon at the top of the screen.
+      3. Scroll to see pending updates and release notes.
+      4. Tap Update next to Word Trip app.
 
-# Optional: Add game-specific metadata
-metadata:
-  genre: "Word Puzzle"
-  target_audience: "Casual gamers, word game enthusiasts"
-  monetization: "Freemium (ads + IAP for hints and coins)"
-  platforms: "iOS, Android"
-  key_features: "Educational, relaxing, travel theme"
+      Once it's done your game will get updated to latest app and your progress will be at the same level.
+  - title: Not getting videos?
+    content: |
+      Our advertisement partner (MoPub) has deprecated their service and as a result, we are no longer surfacing their ads. This means that you will no longer have videos available in order to earn coins to help you out.
+
+      To ensure that you have the best experience in our game, please update your game to the latest version by following these steps:
+
+      **Android:**
+      1. Open the Play Store app on your device.
+      2. Tap on the Menu icon in the top left corner and then My applications and games.
+      3. Find the game Word Trip in the list and tap it.
+      4. Tap Update when the game page opens.
+
+      **iOS:**
+      1. Open the App Store.
+      2. Tap your profile icon at the top of the screen.
+      3. Scroll to see pending updates and release notes.
+      4. Tap Update next to Word Trip app.
+
+categories:
+  - name: Basics
+    description: Fundamental concepts, currency, and core gameplay mechanics.
+    topics:
+      - question: What is WordTrip?
+        answer: |
+          WordTrip is a simple word puzzle game that lets you exercise your brain and chill out at the same time!
+
+          It's based on anagrams and how many you can find.
+
+          The story takes you around the world, across countries, with the magical Compass of words!
+      - question: How to play?
+        answer: |
+          It's as easy as ABC!
+
+          You need to find words hidden in the Compass. Slide & drag your finger over the letters to form required words and solve the puzzle.
+
+          The number of letters increase as you progress and the puzzles get trickier.
+
+          Your Wisdom score increases as you progress across countries and the aim is to go on a ''World Tour''!
+      - question: What are coins?
+        answer: Coins make up the basic currency system of the game. They are used to get hints, when stuck on a puzzle.
+      - question: What is wisdom score?
+        answer: |
+          The Wisdom Score is there to measure how far you have progressed in the game. The longer your Streak is on a puzzle, the more Wisdom you earn!
+
+          Wisdom score is accumulated and can be used to rank higher than other players, but the score isn't spent like coins. The number of green leaves you get is equal to every word you solve, depending on the Streak!
+      - question: Using hints
+        answer: |
+          If you are stuck on the puzzle and need help, you can get it by using hints.
+
+          Hints reveal the letters for you on the grid. Using hints costs you coins. Press the 'HINTS' button at the side of the puzzle screen to reveal a letter.
+
+          The puzzle is automatically cleared once all letters are revealed.
+      - question: How do the hints work?
+        answer: |
+          **Main/Spell Bee puzzle screen:**
+          1. Normal hint reveals a letter in the puzzle.
+          2. Burst hint reveals 6 random letters in the puzzle.
+
+          **VIP Puzzle screen:**
+          1. Normal hint can reveal up to 2 letters (Digraph letter) on the puzzle.
+          2. Burst hint can reveal up to 12 letters (Digraph letter) on the puzzle.
+      - question: How do I get more hints?
+        answer: |
+          There are several ways to earn hints:
+
+          1. Collect your daily bonus for a chance at receiving a hint as a reward.
+          2. Take part in events and competitions. The treasure chests you get as a reward for winning may contain hints.
+          3. Using the spinner. The Spinner may land on the hints as a lucky reward.
+          4. You can buy bundle of coin and hint packs in the store as an in-app purchase.
+      - question: Ask for help
+        answer: |
+          You can also ask a friend to help you out by using the ''?'' button on the puzzle screen.
+
+          This will share a screen and a link to the game as well.
+      - question: Using Shuffle
+        answer: The Shuffle option will only re-arrange the letters on the Compass. This will give you a new perspective of looking at them and help in trying to make those last few words.
+      - question: Using the spinner
+        answer: |
+          Located at the top of the puzzle screen, the Spinner is a handy tool and is meant to help you along the way.
+
+          The Spinner will give you random rewards, depending on your luck.
+
+          You will earn some Spins for free, per day, and you can also buy them from the store.
+      - question: What is Daily Bonus?
+        answer: The Daily Bonus Calendar is a free reward you receive for returning to the game on a daily basis! The rewards get better and better if you keep your streak up, so make sure you come back every day for some exciting gifts!
+      - question: The Quest Center
+        answer: |
+          The Quest Center is another place in the game where you can earn free coins!
+
+          There are Daily Quests for you to challenge yourself with. Not only will they help you improve your skills, you get a reward for completing them!
+
+          There are also a variety of other quests that provide you with coins.
+      - question: How to earn free coins/spins?
+        answer: |
+          There are many ways to earn free coins
+          1. By watching videos.
+          2. Filling your Bonus Jar.
+          3. By clearing puzzles/countries.
+          4. Completing quests in the Quest Center.
+          5. By using the spinner(random coin rewards).
+          6. Unlocking a new collectible in your Travel Journal by playing Daily Spelling Bee Challenge.
+          7. Returning to the game every day. The Daily Bonus rewards get better and better the more regular you are!
+          8. By inviting friends through your unique code.
+          9. By performing certain actions in the 'Offers' section. The exact actions and offers vary from time to time and are subject to availability.
+      - question: What is a Friend's Profile?
+        answer: |
+          A friend's profile is a great way to increase your social interaction with your friends present on Facebook, playing the game.
+          We require permission to access your basic Facebook profile details, with which we can show your friend's progress on the game.
+
+          You can view their recently earned badges, puzzle stats, tournament scores, and rank comparison, etc. by tapping on your friend's profile icon from the leaderboard or minimap on the home screen.
+      - question: How can I connect to Facebook and see my friend's progress?
+        answer: |
+          To view your friend's progress and other stats on the game, you need to be connected to the internet and
+          permit the game to access your Facebook profile data, such as your name,
+          Facebook ID, email address, and friends list, which will provide the best playing experience with your friends.
+          We can only access the basic information of your Facebook friends who play our games,
+          which needs your permission to "Allow these apps to use your account" which should be turned on from Facebook settings.
+
+          We DO NOT collect any additional data or share any user information of our players and your personal information is completely safe with us.
+      - question: How many levels does the game have?
+        answer: At the moment there are 6030 levels in the game. Our team is doing their best to add new levels to the game.
+      - question: What are Expert Puzzles?
+        answer: |
+          Expert Puzzles on WordTrip comprise an endless loop of puzzles.
+          Players can begin with Expert Puzzles to improve their word mastery after the completion of 6030 regular puzzles.
+      - question: When will new levels be released?
+        answer: |
+          We are working hard to send you new set of exciting puzzles. We are almost there and it will be available to you very soon. Please ensure that you keep your game up to date as often as possible.
+
+          We really appreciate your patience..!
+
+  - name: Content
+    description: Information about game words, puzzles, and dictionary.
+    topics:
+      - question: Valid words and required words
+        answer: |
+          1. Each puzzle has certain 'Required words' that you have to find to solve the puzzle.
+          2. You might find a lot of 'Valid words'. The key is to find the ones that we have hidden!
+          3. For each puzzle, you know the lengths of the words to be found, by counting the empty letter tiles above the puzzle.
+          4. The 'extra' Valid words you find will help you out later!
+          5. All words (almost) in the English dictionary are considered Valid words. Offensive words, abbreviations, prefixes, suffixes or any word that might be offensive are strictly disallowed. If you have any queries about a particular word or puzzle, let us know by hitting the Help button below.
+      - question: Puzzle not solvable
+        answer: |
+          Sometimes, you might feel that a certain puzzle is just not solvable. We have received many such queries.
+
+          These are not bugs, but rather a part of the game challenge! Not all valid words are always accepted, and it is the words required in the puzzle that have to found.
+
+          All puzzles are solvable! We've personally solved each and every one of them!
+      - question: How hard do the puzzles get? What is the maximum number of letters in a puzzle?
+        answer: The largest puzzles include words with 8 letters. The puzzles do get larger and more difficult as the game progress.
+      - question: How do I report an offensive word or definition?
+        answer: |
+          While we do use a third-party dictionary for word definitions, we are able to edit any offensive definitions.
+
+          Please send us a screenshot of the word and level number through the Contact Us feature and we will have it reviewed.
+      - question: Do you accept all words as bonus words?
+        answer: |
+          We're not able to accept all possible words as bonus words. The goal is to use the letters provided to find a set of bonus words that you will receive extra coins for.
+
+          Also, proper nouns such as places, people, days of the week and generally any word that is always capitalized or derogatory in any form will not count as a bonus word.
+      - question: A word didn't swipe on my first attempt.
+        answer: |
+          Typically this happens if a word was entered incorrectly. Either the letters were swiped out of order or a letter didn't quite connect.
+
+          If you believe a bug that is causing some other sort of issue, any screenshot or more detailed explanations would be appreciated so we can look into it further.
+      - question: Other content issue
+        answer: null
+
+  - name: Daily Spelling Bee
+    description: Details about the daily puzzle feature.
+    topics:
+      - question: What is Spell Bee?
+        answer: |
+          Spell Bee is a feature which gives you one challenging puzzle everyday and awesome rewards for that.
+
+          In Spell Bee you first have to solve those words on which the Bee is sitting to collect them and earn the stars. If you solve any word other than Bee word the Bee will start flying just to remind you to solve that particular word.
+      - question: My Travel Journal
+        answer: If you earn enough stars, your travel journal will unlock a fantastic new collectible. These are fascinating, fact-filled, astonishing things that the spelling bee has discovered around the world and which you will receive as a reward along with a slew of other exciting rewards.
+
+  - name: Profile
+    description: User profile, avatars, and stats.
+    topics:
+      - question: My Profile
+        answer: |
+          Your profile is like your Home Page in the Word Trip!
+          Here you can customize your name and avatar, collect badges and check out your game stats.
+      - question: What are Badges?
+        answer: |
+          Badges mark the milestones you achieve in the game.
+
+          To earn a badge all you need to do is play and achieve the goals. Only the best can earn the highest badges!
+      - question: What are my stats?
+        answer: |
+          Your stats are like the vitals of your gameplay. Here you can see your progress through the puzzles and the various events we have for you.
+
+          You can see how much you've improved over time. All you need to do is play and watch your stats rise!
+      - question: How do I edit my Profile Name?
+        answer: |
+          By default, your Profile Name is your guest ID, but you can edit your name and other details in the edit screen. To access this just tap on the little edit icon on the top right corner of your profile screen.
+
+          For Facebook log in, your Facebook profile name will be displayed which can also be edited in the same way.
+      - question: What is an avatar?
+        answer: |
+          Your avatar is your representation in the WordTrip Universe!
+          You can choose to put up a picture of yourself or choose from any of the awesome avatars available.
+          These are great to show off with on leaderboards!
+      - question: How do I edit my Profile Avatar?
+        answer: |
+          You can change your avatar by tapping on the avatar icon in the profile screen.
+          You have three awesome (and free) avatars to chose from but if you want to change it up, we also have a variety of amazing avatars that you can buy with coins.
+
+          If the game is connected to your FB account, the game will use your Facebook profile picture, but feel free to change it to one of the avatars on the list if you want. Your Facebook profile picture will stay on the list, so you can always switch back to it.
+
+          NOTE: you cannot upload additional images to the list of profile pictures, although you can always change your Facebook profile picture and use it in the game.
+
+  - name: Clubs
+    description: Social clubs feature for players.
+    topics:
+      - question: What is a club?
+        answer: |
+          WordTrip clubs are social spaces to chat with and help other members of the WordTrip community!
+
+          Club members can request hints and help each other within the same club. Join or create a club to interact with other WordTrip players!
+      - question: When can I join a club?
+        answer: You can join a club after level 75.
+      - question: How to create or join a club?
+        answer: You can visit the clubs screen by clicking on the clubs icon on the bottom left on the puzzle complete screen. From there you can search for a club to join, or use the "Create" tab to create your own club.
+      - question: How to leave a club?
+        answer: From the clubs screen, select the "MY CLUB" tab and then tap the "Leave" icon on the top left of the screen.
+      - question: How to "help" or request help in a club?
+        answer: |
+          You can request help from your teammates in the club by tapping the "Request" button on the bottom left of the clubs chat screen.
+          When a player requests help from their club, a request is posted in the club chat. Once 5 teammates tap the "help" button on the request, the requesting player will receive a free hint.
+          Once 5 teammates have helped you, you can tap the "Claim" button on the bottom left of the clubs chat screen to claim your free hint.
+          Helping other club members costs nothing and, in fact, gives the helper a coin!
+
+  - name: Piggy Bank
+    description: In-game feature for saving and purchasing coins.
+    topics:
+      - question: What is Piggy Bank?
+        answer: |
+          To help you get more coins, the Piggy Bank will offer special deals for those who fill it up!
+
+          Earn extra coins by collecting wisdom score when you complete a level. The more streak you get the more coins are added to the Piggy Bank.
+
+          Keep filling the Piggy Bank until you see a popup stating 'Piggy Bank Full'. And then pay to break it and collect the coins.
+
+          Once the Piggy Bank is broken you will now have the opportunity to unlock new level of Piggy to fill it up again.
+      - question: What are the types of piggy banks?
+        answer: |
+          There are 5 levels of piggy banks:
+          Basic, Bronze, Silver, Gold and Crystal.
+
+          Your piggy bank will upgrade every time your purchase it! Each upgraded piggy will store more coins and fill faster.
+
+          The best part? Every upgraded piggy will give you a sweeter deal on coins than the last one!
+      - question: How do I buy a Piggy Bank?
+        answer: |
+          Here's how you can purchase the piggy,
+
+          1. When it is half filled or completely filled you will get pop ups which has a button stating "Buy" through which you can break it and collect the coins.
+
+          2. Tap on 'Coins bar' on top of your puzzle screen. There you can find a piggy package to purchase, from which you can buy, break and collect coins from your Piggy Bank.
+      - question: Not able to purchase my Piggy Bank?
+        answer: |
+          If you are not able to buy your Piggy Bank, you may have no Google/App store available in your phone or
+          you have already reached to the maximum coin balance.
+
+          If your Piggy is filled, you can purchase it now with a great deal!
+
+  - name: In-Game Events and HOT Topics
+    description: Tournaments, leagues, and limited-time events.
+    topics:
+      - question: Tournaments
+        subtopics:
+          - question: What is Gold Rush?
+            answer: |
+              Gold Rush is a multiplayer tournament where you face off against fellow puzzle-solvers from across the world!
+
+              You can win amazing rewards by competing, not to mention test your own skills against players everywhere!
+          - question: What is Treasure Hunt?
+            answer: |
+              The Treasure Hunt is a time limited competitive event held in the game on a regular basis.
+
+              The competition consists of two stages:
+              1. Collect the required number of palm leaves by solving the puzzles to unlock treasure chests and earn gifts.
+              2. Keep collecting palm leaves to move up the leaderboard and finish at the top.
+
+              Once the competition is over, the 5 best players get prizes.
+
+              Important Note: Your device has to be connected to the internet for you to participate in the tournaments. All the palm leaves you've collected while playing offline will only be counted towards the event end if you connect your device to the internet and open the game before the event ends.
+          - question: What are Leagues?
+            answer: |
+              Leagues work in the following ways:
+              - Each tournament gives you a chance to progress to a higher league
+              - Your League status is updated at the end of each tournament
+              - If you are demoted to a League, do not worry! You'll have a chance to move back up in the very next tournament!
+              - Each League provides a greater level of competition, but also comes with higher rewards!
+          - question: How do I score?
+            answer: |
+              "Once the competition is underway, you can start collecting a palm/gold leaves by solving the main puzzles.
+
+              Form correct words to collect a palm/gold leaves. Bonus words also contribute to the score, however they will not add when the bonus jar is full.
+
+              Spelling Bee/VIP puzzle words do not count towards the tournament."
+          - question: Players on the leaderboard
+            answer: They're players just like you from all over the world. When you enter a tournament, you're grouped with random players at around your level. That's who you see on the Leaderboard.
+          - question: Friends on the leaderboard
+            answer: Competition participants with similar game progress are grouped randomly, so you won't necessarily see your friends on the Leaderboard. They're also taking part in the tournament, but in a different group of players.
+          - question: Event rewards
+            answer: |
+              Event rewards are granted for players winning following positions in leaderboard:
+
+              - Bronze - Top 5 players
+              - Silver - Top 4 players
+              - Gold - Top 3 players
+              - Ruby - Top 2 players
+              - Emerald - Top 1 player
+          - question: What time does the tournaments start?
+            answer: |
+              Gold Rush Tournaments start at 8:30 PM UTC time on Fridays and end at 12:30 AM UTC time on Mondays.
+
+              Treasure Hunt Tournaments start at 2:30 AM UTC time on Tuesdays and end at 2:30 AM UTC time on Fridays.
+          - question: Other issues
+            answer: null
+
+      - question: Jigsaw
+        subtopics:
+          - question: What is Jigsaw?
+            answer: |
+              Jigsaw is a regularly occurring, single-player and time-limited event in which players need to collect jigsaw pieces to reveal exciting images and facts. You have to collect 30 jigsaw pieces before the event ends in order to achieve the rewards.
+
+              Important Note: Your device has to be connected to the internet for you to get the Jigsaw events.
+          - question: How do I play Jigsaw?
+            answer: |
+              To complete a Jigsaw, you have to collect all Jigsaw pieces spread across the puzzles in the main game.
+
+              Once you have collected all the pieces by solving words within a the time, you can unlock a beautiful monument along with a fun fact.
+          - question: I can't complete the jigsaw event, some pieces are missing!
+            answer: |
+              As Jigsaw is a time-bound single player event, you have to be online for the event to start and for you to collect all Jigsaw pieces before the event timer has run out. The number of puzzle pieces you have to collect depends on the puzzle level you are at.
+
+              To check your Jigsaw progress, click on the event icon at the bottom-left side of the main puzzle screen or event pop-up window on your phone.
+          - question: Other issues
+            answer: null
+
+      - question: Quotes
+        subtopics:
+          - question: What is Quotes?
+            answer: |
+              "Quotes are regularly occurring, time-limited events in which players need to collect cookies to reveal interesting quotes. You have to collect all the available cookies before the event ends in order to achieve the rewards.
+
+              Important Note: Your device has to be connected to the internet for you to get the Quotes events."
+          - question: How do I play Quotes?
+            answer: |
+              To complete Quotes, you have to collect all cookie pieces across the puzzles in the main game.
+
+              Once you have collected all the pieces by solving words within the time, you can see what authors have mentioned in their words of wisdom.
+          - question: Other issues
+            answer: null
+
+  - name: Technical
+    description: Technical support, bugs, and device issues.
+    topics:
+      - question: Game crashing/freezing
+        answer: |
+          Please check if you have the latest version of the game installed. If you are already on the latest version, please kill the app and relaunch it.
+
+          If the problem continues to happen, let us know by hitting the Help button below.
+      - question: FB Connect
+        subtopics:
+          - question: Saving progress
+            answer: Log in to Facebook through the game (in the Options menu). Once you sync your game with Facebook, the data is stored on our servers and is safe! You can access it on any other device by logging into Facebook from the game in that device.
+          - question: Restore progress on a new device
+            answer: |
+              1. Facebook was connected on old device. You just have to log into Facebook through the game on your new device, and give it a few seconds to sync.
+
+              2. Facebook was not connected on old device. We request you to use your old device and log into Facebook through the game. This will sync the data with the cloud. Now, if you log into Facebook through the game on your new device, your progress will be updated in a few seconds.
+          - question: Lost my progress
+            answer: |
+              Game progress gets reset when the application's cache or data is cleared from the device, or you logout of Facebook. Do not clear the application data if you are not connected to Facebook. We recommend connecting your account to Facebook to ensure that the progress gets saved on our servers.
+
+              1. Facebook not connected & progress lost. If you have lost the progress before connecting, drop an email by clicking the Help button below. We will try to restore your data, but in certain cases, they might be lost entirely.
+
+              2. Facebook connected & progress lost. If you had connected to Facebook, you can get your progress back by re-logging into Facebook through the game and playing the game for a few seconds till the data is synced.
+
+              3. Progress lost on Facebook logout Don't worry. You just need to re-login to Facebook from your game.
+      - question: Sounds & Music
+        subtopics:
+          - question: Can I turn on or off the music or sound effects?
+            answer: You can adjust the sounds in the settings of the game. There is a toggle for the game music and sound effects.
+          - question: Sound effects are missing!
+            answer: |
+              1. Check the game settings to make sure sounds and music are turned on.
+              2. If all the settings are fine and the sound is still off, try restarting the game app.
+              3. If that doesn't help, try restarting your device.
+
+              That usually fixes the sound problem. If not, try the following:
+              1. Make sure your device is not muted and that the volume is turned up high enough.
+
+              If none of that worked, open another application to make sure your device sound is working in general. If the problem persists, it probably has to do with your device itself rather than the game.
+          - question: Music Off still able to hear ad sounds!
+            answer: |
+              If the game sounds are bugging you, you can turn them off from the Settings from the home screen.
+
+              But sounds from ads are out of our control, and if this is the problem, please try reducing the media volume by pressing the volume down key while an ad plays.
+      - question: Notifs
+        subtopics:
+          - question: How to Turn off notifications on my device?
+            answer: |
+              You can turn off game notifications in your device settings:
+              1. Open Settings -> Applications
+              2. Find Word Trip in the list of installed apps and select it.
+              3. Untick Allow Notifications.
+      - question: Updates
+        subtopics:
+          - question: When will the next update be released?
+            answer: |
+              Go to the application store for your device to check for all WordTrip updates:
+              - The What's New section describes the game's latest update
+              - The Version History section contains information about all previous game updates.
+
+              Our game page in application stores:
+              - App store
+              - Google Play
+              - Amazon Appstore
+          - question: How do I update the game?
+            answer: |
+              1. Open the Play Store app on your device.
+              2. Tap on the Menu icon in the top left corner and then My applications and games.
+              3. Find the game name in the list and tap it.
+              4. Tap Update when the game page opens.
+
+              You can also adjust your device settings to automatically download updates for the apps you have installed:
+              1. Open the Play Store app.
+              2. Tap the Menu icon in the top left corner.
+              3. Go to the Settings section.
+              4. Tap Auto-update apps.
+              5. Choose one of the following:
+              - Auto-update apps at any time: Updates will be downloaded via both Wifi and your mobile network.
+              - Auto-update apps over Wi-Fi only: Updates will only start downloading when your device has a Wi-Fi connection.
+
+              For Kindle devices:
+              1. Open Apps -> Store
+              2. Tap the menu icon in the bottom part of the screen, and then App Updates(or My Apps).
+              3. Find the game in the list and tap Update.
+          - question: i don't have an update
+            answer: |
+              Please bear in mind that a new version of the game is released on different platforms with small delays in time(sometimes up to several days). That happens due to a difference in the procedures for checking the update on different platforms.
+
+              Don't worry, the update will be available very soon for you too!
+
+  - name: Issues with purchases
+    description: Troubleshooting in-app purchases, refunds, and payment methods.
+    topics:
+      - question: Credit card safety/details
+        answer: |
+          Playsimple games doesn't have access to your financial data and cannot process in-app purchases.
+
+          When you're making a purchase in one of our games, the purchase is processed by the application store that you downloaded the game from(For example, Google Play or App store).
+      - question: Purchased coins/spins not added
+        answer: |
+          After a successful purchase, it might take a couple of seconds for the data to sync.
+
+          If the purchase went fine and the coins/spins seem to appear incorrectly (or do not appear at all), please send us the details by hitting the Help button below. Be rest assured that our team will resolve this issue at the earliest.
+      - question: Ads still showing after purchase
+        answer: |
+          If you are still seeing ads after making a successful ''No Ads'' purchase, please restart the game.
+
+          If you still continue seeing ads, let us know by hitting the Help button below.
+      - question: Unable to make purchases
+        answer: |
+          If you've made purchases in tha game or other applications before:
+          1. Your internet connection: It has to be stable in order to make purchases.
+          2. Temporary problems with the app store: All in-game purchases are processed by the store where the game was downloaded from. There is a chance that the store is overloaded and unable to process your request. In that case just wait several minutes and try again.
+          3. Problems with the store app: These are usually solved by restarting your device.
+
+          If you've never made purchases in the game or other applications:
+          1. Incorrect payment information: If you made a mistake while entering your payment information, cancel the payment and start over.
+          2. Unsupported payment method: It may be that the payment method you want to use is not supported by the app store. The list of available payment methods can be found in the respective sections of the Apple, Google and Amazon Customer Support websites.
+
+          If you're still having problems making purchases, please contact the app store customer support.
+      - question: How to get Purchase refund?
+        answer: |
+          All purchases are processed by the store you downloaded the game from. To claim a refund, you'll need to contact the customer support service for that store.
+
+          Any information you provide to support your claim(e.g., the order number, the purchase time, or your receipt) can considerably speed up the refund process.
+
+          Android Google Play Store
+          Apple App Store
+      - question: How can I avoid an accidental in-app purchase?
+        answer: |
+          WordTrip is completely free to play but some optional in-game items will require payment.
+
+          Please follow the below steps to avoid accidental purchase:
+          1) Make sure no one else from your household is using your credit card details.
+          2) Activate payment security - Google Play has PIN code security before transactions can be made.
+          3) Contact your bank as they may be able to see further who did the transactions.
+
+          Please note that our Games can not automatically activate purchase - it requires the user in order to initiate, activate and verify any orders.
+      - question: I've been charged more than I expected!
+        answer: |
+          You can see the final price on the screen before you confirm the payment, as well as on the receipt from the application store.
+
+          In some regions, additional VAT may be charged. Your region is determined automatically based on the country selected in your application store profile.
+
+          If you still think you got charged extra, please contact your application store's customer support. They'll be able to give you more details on your purchases and the tax policy for online purchases in your region.
+      - question: Other issues
+        answer: null
+
+  - name: Issues with ads/videos/offers
+    description: Troubleshooting advertisements and offer wall issues.
+    topics:
+      - question: No videos available
+        answer: |
+          Video ads are shown to a player depending on the availability of videos from ad networks. Please try again after a while.
+
+          If the issue persists, let us know by hitting the Help button below.
+      - question: Videos not playing
+        answer: |
+          Video ads not starting or gets stopped midway, Make sure you have the latest version. If you have no updates available, please restart the game and try again.
+
+          If the problem persists, please let us know by hitting the Help button below.
+      - question: No coins for watching videos
+        answer: |
+          If you have watched a video for its entire duration, the coins will be added to your balance within a few seconds.
+
+          If you viewed the entire ad and still didn't get the coins, hit the Help button below.
+      - question: Game crashing on playing videos
+        answer: |
+          If you find the game ending suddenly on playing a video, please check if you are on the latest version.
+
+          If you do have the latest version, let us know by hitting the Help button below.
+      - question: Game freezes on playing videos
+        answer: |
+          Please kill and restart the game.
+
+          If the problem persists, let us know by hitting the Help button below.
+      - question: Ad banner covering game screen
+        answer: |
+          Please kill the app and relaunch. It might fix the issue.
+
+          If the problem continues to happen, let us know by hitting the Help button below.
+      - question: Inappropriate ads
+        answer: |
+          Ads are provided by our ad partners. Although we try very hard to avoid inappropriate ads or videos, some might slip our attention.
+
+          If you find any such ad that may bother you or someone you know, do inform us by hitting the Help button below.
+      - question: No coins for completing an offer
+        answer: |
+          Once you have availed an offer or installed an app, it will take a few minutes for the coin bonus to be added. You will always get a notification, inside the game, about the coins added.
+
+          Please note that you have to complete all the actions that are mentioned by the app provider.
+
+          If you still haven't got the coins, please press the 'Missing coins?' option, located at the bottom of the Offers screen.
+      - question: No offers available
+        answer: |
+          Offers are shown based on their availability from our partner ad networks. If you do not see any offers, please try again after a while.
+
+          If the problem continues to happen, let us know by hitting the Help button below.
+      - question: How to stop ads?
+        answer: |
+          We show ads to keep game free for players. You can remove ads from our game by purchasing any of the coin packages that are available in the game store.
+          This will give you an ad free experience throughout the game play so that you will be able to play peacefully.
+      - question: Other issue
+        answer: null
+
+  - name: Issues with earning coins
+    description: Troubleshooting coin rewards from various activities.
+    topics:
+      - question: How to earn free coins/spins?
+        answer: |
+          There are many ways to earn free coins
+          1. By watching videos.
+          2. Filling your Bonus Jar.
+          3. By clearing puzzles/countries.
+          4. Completing quests in the Quest Center.
+          5. By using the spinner(random coin rewards).
+          6. Unlocking a new collectible in your Travel Journal by playing Daily Spelling Bee Challenge.
+          7. Returning to the game every day. The Daily Bonus rewards get better and better the more regular you are!
+          8. By inviting friends through your unique code.
+          9. By performing certain actions in the 'Offers' section. The exact actions and offers vary from time to time and are subject to availability.
+      - question: No coins for watching videos
+        answer: |
+          If you have watched a video for its entire duration, the coins will be added to your balance within a few seconds.
+
+          If you viewed the entire ad and still didn't get the coins, hit the Help button below.
+      - question: No coins for completing offers
+        answer: |
+          Once you have availed an offer or installed an app, it will take a few minutes for the coin bonus to be added. You will always get a notification, inside the game, about the coins added.
+
+          Please note that you have to complete all the actions that are mentioned by the app provider.
+
+          If you still haven't got the coins, please press the 'Missing coins?' option, located at the bottom of the Offers screen.
+      - question: No coins for referrals
+        answer: |
+          For completing a successful referral, you must enter the unique code provided to you by your friend (or vice versa) and allow a few minutes for the sync to happen.
+
+          If the coins do not seem to appear, please send us the details by hitting the Help button below.
+
+          Note: You can use a referral code only once, but you can earn more coins by sharing your code with new players. So, spread the word!
+      - question: No Daily Bonus coins
+        answer: |
+          It takes a few minutes for the Daily Bonus to be credited, so we request you to play for a while.
+
+          If you did not get the Daily Bonus, please let us know by hitting the Help button below.
+
+  - name: Help
+    description: Contacting support and troubleshooting guidance.
+    topics:
+      - question: How can I contact support?
+        answer: |
+          On this page, we have put together a variety of helpful articles to help you solve any problem you might encounter. Didn't find a solution? Don't worry. We've got your back!
+
+          To contact us through the game, please do the following:
+          1. Open the in-game Settings menu and tap Contact Us.
+          2. Choose any article from any topic.
+          3. Provide as much information about the issue as possible to help our agents assist you more efficiently!
+      - question: How do I take screenshot?
+        answer: |
+          To take a screenshot on your Android device
+          Click Here
+
+          To take a screenshot on your iOS device
+          Click Here
+      - question: I'm having a technical issue
+        answer: |
+          We're very sorry if the game is not working as you expected.
+
+          Try one of these steps to fix the problem:
+          1. Restart your device and re-enter the game.
+          2. Make sure your game is updated to the latest version.
+          3. Make sure your device is updated to the latest version.
+          4. Delete the game and reinstall it from the application store. Don't worry: if your game is connected to the Facebook, you won't lose your progress!
+
+          If none of that helped, contact our customer support and provide the following information: (If possible)
+          - what exactly is going wrong.
+          - Which actions lead to the problem.
+          - When the problem occured for the first time (after updating the game, reinstalling it, or at some other point)
+          - A screenshot of the problem
+      - question: User ID/RefId
+        answer: |
+          Why is my RefId important?
+          RefId is an unique ID given to your game. If you lose progress or need assistance, it helps us to quickly identify your account!
+
+          Where can I find my RefId?
+          - Open the game and click the Profile icon.
+          - Your User ID will be at the bottom of your name and look like this: User ID: 15un3dui
+          - When contacting our support team(especially not from the game settings), make sure to include your User ID in your request.
+
+          Helpful Tips
+          - Take note of your User ID in case you lose access to your device or lose your progress.
+          - Keep your User ID safe by only sharing it with your friends.
+
+  - name: Game Feedback
+    description: Player feedback, suggestions, and other games.
+    topics:
+      - question: General feedback
+        answer: null
+      - question: New feature suggestion
+        answer: Got a great idea? We are always on the lookout for new and innovative concepts. Please hit the Help button below and send us your new feature suggestion. We will review it with the team and try to prioritize it on our planning roadmap.
+      - question: More Games
+        answer: |
+          If you're loving the WordTrip experience and thinking about trying something new - we've got you covered! You can discover an exciting new world in another one of our games:
+
+          Crossword Jam: It's an anagram, it's a crossword, it's CROSSWORD JAM! These puzzles will have you solving your way around the world-traveling across beautiful landscapes and learning a whole lot of fun facts along the way!
+
+          Daily Themed Crossword: Classic crosswords with a fun twist! Easy to learn and super fun to solve, these crosswords cover everything from Movies, Sports, Technology, Games, History, Architecture and beyond!
+
+          Word Wars: Love words? This classic social board game is just what you need to show off your word power. Challenge someone you know or accept one from a random opponent to get started on you board.
+
+          Solitaire: A classic card game that does not fail. With thousands of shuffles, customizable screens, unlimited hints, personal leaderboard support and tons of other features, this game won't stop surprising you.
+
+          Keep up to date with news and learn more about our games on our website.(link)
+
+          Feel free to contact our helpful support team if you have any questions. We'll do our best to assist you.
+      - question: Other feedback
+        answer: null
+
+  - name: Other Issues
+    description: Miscellaneous issues including data privacy.
+    topics:
+      - question: My data
+        answer: |
+          We strive to give our players the best playing experience and help us to achieve that, we collect your data from select places and store them on our servers. This data includes your Advertiser ID and Device ID. If you connect to Facebook to save your game session and to be able to play with friends, we get access to information that is already available on your Facebook account like your name, gender, Facebook ID, email address and friends list.
+
+          We DO NOT collect any additional data nor do we indulge in the sale or purchase or your data from any other source(s). Your data is safely protected on our servers under encryption. We are mindful of the trust and faith you have put into Playsimple Games and we continue to deliver on our promise of bringing the best possible game experience.
+      - question: Other issue
+        answer: null
+
+  - name: Subscriptions
+    description: VIP subscription details and management.
+    topics:
+      - question: About Subscriptions
+        answer: |
+          The VIP Subscription plan for WordTrip will help you progress faster in the game, and rewards you with the following benefits
+
+          - Over 2500 exclusive puzzles
+          - 50% Discount on the price of BurstHint
+          - No Ads, forever!
+          - A joining Bonus with lots of Coins!
+      - question: How much does it cost? What are the modes of payment?
+        answer: |
+          - The cost will depend on your choice. The subscription will renew automatically at the end of the period chosen and renews automatically every time.
+
+          - For information on modes of payment, you can learn more here.
+
+          iOS  <a href='https //support.apple.com/billing' title='Click Here'>
+
+          Android  <a href='https //support.google.com/googleplay/answer/2651410' title='Click Here'>
+      - question: Will the Subscription renew automatically?
+        answer: |
+          - Yes, this is an auto-renewing Subscription.
+
+          - You will automatically be billed the same day of every week. For example, if you join on April 5th, your next billing date will be April 12th.
+
+          - Your account will be charged for renewal within 24-hours prior to the end of the current period.
+      - question: How can I subscribe to WordTrip?
+        answer: To Subscribe to WordTrip, tap on the VIP banner in the Coin Shop, and then tap on the 'Subscribe' button on the 'Become a VIP' dialogue box.
+      - question: Issues with payments?
+        answer: |
+          In case you are facing issues with your payment method, you can learn more here.
+
+          Android    <a href='https //support.google.com/googleplay/answer/1267137' title='Click Here'>
+
+          iOS   <a href='https //support.apple.com/en-us/HT203005' title='Click Here'>
+      - question: When will I receive my Joining Bonus?
+        answer: The Joining Bonus is a one-time reward that is given the first time you become a Subscriber on WordTrip.
+      - question: What Ads will be turned off as part of my Subscription?
+        answer: You will not see any Ads in between puzzles or banner ads on your puzzle screen while your Subscription is active. Although, you will still have the option to Watch Videos to earn more Coins & Spins!
+      - question: Can I access my Subscription on multiple devices?
+        answer: |
+          - Subscriptions are linked to your Google Play Store/ iTunes Appstore Account, not to your device. If you get a new or additional device, reinstall the app where you purchased the subscription and you'll have access to your content.
+
+          - If you can't access your content, make sure you're using the same Google Play Store/ iTunes Appstore Account as when you purchased the content.
+
+          - Note: The same subscription cannot be used on both iOS and Android devices.
+      - question: Where can I view, manage or cancel my Subscription?
+        answer: |
+          To manage or cancel your Subscription, simply go through the following steps
+
+          iOS
+          1. Open Settings on your device, scroll down and tap on iTunes & App Store
+          2. Click on Apple ID (your email) and choose View Apple ID. Proceed to enter your password or Touch ID if required
+          3. Scroll down, tap on Subscriptions and select WordTrip
+
+          For more information, visit
+          <a href='https //support.apple.com/en-us/HT202039' title='Click Here'>
+
+          Android
+          1. Open the Google Play Store
+          2. Access the Menu by tapping on the tree lines icon located next to the Google Play Store logo or by swiping left from the right corner of the screen
+          3. Tap Account and then Subscriptions
+          4. Look for WordTrip
+
+          For more information, visit
+          <a href='https //support.google.com/googleplay/answer/7018481?co=GENIE.PlatformAndroid&hl=en' title='Click Here'>
+      - question: If I cancel the VIP membership before the end of the Week do I get a partial refund?
+        answer: |
+          - Your benefits will remain intact until your subscription expires on your next one week anniversary. However, you will not receive a partial refund while you are enjoying these benefits.
+
+          - You will not receive any future billing from us once you cancel the subscription.
+      - question: If I cancel, will I be able to rejoin the VIP Plan at any time?
+        answer: Yes, you can re-subscribe to the VIP Plan at any time.
+      - question: How can I get a refund?
+        answer: |
+          iOS
+          To request a refund, you will have to contact the App Store through the problem reports page.
+          Link <a href='https //reportaproblem.apple.com/' title='Click here'>
+
+          Android To request a refund you will have to contact the Google Play Store through this page.
+          Link <a href='https //support.google.com/googleplay/answer/2479637#apps' title='Click Here'>
+
+  - name: Extras or Not Applicable
+    description: Miscellaneous topics and general information.
+    topics:
+      - question: Connecting to a FB account
+        answer: |
+          You can connect to Facebook in game settings.
+
+          Please follow these steps to connect your game to your facebook account:
+          1. Tap on Menu icon in the upper right corner of the screen to open Settings.
+          2. Tap on Login & Play option.
+          3. You will be redirected to Facebook, where you will be asked to login.
+          4. Enter your facebook credentials.
+          5. Tap Continue. After your FB account is connected to WordTrip, you will be redirected back to the game.
+      - question: How does Facebook sync works?
+        answer: |
+          1. If you're connecting your game via Facebook ID (which has never been used in this game) all your guest user progress and coins will get copied and additional 100 coins will get added.
+
+          2. If you're connecting your game via Facebook ID (which is used already in this game) then all your progress will get overwritten by Facebook progress.
+
+          Once you log in, the system takes some time to restore your progress - this depends on your internet speed. Please continue playing for a few minutes till your progress gets restored.
+          It may take a few seconds based on your internet connection and speed.
+      - question: Cannot connect to Facebook
+        answer: |
+          1. Make sure you have a stable internet connection.
+          2. Check to see if your username and password are correct.
+          3. If you have the Facebook app installed on your device, log out of it(or delete and reinstall it).
+          4. Log out of your Facebook account in all browsers installed on your device(Chrome, Opera, Safari, etc.).
+          5. Restart your device and try to connect the game to Facebook again.
+      - question: How do I reinstall/restart the game?
+        answer: |
+          Reinstalling or restarting a game can often solve most of the problems you may encounter.
+
+          To restart a game, simply force quit the application and launch it again.
+
+          Reinstalling a game may be trickier. Please follow these steps to avoid losing your game progress:
+          1. Make sure your game is connected to your Facebook account.
+          2. Go to settings > Apps, choose the Word Trip game and tap Delete.
+          3. Restart your device.
+          4. Go to the Application store and download the app again.
+          5. Make sure to check that you have a stable internet connection before you launch the game.
+          6. Once you launch the game, connect your game via Facebook and your progress gets restored.
+      - question: I've experienced a bug. What should I do?
+        answer: |
+          If you've experienced any bugs while playing our game, try some of these steps:
+
+          1. Reboot your device.
+          2. Check for available game updates in the store where you downloaded the game.
+
+          Normally, most of the issues are solved by the steps above.
+
+          If none of the steps mentioned above helped, please contact us through our official in game support.
+
+          Note: We can check the issue more quickly if you contact us with detailed information by referring to below.
+
+          1. what were the exact steps leading to the issue?
+          ex: The app closed suddenly when I was playing level xxx.
+
+          2. Could you explain more about the symptom?
+          ex: The app freezes right after a video ad ends.
+
+          3. What are the details of the issue?
+          If possible, please attach screenshots where we can confirm the issue.
+      - question: No reply from support
+        answer: |
+          You contacted our Customer Support but didn't receive a reply? Don't worry, it's likely our team hasn't reached your request yet - just wait for the notification!
+
+          How soon should I expect a reply?
+          Based on the complexity of your request and our current workload, replies can take several hours up to a few days. On weekends and holidays, this may take a little longer. We appreciate your patience and understanding!
+
+          I got a reply from a bot instead of a human
+          Some of our friendly bots gather details from your request to help our agents assist you more efficiently! If we're able to help, our bots may close your request without passing it onto an agent.
+      - question: How do I change the payment method?
+        answer: |
+          You can edit your payment method in your account settings.
+          For the App Store:
+          1. Open device settings -> iTunes & App Store.
+          2. Tap your Apple ID email and select View Apple ID. You may be asked to log into your account.
+          3. Select Payment Information.
+          4. Edit or remove the information. Tap None to remove a payment method.
+          5. Tap Done.
+
+          For Google Play:
+          1. Open Play store
+          2. Tap menu -> Account
+          3. Choose Payment methods -> More payment settings.
+          4. Enter your Google Payments account if asked to do so.
+          5. Tap Menu in the browser -> Payment methods.
+          6. Tap Edit under the selected payment method.
+          7. Apply the changes and tap Save.
+
+          For the Amazon Appstore:
+          1. Open Manage Your Content and Devices.
+          2. Select Settings -> Edit Payment Method.
+          3. Enter your changes and tap Continue.
+      - question: What to do if "No Ads Available" message appears?
+        answer: |
+          Dear Customers,
+          Unfortunately sometimes there might be a limit to the number of video ads one can watch.
+
+          "No ads available" message simply means that advertising providers do not have videos available to you at the moment. The lack of ads is not a bug. When tapped "w2e icon" we try to find video ads for you and load them. If no videos were found this time, "No Ads Available", message appears.
+
+          Please don't worry, video ads will surely become available later and you will be able to earn coins for watching them.
+      - question: Why don't I have an event that another player has?
+        answer: |
+          We do our best to ensure that the same events are available to all the players. However, sometimes they may not show on your device because of the following reasons:
+          1. The event may have been available for a limited time.
+          2. You might have not cleared the eligibility criteria to enter the event.
+          3. Your game might not be updated to the latest version
+          But don't worry, our team is constantly working on new events, and they will become available to you soon!
+      - question: Missing Leaderboard events
+        answer: The remaining puzzles on your game are not sufficient to participate in tournament. We will be sending a new set off exciting puzzles very soon, so that you will be able to take part in tournaments.
+      - question: I've noticed a cheater
+        answer: If you think someone is cheating during a competition, take a screenshot of their name and profile picture and contact our customer Support with a description of the problem.
+      - question: Minigames
+        answer: |
+          Have you had a chance to try out our new minigames? Tap the Play Word hunt button to start playing a minigame. The button may appear on the level complete screen after you finish a level.
+
+          If you decide to play the minigame later, don't worry - it won't go anywhere. You'll find the Word Hunt button again after you solve few more levels.
+      - question: What is Spell Bee
+        answer: The Spell Bee puzzles appear once every 24 hours. Players try to collect as many bees as possible when playing the puzzle. If you play a word on a square where bee sits, you then collect that Bee. As you fill your progress bar with Bees, you will unlock collectible for your travel journal.
+      - question: Can I replay a Spell bee puzzle I solve?
+        answer: Unfortunately, no. Spell Bee puzzles you solve cannot be replayed. Don't get upset though, more exciting and challenging puzzles will be provided everyday!
+
+event_intelligence:
+  description: Rules for classifying support tickets related to in-game events and features.
+  summary_rule: |
+    If text refers to Letter Hunt, Cosmetics, Club Championship, Streak Shield (during leaderboard), or any leaderboard-based competition, classify as:
+    classification = "Genuine"
+    category = "Event related issue"
+
+    Everything else → classify under the correct feature category from the FAQ.
+  event_patterns:
+    - name: Letter Hunt
+      description: Golden Tiles / Hidden Objects Event. Single-player event where players collect letters from golden tiles to unlock words and reveal hidden objects across 3 stages.
+      keywords:
+        - Golden tiles not appearing
+        - Can't find letters
+        - Missing letters
+        - Letter Hunt scene not loading
+        - Objects not unlocking
+        - Stages not progressing
+        - Words not filling in the Letter Hunt board
+        - Event reset
+        - Progress lost
+        - Golden tiles
+        - Letter Hunt scene
+        - Stages 1/2/3
+        - Hidden objects
+    - name: Cosmetics
+      description: Avatar Shards / Loot Box Event. Event where players collect avatar collectibles to earn loot boxes and unlock themed avatars.
+      keywords:
+        - Avatar shards
+        - Loot box not received
+        - Duplicate jar
+        - Cosmetic event not starting
+        - Can't unlock avatar
+        - Missing collectibles
+        - Shards
+        - Loot boxes
+        - Avatar themes
+        - Duplicate jar
+    - name: Club Championship
+      description: Team Tournament Event. Weekend team competition where clubs collect golden leaves to win rewards.
+      keywords:
+        - Club tournament
+        - Wisdom leaves
+        - Club reward missing
+        - Club ranking
+        - Superstar card
+        - Club score not updating
+        - Didn't receive club rewards
+        - Tournament scoring
+        - Club ranking
+        - Golden leaves
+        - End-of-tournament rewards
+    - name: Streak Shield
+      description: Leaderboard Event Dependency. A support feature linked to leaderboard events. Unlocks only when leaderboard is active.
+      keywords:
+        - Streak shield missing
+        - Can't buy streak shield
+        - Streak shield not activating
+        - Streak break not protected
+      note: If user refers to streak shield during leaderboard event → Event related issue. If user refers to streak shield outside event → classify under Streak/Wisdom Score.
+    - name: Leaderboards
+      description: Treasure Hunt / Gold Rush / Score Race. Leaderboard-based competitive events.
+      keywords:
+        - Ranking
+        - Score race
+        - Wisdom score
+        - Can't see leaderboard
+        - Not receiving leaderboard rewards
+        - Rankings
+        - Scores not updating
+        - Leaderboard rewards
+  feature_mapping:
+    - feature: Lucky Ladybug
+      keywords: [Ladybug, hints revealed, ladybug not working]
+      category: Core Gameplay
+    - feature: Level Tagging
+      keywords: [Easy level, hard level, boosters]
+      category: Core Gameplay
+    - feature: Combo
+      keywords: [combo score, combo not counting]
+      category: Streak/Wisdom Score
+    - feature: Profile
+      keywords: [avatar, name change, profile pic]
+      category: Profile
+    - feature: Daily Spelling Bee
+      keywords: [spell bee, daily puzzle, bee words]
+      category: Daily spelling bee
+    - feature: Streak/Wisdom
+      keywords: [streak, wisdom score, words formed back to back]
+      category: Streak/Wisdom Score
+    - feature: Quest Center
+      keywords: [quest center, daily quests, tasks]
+      category: Quest Center
+    - feature: Piggy Bank
+      keywords: [piggy bank, piggy, bank]
+      category: Piggy Bank
+    - feature: Store & Purchases
+      keywords: [store, purchase, buy, coin pack]
+      category: Store screen & Purchase
+    - feature: FB & Apple Sync
+      keywords: [facebook, fb, apple, sync, login]
+      category: FB & Apple sync
+    - feature: Notifications
+      keywords: [notification, notif, alert]
+      category: Notification of the game
+    - feature: EOC
+      keywords: [end of content, no more levels]
+      category: End of content
+    - feature: Music & Sound
+      keywords: [music, sound, audio, volume]
+      category: Game music and sound
+  not_genuine_rules:
+    description: Use "Not Genuine" classification for tickets with no actionable problem.
+    criteria:
+      - Only greetings, thanks, emojis, or random text with no problem
+      - Obvious spam
+      - Text is empty or completely irrelevant
+      - Contains only opinions, suggestions, or preferences WITHOUT a clear malfunction
+    classification: "Not Genuine"
+    category: "Other"
+    subcategory: "Not applicable"
+    reason: "No meaningful complaint or issue identified."
+
+output_format:
+  description: Required JSON format for ticket classification output.
+  rules: |
+    Return ONLY one JSON object, no explanation, no markdown.
+    classification must be exactly one of: "Genuine", "Not Genuine"
+    category must follow the allowed lists in the FAQ categories.
+    subcategory must follow the allowed subcategory options.
+    confidence is a number between 0 and 1.
+    tags is a JSON array of short strings (can be empty).
+    translated_description should be left as an empty string since all tickets are in English.
+```
