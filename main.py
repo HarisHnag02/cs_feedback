@@ -435,7 +435,11 @@ def main():
             print(f"\n📄 Markdown Report (for designers):")
             print(f"   File: {report_paths['markdown'].name}")
             print(f"   Location: {report_paths['markdown'].parent}/")
-            
+
+            print(f"\n📋 Summary Report (one-pager):")
+            print(f"   File: {report_paths.get('summary', report_paths['markdown']).name}")
+            print(f"   Location: {report_paths['markdown'].parent}/")
+
             print(f"\n📊 JSON Insights (for analysis):")
             print(f"   File: {report_paths['json'].name}")
             print(f"   Location: {report_paths['json'].parent}/")

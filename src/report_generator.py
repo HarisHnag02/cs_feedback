@@ -7,6 +7,7 @@ player pain, retention risks, and revenue risks — not just frequency tables.
 """
 
 from collections import Counter, defaultdict
+from itertools import islice
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -570,6 +571,157 @@ def generate_json_insights(
     return json_report
 
 
+def generate_summary_report(
+    insights: AggregatedInsights,
+    classifications: List[Dict[str, Any]],
+    input_params: FeedbackAnalysisInput
+) -> str:
+    """
+    Generate a concise one-page executive summary report.
+    Designed to be shared with leadership in under 2 minutes of reading.
+    """
+    logger.info("Generating summary report...")
+
+    total = insights.total_tickets
+    sent = insights.sentiment_breakdown
+    neg_pct  = round(sent.get('Negative', 0) / total * 100, 1) if total else 0
+    pos_pct  = round(sent.get('Positive', 0) / total * 100, 1) if total else 0
+
+    risks      = Counter(c.get('business_risk')      for c in classifications if c.get('business_risk'))
+    severities = Counter(c.get('sentiment_severity') for c in classifications if c.get('sentiment_severity'))
+    payer_sigs = Counter(c.get('player_type_signal') for c in classifications if c.get('player_type_signal'))
+
+    critical_count   = severities.get('Critical', 0)
+    payer_complaints = payer_sigs.get('Payer', 0)
+    churn_threats    = sum(1 for c in classifications if 'Churn' in (c.get('intent') or ''))
+
+    # Top 3 pain points
+    neg_groups = defaultdict(list)
+    for c in classifications:
+        if c.get('sentiment') in ['Negative', 'Mixed']:
+            key = (c.get('category', 'Other'), c.get('subcategory', 'General'))
+            neg_groups[key].append(c)
+
+    risk_order = {'Revenue': 0, 'Trust': 1, 'Retention': 2, 'Rating': 3, None: 4}
+    top_pain = sorted(
+        neg_groups.items(),
+        key=lambda x: (min(risk_order.get(c.get('business_risk'), 4) for c in x[1]), -len(x[1]))
+    )[:3]
+
+    # Top positive driver
+    pos_groups = defaultdict(list)
+    for c in classifications:
+        if c.get('sentiment') == 'Positive':
+            pos_groups[c.get('related_feature') or 'General'].append(c)
+    top_pos = sorted(pos_groups.items(), key=lambda x: -len(x[1]))[:1]
+
+    # Risk health indicator
+    if neg_pct > 60 or critical_count > 10:
+        health = "🔴 CRITICAL"
+    elif neg_pct > 40 or payer_complaints > 5:
+        health = "🟡 AT RISK"
+    else:
+        health = "🟢 STABLE"
+
+    lines = [
+        f"# 📌 Feedback Summary — {input_params.game_name} ({input_params.os})",
+        f"> Period: {input_params.start_date} → {input_params.end_date} | "
+        f"Tickets: {total} | Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+        "",
+        f"## Overall Health: {health}",
+        "",
+        "| Metric | Value |",
+        "|--------|-------|",
+        f"| Negative Sentiment | {neg_pct}% |",
+        f"| Positive Sentiment | {pos_pct}% |",
+        f"| Critical Tickets | {critical_count} |",
+        f"| Payer Complaints | {payer_complaints} |",
+        f"| Churn Threats | {churn_threats} |",
+        f"| Top Business Risk | {risks.most_common(1)[0][0] if risks else 'N/A'} |",
+        "",
+        "---",
+        "",
+        "## 🔥 Top 3 Issues (by Business Impact)",
+        "",
+    ]
+
+    for rank, ((cat, sub), tickets) in enumerate(top_pain, 1):
+        count    = len(tickets)
+        pct      = round(count / total * 100, 1) if total else 0
+        brisk    = Counter(t.get('business_risk') for t in tickets if t.get('business_risk'))
+        b_label  = brisk.most_common(1)[0][0] if brisk else 'N/A'
+        is_100   = all(t.get('sentiment') == 'Negative' for t in tickets)
+        signal   = next((t.get('short_summary') for t in tickets if t.get('short_summary')), 'N/A')
+        cause    = next((t.get('root_cause')    for t in tickets if t.get('root_cause')),    'N/A')
+        fix      = next((t.get('player_suggested_solution') for t in tickets
+                         if t.get('player_suggested_solution')), None)
+
+        lines.extend([
+            f"### {rank}. {cat} — {sub}",
+            f"**{count} tickets ({pct}%)** | Risk: **{b_label}** "
+            f"{'| ⚠️ 100% Negative' if is_100 else ''}",
+            f"- **Signal:** {signal}",
+            f"- **Root cause:** {cause}",
+        ])
+        if fix:
+            lines.append(f"- **Player wants:** {fix}")
+        lines.append("")
+
+    lines.extend([
+        "---",
+        "",
+        "## 💚 Biggest Positive Driver",
+        "",
+    ])
+
+    if top_pos:
+        feat, tix = top_pos[0]
+        pos_signal = next((t.get('short_summary') for t in tix if t.get('short_summary')), 'N/A')
+        lines.extend([
+            f"**{feat}** — {len(tix)} positive mentions ({round(len(tix)/total*100,1)}%)",
+            f"- *\"{pos_signal}\"*",
+            f"- Scale opportunity: extend this feature or offer premium content around it.",
+            "",
+        ])
+
+    lines.extend([
+        "---",
+        "",
+        "## 🎯 3 Immediate Actions",
+        "",
+    ])
+
+    if critical_count > 0:
+        lines.append(f"1. **Fix {critical_count} critical-severity issues this sprint** — these players are on the edge of churning or 1-starring.")
+    else:
+        lines.append("1. **Address top pain point immediately** — even without critical tickets, retention risk is active.")
+
+    if payer_complaints > 0:
+        lines.append(f"2. **Resolve {payer_complaints} payer complaints** — revenue is directly at risk. Audit monetization flow this week.")
+    else:
+        lines.append("2. **Monitor payer satisfaction** — keep IAP trust high; watch for emerging monetization friction.")
+
+    top_risk = risks.most_common(1)[0][0] if risks else None
+    if top_risk == 'Retention':
+        lines.append("3. **Reduce retention friction** — map player journey and simplify the most-complained friction points.")
+    elif top_risk == 'Trust':
+        lines.append("3. **Rebuild player trust** — issue a transparent update note or CS outreach to affected players.")
+    else:
+        lines.append("3. **Investigate top subcategory drop-off** — use telemetry to confirm root cause before building fixes.")
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        f"*Full report: `report_{sanitize_filename(input_params.game_name)}_{input_params.os}_"
+        f"{input_params.start_date}_to_{input_params.end_date}_<timestamp>.md`*",
+        ""
+    ])
+
+    logger.info("✓ Summary report generated")
+    return "\n".join(lines)
+
+
 def save_reports(
     insights: AggregatedInsights,
     classifications: List[Dict[str, Any]],
@@ -593,15 +745,21 @@ def save_reports(
         f"{input_params.start_date}_to_{input_params.end_date}_{timestamp}"
     )
 
-    # Markdown report
+    # Full Markdown report
     markdown_content = generate_markdown_report(
         insights, classifications, input_params, game_context
     )
     markdown_path = REPORTS_MARKDOWN_DIR / f"report_{base_filename}.md"
     save_markdown(markdown_content, markdown_path)
-    logger.info(f"✓ Markdown report: {markdown_path.name}")
+    logger.info(f"✓ Full report: {markdown_path.name}")
 
-    # JSON report
+    # Summary Markdown report (one-pager)
+    summary_content = generate_summary_report(insights, classifications, input_params)
+    summary_path = REPORTS_MARKDOWN_DIR / f"summary_{base_filename}.md"
+    save_markdown(summary_content, summary_path)
+    logger.info(f"✓ Summary report: {summary_path.name}")
+
+    # JSON insights
     json_insights = generate_json_insights(
         insights, classifications, input_params, metadata or {}
     )
@@ -610,7 +768,7 @@ def save_reports(
     logger.info(f"✓ JSON insights: {json_path.name}")
 
     logger.info("="*70)
-    logger.info("✓ Report generation complete")
+    logger.info("✓ All reports generated")
     logger.info("="*70)
 
-    return {'markdown': markdown_path, 'json': json_path}
+    return {'markdown': markdown_path, 'summary': summary_path, 'json': json_path}
